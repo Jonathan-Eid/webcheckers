@@ -9,7 +9,7 @@ microframework.
 
 - Disney Ganbaatar
 
-- John Doe
+- Ani Williams
 
 
 ## Prerequisites
