@@ -11,6 +11,8 @@ microframework.
 
 - Ani Williams
 
+- Jonathan Eid
+
 
 ## Prerequisites
 
