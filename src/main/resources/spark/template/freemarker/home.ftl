@@ -16,6 +16,7 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+      <a href="./signIn">Sign In</a>
     </div>
     
   </div>
