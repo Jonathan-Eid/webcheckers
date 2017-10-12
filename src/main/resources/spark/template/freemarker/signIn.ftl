@@ -15,7 +15,7 @@
         </div>
 
         <div class="body">
-          <p>Please Sign in fam</p>
+          <p>${signInMessage}</p>
           <label for="user">username:</label>
           <input type="text" id="user" name="username">
           <button type="submit">Sign In</button>

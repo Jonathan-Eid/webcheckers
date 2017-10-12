@@ -12,7 +12,7 @@ public class GetSignInRoute implements Route {
 	private final TemplateEngine templateEngine;
 
 	static final String SIGN_IN_MESSAGE_ATTR = "signInMessage";
-	static final String SIGN_IN_MESSAGE = "PLease Enter a username: ";
+	static final String SIGN_IN_MESSAGE = "Please enter a username: ";
 
 
 	/**

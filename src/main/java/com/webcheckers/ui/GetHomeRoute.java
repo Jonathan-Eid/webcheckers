@@ -45,17 +45,7 @@ public class GetHomeRoute implements Route {
 		final Session httpSession = request.session();
 		Map<String, Object> vm = new HashMap<>();
 		vm.put("title", "Welcome!");
-
-		// if this is a new browser session. Player needs to sign in.
-		if (httpSession.isNew()){
-			vm.put("signIn", null); // TODO Add Sign in button
-
-		}
-		else{
-			// TODO Display list of players.
-		}
-
-			return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+		return templateEngine.render(new ModelAndView(vm, "home.ftl"));
 	}
 
 }
