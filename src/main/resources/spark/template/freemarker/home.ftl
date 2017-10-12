@@ -20,6 +20,7 @@
         <!-- TODO -->
         <a href="./signOut">Sign In</a>
       <#else>
+         <a Number of Players Online: ${numPlayers} </a>
          <a href="./signIn">Sign In</a>
       </#if>
 
