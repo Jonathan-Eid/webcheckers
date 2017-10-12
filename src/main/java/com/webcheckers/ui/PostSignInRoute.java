@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import freemarker.ext.util.IdentityHashMap;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -19,16 +18,17 @@ public class PostSignInRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
-    public PostSignInRoute(TemplateEngine templateEngine) {
-        Objects.requireNonNull(templateEngine, "template engine cannot be empty");
+    public PostSignInRoute(TemplateEngine templateEngine, PlayerLobby playerLobby) {
+    	  Objects.requireNonNull(templateEngine, "template engine cannot be empty");
+        Objects.requireNonNull(playerLobby, "playerlobby cannot be empty");
+        this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
     }
 
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        final Map<String,Object> vm = new HashMap<>();
-
+    	final Map<String,Object> vm = new HashMap<>();
         return null;
     }
 }

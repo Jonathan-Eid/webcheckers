@@ -1,6 +1,7 @@
 package com.webcheckers;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.ui.WebServer;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -59,6 +60,9 @@ public final class Application {
 
 		// inject web server into application
 		final Application app = new Application(webServer);
+
+		// Instantiate the player lobby to
+		PlayerLobby playerLobby = new PlayerLobby();
 
 		// start the application up
 		app.initialize();
