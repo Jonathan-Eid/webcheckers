@@ -51,8 +51,8 @@ public class PlayerLobby {
         return null;
     }
 
-    public int getNumPlayers() {
-        return playerMap.size();
+    public String getNumPlayers() {
+        return Integer.toString(playerMap.size());
     }
 
     private boolean isLoggedIn(String name) {

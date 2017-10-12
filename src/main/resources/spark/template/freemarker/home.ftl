@@ -17,10 +17,9 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
       <#if playerSignedIn??>
-        <!-- TODO -->
-        <a href="./signOut">Sign In</a>
+        <a href="./signOut">Sign Out</a>
       <#else>
-         <a Number of Players Online: ${numPlayers} </a>
+         <p> Number of Players Online: ${numPlayers}</p></br>
          <a href="./signIn">Sign In</a>
       </#if>
 
