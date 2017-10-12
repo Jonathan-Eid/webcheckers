@@ -8,39 +8,45 @@ import java.util.Map;
 public class PlayerLobby {
 
 	private static Map<String, Player> playerMap;
-	public enum SignInResult {SIGNEDIN, INVALIDINPUT, INVALIDPLAYER};
+	public enum SignInResult {SIGNEDIN, INVALIDINPUT, INVALIDPLAYER, SIGNEDOUT}
 
     public PlayerLobby(){
         playerMap = new HashMap<>();
     }
 
-    public boolean signInPlayer(String name){
-        if (isLoggedIn(name)){
-            return false;
+    public SignInResult signInPlayer(String name){
+        if (invalidInput(name)){
+            return SignInResult.INVALIDINPUT;
+        }
+        else if (isLoggedIn(name)){
+            return SignInResult.INVALIDPLAYER;
         }
         else{
             Player playerLogin = new Player(name);
             playerMap.put(name, playerLogin);
-            return true;
+            return SignInResult.SIGNEDIN;
         }
     }
 
-    public boolean signOutPlayer(String name){
-        if (!isLoggedIn(name)){
-            return false;
+    public SignInResult signOutPlayer(String name){
+        if (invalidInput(name)){
+            return SignInResult.INVALIDINPUT;
+        }
+        else if (!isLoggedIn(name)){
+            return SignInResult.INVALIDPLAYER;
         }
         else{
             playerMap.remove(name);
-            return true;
+            return SignInResult.SIGNEDOUT;
         }
     }
 
     public boolean invalidInput(String name){
-        return name.contains('"')
+        return name.contains("\"");
     }
 
     public Player getPlayer(String name) {
-        if (!invalidInput()) {
+        if (!invalidInput(name)) {
             if (isLoggedIn(name)) {
 
                 return playerMap.get(name);
@@ -49,7 +55,7 @@ public class PlayerLobby {
     }
 
     public int getNumPlayers(){
-        playerMap.size();
+        return playerMap.size();
     }
 
     private boolean isLoggedIn(String name){
