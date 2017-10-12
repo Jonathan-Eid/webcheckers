@@ -25,6 +25,7 @@ public class GetSignOutRoute implements Route { // TODO
         Objects.requireNonNull(playerLobby, "player lobby cannot be null");
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
+        LOG.config("GetSignOutRoute is initialized.");
     }
 
     @Override
