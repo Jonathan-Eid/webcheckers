@@ -21,6 +21,7 @@ public class PostSignInRoute implements Route {
     static final String SIGN_IN_MESSAGE_ATTR = "signInMessage";
     static final String SIGN_IN_MESSAGE = "Please enter a valid username: ";
     static final String INVALID_SIGN_IN_ATTR = "invalidSignInMessage";
+    static final String PLAYER_SIGNED_IN_ATTR = "plaerSignedIn";
 
 
     public PostSignInRoute(TemplateEngine templateEngine, PlayerLobby playerLobby) {
@@ -39,6 +40,7 @@ public class PostSignInRoute implements Route {
             case SIGNED_IN:
                 final Session session = request.session();
                 session.attribute("player", userName);
+                vm.put(PLAYER_SIGNED_IN_ATTR, "fuck you disney. jk i luh ya b");
                 break;
             case INVALID_INPUT:
                 vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
@@ -51,14 +53,6 @@ public class PostSignInRoute implements Route {
             default:
                 throw new NoSuchElementException("Invalid result of sign in received");
         }
-    	//if (playerLobby.signInPlayer(userName).equals(PlayerLobby.SignInResult.SIGNED_IN)){
-    	  //  final Session session = request.session();
-    	    //session.attribute("player", userName);
-
-        //}else{
-    	  //  vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
-            //return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-        //}
         return null;
     }
 }
