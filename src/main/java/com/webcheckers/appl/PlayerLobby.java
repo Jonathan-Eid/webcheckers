@@ -8,6 +8,7 @@ import java.util.Map;
 public class PlayerLobby {
 
 	private static Map<String, Player> playerMap;
+	public enum SignInResult {SIGNEDIN, INVALIDINPUT, INVALIDPLAYER};
 
     public PlayerLobby(){
         playerMap = new HashMap<>();
@@ -32,6 +33,23 @@ public class PlayerLobby {
             playerMap.remove(name);
             return true;
         }
+    }
+
+    public boolean invalidInput(String name){
+        return name.contains('"')
+    }
+
+    public Player getPlayer(String name) {
+        if (!invalidInput()) {
+            if (isLoggedIn(name)) {
+
+                return playerMap.get(name);
+            }
+        }
+    }
+
+    public int getNumPlayers(){
+        playerMap.size();
     }
 
     private boolean isLoggedIn(String name){
