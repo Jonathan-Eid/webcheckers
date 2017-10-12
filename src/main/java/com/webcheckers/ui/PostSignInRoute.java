@@ -20,6 +20,9 @@ public class PostSignInRoute implements Route {
     static final String SIGN_IN_MESSAGE = "Please enter a username: ";
     static final String INVALID_SIGN_IN_ATTR = "invalidSignInMessage";
     static final String PLAYER_SIGNED_IN_ATTR = "playerSignedIn";
+    static final String TITLE_ATTR = "title";
+    static final String TITLE_VAL = "Welcome!";
+
 
     static final String TITLE_ATTR = "title";
     static final String TITLE_VAL = "Welcome!";
@@ -44,6 +47,7 @@ public class PostSignInRoute implements Route {
                 final Session session = request.session();
                 session.attribute("player", playerLobby.getPlayer(userName));
                 vm.put(PLAYER_SIGNED_IN_ATTR, "Basham you're a great professor!");
+                vm.put(TITLE_ATTR, TITLE_VAL);
                 return templateEngine.render(new ModelAndView(vm, "home.ftl"));
             case INVALID_INPUT:
                 vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
