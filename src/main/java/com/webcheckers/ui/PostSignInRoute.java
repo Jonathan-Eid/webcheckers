@@ -14,7 +14,6 @@ import java.util.Objects;
 
 public class PostSignInRoute implements Route {
 
-
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
@@ -35,30 +34,22 @@ public class PostSignInRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
     	final Map<String,Object> vm = new HashMap<>();
         final String userName = request.queryParams("username");
-        switch (playerLobby.signInPlayer(userName)){
-            case SIGNED_IN:
-                final Session session = request.session();
-                session.attribute("player", userName);
-                break;
-            case INVALID_INPUT:
-                vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
-                vm.put(INVALID_SIGN_IN_ATTR, "Please input a valid username");
-                return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-            case INVALID_PLAYER:
-                vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
-                vm.put(INVALID_SIGN_IN_ATTR, "Player name is already in use");
-                return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-            default:
-                throw new NoSuchElementException("Invalid result of sign in received");
+        switch (playerLobby.signInPlayer(userName)) {
+	        case SIGNED_IN:
+		        final Session session = request.session();
+		        session.attribute("player", userName);
+		        break;
+	        case INVALID_INPUT:
+		        vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
+		        vm.put(INVALID_SIGN_IN_ATTR, "Please input a valid username");
+		        return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
+	        case INVALID_PLAYER:
+		        vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
+		        vm.put(INVALID_SIGN_IN_ATTR, "Player name is already in use");
+		        return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
+	        default:
+		        throw new NoSuchElementException("Invalid result of sign in received");
         }
-    	//if (playerLobby.signInPlayer(userName).equals(PlayerLobby.SignInResult.SIGNED_IN)){
-    	  //  final Session session = request.session();
-    	    //session.attribute("player", userName);
-
-        //}else{
-    	  //  vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
-            //return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-        //}
-        return null;
+	    throw new NoSuchElementException("Invalid result of sign in received");
     }
 }

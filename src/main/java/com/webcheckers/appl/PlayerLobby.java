@@ -42,7 +42,7 @@ public class PlayerLobby {
     }
 
     public boolean invalidInput(String name){
-        return name.contains("\"");
+        return name.contains("\"") || name.equals("");
     }
 
     public Player getPlayer(String name) {
