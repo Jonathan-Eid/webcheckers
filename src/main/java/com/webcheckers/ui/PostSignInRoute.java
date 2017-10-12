@@ -16,6 +16,7 @@ import java.util.Objects;
 
 public class PostSignInRoute implements Route {
 
+
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 

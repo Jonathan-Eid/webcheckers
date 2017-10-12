@@ -8,7 +8,7 @@ import java.util.Map;
 public class PlayerLobby {
 
 	private static Map<String, Player> playerMap;
-	public enum SignInResult {SIGNEDIN, INVALIDINPUT, INVALIDPLAYER, SIGNEDOUT}
+	public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby(){
         playerMap = new HashMap<>();
@@ -16,28 +16,28 @@ public class PlayerLobby {
 
     public SignInResult signInPlayer(String name){
         if (invalidInput(name)){
-            return SignInResult.INVALIDINPUT;
+            return SignInResult.INVALID_INPUT;
         }
         else if (isLoggedIn(name)){
-            return SignInResult.INVALIDPLAYER;
+            return SignInResult.INVALID_PLAYER;
         }
         else{
             Player playerLogin = new Player(name);
             playerMap.put(name, playerLogin);
-            return SignInResult.SIGNEDIN;
+            return SignInResult.SIGNED_IN;
         }
     }
 
     public SignInResult signOutPlayer(String name){
         if (invalidInput(name)){
-            return SignInResult.INVALIDINPUT;
+            return SignInResult.INVALID_INPUT;
         }
         else if (!isLoggedIn(name)){
-            return SignInResult.INVALIDPLAYER;
+            return SignInResult.INVALID_PLAYER;
         }
         else{
             playerMap.remove(name);
-            return SignInResult.SIGNEDOUT;
+            return SignInResult.SIGNED_OUT;
         }
     }
 
@@ -48,10 +48,10 @@ public class PlayerLobby {
     public Player getPlayer(String name) {
         if (!invalidInput(name)) {
             if (isLoggedIn(name)) {
-
                 return playerMap.get(name);
             }
         }
+        return null;
     }
 
     public int getNumPlayers(){

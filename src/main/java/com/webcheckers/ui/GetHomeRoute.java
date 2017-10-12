@@ -1,11 +1,11 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.logging.Logger;
 
 /**
@@ -21,6 +21,7 @@ public class GetHomeRoute implements Route {
 	static final String TITLE_ATTR = "title";
 	static final String TITLE_VAL = "Welcome!";
 	static final String NUM_PLAYERS_ATTR = "numPlayers";
+	private PlayerLobby playerLobby;
 
 	/**
 	 * Create the Spark Route (UI controller) for the
@@ -28,11 +29,13 @@ public class GetHomeRoute implements Route {
 	 *
 	 * @param templateEngine the HTML template rendering engine
 	 */
-	public GetHomeRoute(final TemplateEngine templateEngine) {
+	public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
 		// validation
+		Objects.requireNonNull(playerLobby, "playerLobby must not be null");
 		Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 		//
 		this.templateEngine = templateEngine;
+		this.playerLobby = playerLobby;
 		//
 		LOG.config("GetHomeRoute is initialized.");
 	}
@@ -46,7 +49,7 @@ public class GetHomeRoute implements Route {
 	 */
 	@Override
 	public Object handle(Request request, Response response) {
-		LOG.finer("GetHomeRoute is invoked.");
+		LOG.config("GetHomeRoute is invoked.");
 		final Session httpSession = request.session();
 		Map<String, Object> vm = new HashMap<>();
 		vm.put(TITLE_ATTR, TITLE_VAL);
