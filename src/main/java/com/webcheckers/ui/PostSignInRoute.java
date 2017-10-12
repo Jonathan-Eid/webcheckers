@@ -22,10 +22,6 @@ public class PostSignInRoute implements Route {
     static final String PLAYER_SIGNED_IN_ATTR = "playerSignedIn";
     static final String TITLE_ATTR = "title";
     static final String TITLE_VAL = "Welcome!";
-
-
-    static final String TITLE_ATTR = "title";
-    static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
 
 
