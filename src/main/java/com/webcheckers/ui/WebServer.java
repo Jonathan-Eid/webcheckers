@@ -1,12 +1,14 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
 import java.util.Objects;
 import java.util.logging.Logger;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 import static spark.Spark.staticFileLocation;
 
 
@@ -52,8 +54,9 @@ public class WebServer {
 	/**
 	 * The URL pattern to request the Home page.
 	 */
-	public static final String HOME_URL = "/";
-	public static final String SIGNIN_URL = "/signIn";
+	static final String HOME_URL = "/";
+	static final String SIGN_IN_URL = "/signIn";
+	static final String SIGNING_IN_URL = "/signingIn";
 
 	//
 	// Attributes
@@ -61,6 +64,7 @@ public class WebServer {
 
 	private final TemplateEngine templateEngine;
 	private final Gson gson;
+	private PlayerLobby playerLobby;
 
 	//
 	// Constructor
@@ -73,13 +77,15 @@ public class WebServer {
 	 * @param gson           The Google JSON parser object used to render Ajax responses.
 	 * @throws NullPointerException If any of the parameters are {@code null}.
 	 */
-	public WebServer(final TemplateEngine templateEngine, final Gson gson) {
+	public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
 		// validation
 		Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 		Objects.requireNonNull(gson, "gson must not be null");
+		Objects.requireNonNull(playerLobby, "player ");
 		//
 		this.templateEngine = templateEngine;
 		this.gson = gson;
+		this.playerLobby = playerLobby;
 	}
 
 	//
@@ -137,7 +143,10 @@ public class WebServer {
 		get(HOME_URL, new GetHomeRoute(templateEngine));
 
 		//Sign in Page
-		get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+		get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
+
+		//Signing in page
+		post(SIGNING_IN_URL, new PostSignInRoute(templateEngine, playerLobby));
 
 		//
 		LOG.config("WebServer is initialized.");

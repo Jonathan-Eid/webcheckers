@@ -5,6 +5,7 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.logging.Logger;
 
 /**
@@ -16,6 +17,10 @@ public class GetHomeRoute implements Route {
 	private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
 	private final TemplateEngine templateEngine;
+
+	static final String TITLE_ATTR = "title";
+	static final String TITLE_VAL = "Welcome!";
+	static final String NUM_PLAYERS_ATTR = "numPlayers";
 
 	/**
 	 * Create the Spark Route (UI controller) for the
@@ -44,7 +49,8 @@ public class GetHomeRoute implements Route {
 		LOG.finer("GetHomeRoute is invoked.");
 		final Session httpSession = request.session();
 		Map<String, Object> vm = new HashMap<>();
-		vm.put("title", "Welcome!");
+		vm.put(TITLE_ATTR, TITLE_VAL);
+		//vm.put(NUM_PLAYERS_ATTR, ); //TODO Display number of players
 		return templateEngine.render(new ModelAndView(vm, "home.ftl"));
 	}
 

@@ -2,13 +2,12 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerLobby {
 
-    private static Map<String, Player> playerMap;
+	private static Map<String, Player> playerMap;
 
     public PlayerLobby(){
         playerMap = new HashMap<>();
@@ -35,7 +34,7 @@ public class PlayerLobby {
         }
     }
 
-    public boolean isLoggedIn(String name){
+    private boolean isLoggedIn(String name){
         return playerMap.containsKey(name);
     }
 }
