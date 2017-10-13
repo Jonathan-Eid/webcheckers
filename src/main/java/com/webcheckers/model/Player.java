@@ -7,9 +7,14 @@ public class Player {
         this.name = name;
     }
 
+    /**
+     * Getter for the Name
+     * @return
+     */
     public String getName() {
         return name;
     }
+
 
     @Override
     public boolean equals(Object obj) {

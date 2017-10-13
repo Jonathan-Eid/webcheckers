@@ -30,6 +30,13 @@ public class GetGameRoute implements Route {
         this.playerLobby = playerLobby;
     }
 
+    /**
+     * Render the WebCheckers Game page.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the Home page
+     */
     public Object handle(Request request, Response response) {
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();

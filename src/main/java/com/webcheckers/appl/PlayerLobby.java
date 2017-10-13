@@ -16,6 +16,11 @@ public class PlayerLobby {
         playerList = new ArrayList<>();
     }
 
+    /**
+     * Validates the name and signs the player in. Stores the player in the PlayerList
+     * @param name
+     * @return SignInResult Enum
+     */
     public SignInResult signInPlayer(String name) {
         if (invalidInput(name)) {
             return SignInResult.INVALID_INPUT;
@@ -28,6 +33,11 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * Signs the player out, removing them from the PlayerList.
+     * @param name
+     * @return
+     */
     public SignInResult signOutPlayer(String name) {
         if (invalidInput(name)) {
             return SignInResult.INVALID_INPUT;
@@ -39,10 +49,20 @@ public class PlayerLobby {
         }
     }
 
-    public boolean invalidInput(String name) {
+    /**
+     * Validates the name. A name cannot be empty and cannot contain the (") character
+     * @param name
+     * @return
+     */
+    private boolean invalidInput(String name) {
         return name.contains("\"") || name.equals("");
     }
 
+    /**
+     * Fetches the Player Object from the PlayerList based on the name.
+     * @param name
+     * @return
+     */
     public Player getPlayer(String name) {
         if (!invalidInput(name)) {
             if (isLoggedIn(name)) {
@@ -56,14 +76,28 @@ public class PlayerLobby {
         return null;
     }
 
+    /**
+     * Get's the total number of players signed in.
+     * @return
+     */
     public String getNumPlayers() {
         return Integer.toString(playerList.size());
     }
 
+    /**
+     * Check that a player is signed in.
+     * @param name
+     * @return
+     */
     private boolean isLoggedIn(String name) {
         return playerList.contains(new Player(name));
     }
 
+    /**
+     * List out the Players so that the HomePage can display them.
+     * @param name
+     * @return
+     */
     public String playerList(String name){
         String result = "";
         for (Player player : playerList){
