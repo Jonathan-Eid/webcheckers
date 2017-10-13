@@ -1,12 +1,15 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 /**
  * The UI Controller to GET the Home page.
@@ -51,6 +54,12 @@ public class GetHomeRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.config("GetHomeRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
+        Session session = request.session();
+        if (session.attribute("player") != null){
+            Player player = session.attribute("player");
+            vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, "YAYAYYAYAYA");
+            vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
+        }
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));

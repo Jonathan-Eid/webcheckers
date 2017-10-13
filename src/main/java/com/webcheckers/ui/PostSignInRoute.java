@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import static spark.Spark.halt;
+
 /**
  * Created by Juna on 10/12/2017.
  */
@@ -43,10 +45,9 @@ public class PostSignInRoute implements Route {
             case SIGNED_IN:
                 final Session session = request.session();
                 session.attribute("player", playerLobby.getPlayer(userName));
-                vm.put(PLAYER_SIGNED_IN_ATTR, "Basham you're a great professor!");
-                vm.put(TITLE_ATTR, TITLE_VAL);
-                vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(userName));
-                return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+                response.redirect(WebServer.HOME_URL);
+                halt();
+                return null;
             case INVALID_INPUT:
                 vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
                 vm.put(INVALID_SIGN_IN_ATTR, "ERROR. Invalid name.");
