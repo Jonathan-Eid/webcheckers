@@ -8,21 +8,22 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+/**
+ * Created by Andrew Didycz on 10/12/17.
+ */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-
-    static final String TITLE_ATTR = "title";
-    static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
     private PlayerLobby playerLobby;
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /} HTTP request.
+     * {@code GET /game} HTTP request.
      *
      * @param templateEngine the HTML template rendering engine
+     * @param playerLobby contains information on players
      */
     public GetGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
         this.templateEngine = templateEngine;

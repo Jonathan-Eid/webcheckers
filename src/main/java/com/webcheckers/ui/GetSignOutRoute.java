@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -32,7 +33,11 @@ public class GetSignOutRoute implements Route{
     public Object handle(Request request, Response response) throws Exception {
         LOG.config("GetSignOutRoute handle called.");
         final Session session = request.session();
-        playerLobby.signOutPlayer(session.attribute("player"));
+        Object obj = session.attribute("player");
+        if(obj instanceof Player){
+            Player p = (Player)obj;
+            playerLobby.signOutPlayer(p.getName());
+        }
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
