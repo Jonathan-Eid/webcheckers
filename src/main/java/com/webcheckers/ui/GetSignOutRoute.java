@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 /**
  * Created by dis446 on 10/12/17.
  */
-public class GetSignOutRoute implements Route { // TODO
+public class GetSignOutRoute implements Route{
     private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());
 
     static final String TITLE_ATTR = "title";

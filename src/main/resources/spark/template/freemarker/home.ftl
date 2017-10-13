@@ -17,6 +17,7 @@
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
       <#if playerSignedIn??>
+        ${playerList}
         <a href="./signOut">Sign Out</a>
       <#else>
          <p> Number of Players Online: ${numPlayers}</p></br>
