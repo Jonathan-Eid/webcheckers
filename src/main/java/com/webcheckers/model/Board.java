@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Map;
+
 /**
  * Created by Juna on 10/15/2017.
  */
@@ -92,5 +94,30 @@ public class Board {
             }
         }
     }
+
+    public boolean isValidMove(Square currentSquare, Square finalSquare){
+        int startX = currentSquare.getX();
+        int startY = currentSquare.getY();
+        int endX = finalSquare.getX();
+        int endY = finalSquare.getY();
+        int deltaX = endX-startX;
+        int deltaY = endY-startY;
+        Piece piece = currentSquare.getPiece();
+
+        if (finalSquare.getSpot()== Square.spotType.EMPTY_WHITE || finalSquare.hasPiece() || piece==null){return false;}
+
+        if (piece.getPieceColor() == Piece.colors.WHITE){
+            if (deltaY==1 & Math.abs(deltaX)==1){
+                return true;
+            }
+        }
+        else if(piece.getPieceColor()== Piece.colors.RED){
+            if (deltaY==-1 & Math.abs(deltaX)==1){
+                return true;
+            }
+        }
+
+    }
+
 }
-}
+

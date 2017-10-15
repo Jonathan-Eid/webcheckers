@@ -1,24 +1,27 @@
 package com.webcheckers.model;
 
+import java.lang.reflect.Type;
+
 /**
  * Created by Juna on 10/15/2017.
  */
 public class Piece {
     public enum colors{RED, WHITE}
-    private boolean king;
+    public enum pieceType{SINGLE, KING}
     private colors pieceColor;
+    private pieceType type;
 
     public Piece(colors pieceColor){
-        this.king = false;
+        type = pieceType.SINGLE;
         this.pieceColor = pieceColor;
     }
 
     public void kingMe(){
-        this.king = true;
+        type = pieceType.KING;
     }
 
-    public boolean isKing(){
-        return king;
+    public pieceType getType(){
+        return type;
     }
 
     public colors getPieceColor() {

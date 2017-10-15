@@ -4,26 +4,21 @@ package com.webcheckers.model;
  * Created by Juna on 10/15/2017.
  */
 public class Square {
-    private int x;
-    private int y;
-    public enum spotType{RED, EMPTY_WHITE,RED_KING,WHITE_KING}
+    private int cellIdx;
+    public enum spotType{RED, EMPTY_WHITE}
     private spotType spot;
     private Piece piece = null;
 
-    public Square(int x_location, int y_location,spotType spot){
-        this.x=x_location;
-        this.y=y_location;
+    public Square(int cellLocation, spotType spot){
+        this.cellIdx=cellLocation;
         this.spot = spot;
     }
 
 
-    public int getX() {
-        return x;
+    public int getCellIdx() {
+        return cellIdx;
     }
 
-    public int getY() {
-        return y;
-    }
 
     public spotType getSpot() {
         return spot;
@@ -39,5 +34,9 @@ public class Square {
 
     public boolean hasPiece(){
         return this.piece != null;
+    }
+
+    public boolean isValid(){
+        return (spot == spotType.RED & !hasPiece());
     }
 }
