@@ -102,7 +102,7 @@ public class PlayerLobby {
         String result = "";
         for (Player player : playerList){
             if (!player.getName().equals(name)) {
-                result = result.concat(player.getName() + " \n");
+                result = result.concat(player.getName() + " <br/>");
             }
         }
         LOG.config(result);

@@ -22,8 +22,6 @@ public class PostSignInRoute implements Route {
     static final String SIGN_IN_MESSAGE = "Please enter a username: ";
     static final String INVALID_SIGN_IN_ATTR = "invalidSignInMessage";
     static final String PLAYER_SIGNED_IN_ATTR = "playerSignedIn";
-    static final String TITLE_ATTR = "title";
-    static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
     static final String PLAYER_LIST_ATTR = "playerList";
 
@@ -58,9 +56,8 @@ public class PostSignInRoute implements Route {
                 return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
             case SIGNED_OUT:
                 response.redirect(WebServer.HOME_URL);
-                vm.put(TITLE_ATTR, TITLE_VAL);
-                vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-                return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+                halt();
+                return null;
             default:
                 throw new NoSuchElementException("Invalid result of sign in received");
         }

@@ -18,6 +18,7 @@ import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
  */
 public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    private static final String PLAYER_NAME_ATTR = "playerName";
 
     private final TemplateEngine templateEngine;
 
@@ -55,13 +56,17 @@ public class GetHomeRoute implements Route {
         LOG.config("GetHomeRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
-        if (session.attribute("player") != null){
+        vm.put(TITLE_ATTR, TITLE_VAL);
+        if (session.attribute("player") == null){ //New user.
+            vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
+        }
+        else { //The player must be signed in.
             Player player = session.attribute("player");
+            Objects.requireNonNull(player, "player must not be null");
             vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, "YAYAYYAYAYA");
+            vm.put(PLAYER_NAME_ATTR, player.getName());
             vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
         }
-        vm.put(TITLE_ATTR, TITLE_VAL);
-        vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 

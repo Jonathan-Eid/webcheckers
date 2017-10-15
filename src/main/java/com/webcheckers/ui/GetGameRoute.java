@@ -15,7 +15,6 @@ public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private final TemplateEngine templateEngine;
-    static final String NUM_PLAYERS_ATTR = "numPlayers";
     private PlayerLobby playerLobby;
 
     /**

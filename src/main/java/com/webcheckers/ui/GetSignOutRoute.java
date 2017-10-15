@@ -17,16 +17,10 @@ import static spark.Spark.halt;
 public class GetSignOutRoute implements Route{
     private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());
 
-    static final String TITLE_ATTR = "title";
-    static final String TITLE_VAL = "Welcome!";
-    static final String NUM_PLAYERS_ATTR = "numPlayers";
-    private TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
 
-    public GetSignOutRoute(TemplateEngine templateEngine, PlayerLobby playerLobby) {
-        Objects.requireNonNull(templateEngine, "template engine cannot be null");
+    public GetSignOutRoute(PlayerLobby playerLobby) {
         Objects.requireNonNull(playerLobby, "player lobby cannot be null");
-        this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
         LOG.config("GetSignOutRoute is initialized.");
     }
@@ -36,7 +30,7 @@ public class GetSignOutRoute implements Route{
         LOG.config("GetSignOutRoute handle called.");
         final Session session = request.session();
         Player p = session.attribute("player");
-        session.attribute("player", null);
+        session.removeAttribute("player");
         playerLobby.signOutPlayer(p.getName());
         response.redirect(WebServer.HOME_URL); //Redirect to home page
         halt();
