@@ -130,10 +130,18 @@ public class PlayerLobby {
         return playersInGamesList.contains(player);
     }
 
+    /**
+     * adds a player to the list of players in games
+     * @param player
+     */
     public void addToGame(Player player){
         playersInGamesList.add(player);
     }
 
+    /**
+     * removes a player from the lsit of players in games
+     * @param player
+     */
     public void removeFromGame(Player player){
         playersInGamesList.remove(player);
     }
