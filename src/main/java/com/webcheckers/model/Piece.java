@@ -20,4 +20,8 @@ public class Piece {
     public boolean isKing(){
         return king;
     }
+
+    public colors getPieceColor() {
+        return pieceColor;
+    }
 }

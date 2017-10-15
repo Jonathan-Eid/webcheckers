@@ -6,8 +6,9 @@ package com.webcheckers.model;
 public class Square {
     private int x;
     private int y;
-    public enum spotType{RED, WHITE,RED_KING,WHITE_KING}
+    public enum spotType{RED, EMPTY_WHITE,RED_KING,WHITE_KING}
     private spotType spot;
+    private Piece piece = null;
 
     public Square(int x_location, int y_location,spotType spot){
         this.x=x_location;
@@ -26,5 +27,13 @@ public class Square {
 
     public spotType getSpot() {
         return spot;
+    }
+
+    public Piece getPiece() {
+        return piece;
+    }
+
+    public void setPiece(Piece piece) {
+        this.piece = piece;
     }
 }
