@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 
-public class Player {
+public class Player implements Comparable<Player>{
     private String name;
 
     public Player(String name) {
@@ -28,5 +28,10 @@ public class Player {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        return this.name.compareTo(player.name);
     }
 }

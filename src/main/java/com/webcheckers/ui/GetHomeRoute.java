@@ -57,10 +57,10 @@ public class GetHomeRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
         vm.put(TITLE_ATTR, TITLE_VAL);
-        if (session.attribute("player") == null){ //New user.
+        if (session.isNew()){ //New user.
             vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
         }
-        else { //The player must be signed in.
+        else{ //The player must be signed in.
             Player player = session.attribute("player");
             Objects.requireNonNull(player, "player must not be null");
             vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, "YAYAYYAYAYA");

@@ -1,6 +1,7 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.WebServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +100,19 @@ public class PlayerLobby {
      * @return
      */
     public String playerList(String name){
+        /*
+        <form action="./signingIn" method="POST">
+              <label for="user">username:</label>
+              <input type="text" id="user" name="username">
+              <button type="submit">Sign In</button>
+          </form>
+        */
         String result = "";
         for (Player player : playerList){
             if (!player.getName().equals(name)) {
-                result = result.concat(player.getName() + " <br/>");
+                result = result.concat("<form action=" + WebServer.GAME_URL +
+                        " method=\"Get\" <label for=\"opponent\"></label><button type = \"submit\">" +
+                        player.getName() + "</button> </form> <br/>");
             }
         }
         LOG.config(result);
