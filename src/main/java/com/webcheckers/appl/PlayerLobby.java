@@ -11,10 +11,12 @@ public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
     private static List<Player> playerList;
+    private static List<Player> playersInGamesList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
         playerList = new ArrayList<>();
+        playersInGamesList = new ArrayList<>();
     }
 
     /**
@@ -118,4 +120,22 @@ public class PlayerLobby {
         LOG.config(result);
         return result;
     }
+
+    /**
+     * report whether a player is already in a game
+     * @param player a player who has signed in, and may or may not be in a game
+     * @return true if the player is in a game right now, false otherwise
+     */
+    public boolean isInGame(Player player){
+        return playersInGamesList.contains(player);
+    }
+
+    public void addToGame(Player player){
+        playersInGamesList.add(player);
+    }
+
+    public void removeFromGame(Player player){
+        playersInGamesList.remove(player);
+    }
+
 }
