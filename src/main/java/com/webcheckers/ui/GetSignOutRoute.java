@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static spark.Spark.halt;
+
 /**
  * Created by dis446 on 10/12/17.
  */
@@ -33,14 +35,11 @@ public class GetSignOutRoute implements Route{
     public Object handle(Request request, Response response) throws Exception {
         LOG.config("GetSignOutRoute handle called.");
         final Session session = request.session();
-        Object obj = session.attribute("player");
-        if(obj instanceof Player){
-            Player p = (Player)obj;
-            playerLobby.signOutPlayer(p.getName());
-        }
-        Map<String, Object> vm = new HashMap<>();
-        vm.put(TITLE_ATTR, TITLE_VAL);
-        vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+        Player p = session.attribute("player");
+        session.attribute("player", null);
+        playerLobby.signOutPlayer(p.getName());
+        response.redirect(WebServer.HOME_URL); //Redirect to home page
+        halt();
+        return null;
     }
 }

@@ -44,7 +44,7 @@ public class PlayerLobby {
         } else if (!isLoggedIn(name)) {
             return SignInResult.INVALID_PLAYER;
         } else {
-            playerList.remove(name);
+            playerList.remove(new Player(name));
             return SignInResult.SIGNED_OUT;
         }
     }
