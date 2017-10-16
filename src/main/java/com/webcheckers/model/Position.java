@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- * Created by Juna on 10/15/2017.
+ * Initializes position ot be used for the pieces and squares in the checkers game
+ * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Position {
     private int row;

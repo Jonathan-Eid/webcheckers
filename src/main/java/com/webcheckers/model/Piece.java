@@ -3,7 +3,8 @@ package com.webcheckers.model;
 import java.lang.reflect.Type;
 
 /**
- * Created by Juna on 10/15/2017.
+ * creates a template for the piece object
+ * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Piece {
     public enum colors{RED, WHITE}

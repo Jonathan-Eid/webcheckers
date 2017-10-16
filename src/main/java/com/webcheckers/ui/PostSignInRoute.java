@@ -11,7 +11,10 @@ import java.util.Objects;
 import static spark.Spark.halt;
 
 /**
- * Created by Juna on 10/12/2017.
+ * This dictates the action to take once the player has tried to sign in. If the player enters a valid username then
+ * it will save the player and return the home page where the player can see other players signed on
+ * and choose someone to play with
+ * Created by Juna, Disney, Andy, and Ani on 10/12/2017.
  */
 
 public class PostSignInRoute implements Route {

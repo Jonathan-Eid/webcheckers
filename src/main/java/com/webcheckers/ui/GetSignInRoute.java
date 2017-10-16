@@ -7,6 +7,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+
+/**
+ * from the home page, this displays the sign in page. This is the initial sign in page if the play has not tried to
+ * sign in yet.
+ * created by Johnny, Disney, Andy, Ani
+ */
+
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
     private final TemplateEngine templateEngine;

@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- * Created by Juna on 10/15/2017.
+ * Initializes the rows for the board
+ * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Row {
 

@@ -11,7 +11,8 @@ import java.util.logging.Logger;
 
 
 /**
- * Created by Andrew Didycz on 10/12/17.
+ *
+ * Created by Andrew Didycz, Disney, Ani, Johnny on 10/12/17.
  */
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -61,6 +62,7 @@ public class GetGameRoute implements Route {
             }
             else{ //This is the player who's name was clicked.
                 player = session.attribute("player");
+                opponent = null;
             }
         }
         else {

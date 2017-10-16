@@ -1,5 +1,10 @@
 package com.webcheckers.model;
 
+/**
+ * creates a template for the player object
+ * created by Johnny, Disney, Andy, Ani
+ */
+
 public class Player implements Comparable<Player>{
     private String name;
 

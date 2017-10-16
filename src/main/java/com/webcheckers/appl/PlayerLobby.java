@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Keeps track of all the players that are signed in. It's an information expert on signed in players :P
+ * created by Disney, Andy, Ani, and Johnny
+ */
+
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 

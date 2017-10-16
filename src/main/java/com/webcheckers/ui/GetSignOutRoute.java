@@ -12,7 +12,9 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
- * Created by dis446 on 10/12/17.
+ * This will remove the player from the system. This signs out the player from the game and will return them to the
+ * original home page
+ * Created by dis446, Ani, Andy, Johnny on 10/12/17.
  */
 public class GetSignOutRoute implements Route{
     private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());

@@ -15,6 +15,7 @@ import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
  * The UI Controller to GET the Home page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * edited by Johnny, Disney, Andy, Ani
  */
 public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
