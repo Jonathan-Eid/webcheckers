@@ -17,11 +17,17 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+
+      <#if message??>
+        ${error} <br/>
+      </#if>
+
       <#if playerSignedIn??>
         Your name is ${playerName} <br/></br>
         Here are the players currently signed in </br>
         ${playerList} <br/>
         <a href="./signOut">Sign Out</a>
+
       <#else>
          <p> Number of Players Online: ${numPlayers}</p><br/>
          <a href="./signIn">Sign In</a>

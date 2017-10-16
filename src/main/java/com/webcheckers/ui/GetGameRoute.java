@@ -7,7 +7,11 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
+
+import static com.webcheckers.ui.GetHomeRoute.PLAYER_NAME_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 
 /**
@@ -33,6 +37,21 @@ public class GetGameRoute implements Route {
         this.playerLobby = playerLobby;
     }
 
+
+
+    public String error(String error, Request request, Response response){
+        final Map<String, Object> vm = new HashMap<>();
+        Session session = request.session();
+        Player player = session.attribute("player");
+        vm.put("message", true);
+        vm.put("error", error);
+        vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
+        vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
+        vm.put(GetHomeRoute.PLAYER_NAME_ATTR, player.getName());
+        vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
+        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+    }
+
     /**
      * Render the WebCheckers Game page.
      *
@@ -41,24 +60,41 @@ public class GetGameRoute implements Route {
      * @return the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
+        return error("Test", request, response);
+        /*
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
-        Player player; //Player who hit the button.
-        Player opponent; //Player who's name was clicked.
+        vm.put("viewMode", "PLAY");
+        Player player;
+        Player opponent;
 
+        if (request.session().attribute("signedin")) {
+            if (request.queryParams("name") != null) { //Player who clicked button.
+                player = playerLobby.getPlayer(request.session().attribute("player"));
+                opponent = playerLobby.getPlayer(request.queryParams("name"));
+                if ((!(playerLobby.isInGame(player))) && (!(playerLobby.isInGame(opponent)))) {
+                    playerLobby.addToGame(player, opponent);
+                    response.redirect("/game");
+                }
+                else if (!playerLobby.isInGame(player)){
+                    //Player is already in a game.
+                    error(player.getName() + " is already in a game", request, response);
+                }
+                else {
+                    //Opponent is already in a game.
+                    error(opponent.getName() + " is already in a game", request, response);
+                }
+            }
+        }
         if (session.attribute("player") != null){ //Current player has to be signed in.
             if (request.queryParams("opponent") != null){
                 //This is the player who clicked the button.
+
                 player = session.attribute("player");
                 String opponentName = request.queryParams("opponent");
                 opponent = playerLobby.getPlayer(opponentName);
-                if (playerLobby.isInGame(player)){
-                    session.attribute("inGameError", true);
-                }
-                if (playerLobby.isInGame(opponent)){
-                    session.attribute("inGameError", true);
-                }
+
             }
             else{ //This is the player who's name was clicked.
                 player = session.attribute("player");
@@ -73,10 +109,9 @@ public class GetGameRoute implements Route {
         vm.put("viewMode", viewMode.PLAY);
         vm.put("redPlayer", player);
         vm.put("whitePlayer", opponent);
-        vm.put("activeColor", Piece.colors.RED);
+        vm.put("activeColor", Piece.color.RED);
 
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
+    */
     }
-
-
 }

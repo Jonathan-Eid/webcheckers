@@ -7,12 +7,12 @@ import java.lang.reflect.Type;
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Piece {
-    public enum colors{RED, WHITE}
+    public enum color{RED, WHITE}
     public enum pieceType{SINGLE, KING}
-    private colors pieceColor;
+    private color pieceColor;
     private pieceType type;
 
-    public Piece(colors pieceColor){
+    public Piece(color pieceColor){
         type = pieceType.SINGLE;
         this.pieceColor = pieceColor;
     }
@@ -25,7 +25,7 @@ public class Piece {
         return type;
     }
 
-    public colors getPieceColor() {
+    public color getPieceColor() {
 
         return pieceColor;
     }

@@ -19,7 +19,7 @@ import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
  */
 public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-    private static final String PLAYER_NAME_ATTR = "playerName";
+    public static final String PLAYER_NAME_ATTR = "playerName";
 
     private final TemplateEngine templateEngine;
 
@@ -58,15 +58,15 @@ public class GetHomeRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
         vm.put(TITLE_ATTR, TITLE_VAL);
-        if (session.isNew()){ //New user.
-            vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-        }
-        else{ //The player must be signed in.
-            Player player = session.attribute("player");
-            Objects.requireNonNull(player, "player must not be null");
-            vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, "YAYAYYAYAYA");
-            vm.put(PLAYER_NAME_ATTR, player.getName());
-            vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
+        vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
+        if (!session.isNew()){//The user is signed in
+            if (session.attribute("player") != null) {
+                Player player = session.attribute("player");
+                Objects.requireNonNull(player, "player must not be null");
+                vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
+                vm.put(PLAYER_NAME_ATTR, player.getName());
+                vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
+            }
         }
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
