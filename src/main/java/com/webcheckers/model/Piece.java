@@ -25,6 +25,7 @@ public class Piece {
     }
 
     public colors getPieceColor() {
+
         return pieceColor;
     }
 }

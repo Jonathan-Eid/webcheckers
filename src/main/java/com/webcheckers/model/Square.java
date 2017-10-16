@@ -38,5 +38,6 @@ public class Square {
 
     public boolean isValid(){
         return (spot == spotType.RED & !hasPiece());
+
     }
 }
