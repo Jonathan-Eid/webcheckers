@@ -77,7 +77,7 @@ public class Board implements Iterable{
         }
     }
 
-    private class BoardIterator implements Iterator{
+    private class BoardIterator implements Iterator<Row>{
         int cursor;
         Row current;
 
@@ -105,7 +105,7 @@ public class Board implements Iterable{
 
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Row> iterator() {
         return new BoardIterator();
     }
 }

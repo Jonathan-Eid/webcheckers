@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Initializes the rows for the board
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
-public class Row implements Iterable{
+public class Row implements Iterable<Square>{
 
     private int index;
     private Square[] spaces;
@@ -28,7 +28,7 @@ public class Row implements Iterable{
         spaces[cellIdx] = new Square(cellIdx,spotType);
     }
 
-    private class RowIterator implements Iterator {
+    private class RowIterator implements Iterator<Square> {
         int cursor;
         Square current;
 
@@ -56,7 +56,7 @@ public class Row implements Iterable{
 
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Square> iterator() {
         return new RowIterator();
     }
 }
