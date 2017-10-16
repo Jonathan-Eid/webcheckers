@@ -13,7 +13,6 @@ public class Position {
         this.cell=cell;
     }
 
-
     public int getRow() {
         return row;
     }

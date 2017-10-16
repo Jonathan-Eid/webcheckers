@@ -2,7 +2,6 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
-import com.webcheckers.ui.WebServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

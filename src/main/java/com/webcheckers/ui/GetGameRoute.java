@@ -47,6 +47,13 @@ public class GetGameRoute implements Route {
     }
 
 
+    /**
+     * Renders the home page with a given error message. This is called when something goes wrong but not fatally.
+     * @param error String message to display to user
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return
+     */
     public String error(String error, Request request, Response response){
         final Map<String, Object> vm = new HashMap<>();
         Session session = request.session();

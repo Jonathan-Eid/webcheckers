@@ -21,12 +21,23 @@ public class GetSignOutRoute implements Route{
 
     private PlayerLobby playerLobby;
 
+    /**
+     *
+     * @param playerLobby
+     */
     public GetSignOutRoute(PlayerLobby playerLobby) {
         Objects.requireNonNull(playerLobby, "player lobby cannot be null");
         this.playerLobby = playerLobby;
         LOG.config("GetSignOutRoute is initialized.");
     }
 
+    /**
+     * Signs the player out and redirects them to the home page.
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         LOG.config("GetSignOutRoute handle called.");

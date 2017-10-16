@@ -21,8 +21,6 @@ public class PostSignInRoute implements Route {
     private final TemplateEngine templateEngine;
     private final PlayerLobby playerLobby;
 
-    static final String SIGN_IN_MESSAGE_ATTR = "signInMessage";
-    static final String SIGN_IN_MESSAGE = "Please enter a username: ";
     static final String INVALID_SIGN_IN_ATTR = "invalidSignInMessage";
     static final String PLAYER_SIGNED_IN_ATTR = "playerSignedIn";
     static final String PLAYER_LIST_ATTR = "playerList";
@@ -36,6 +34,14 @@ public class PostSignInRoute implements Route {
     }
 
 
+    /**
+     * Handles the sign in of the player. Validates the input and either renders the home page or redirects to the sign
+     * in page if the sign in failed.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
@@ -50,11 +56,11 @@ public class PostSignInRoute implements Route {
                 halt();
                 return null;
             case INVALID_INPUT:
-                vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
+                vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
                 vm.put(INVALID_SIGN_IN_ATTR, "ERROR. Invalid name.");
                 return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
             case INVALID_PLAYER:
-                vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
+                vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
                 vm.put(INVALID_SIGN_IN_ATTR, "Player name " + userName + " is already in use");
                 return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
             case SIGNED_OUT:

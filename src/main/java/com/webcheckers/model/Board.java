@@ -1,7 +1,6 @@
 package com.webcheckers.model;
 
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  *creates a template for the board
@@ -96,10 +95,7 @@ public class Board implements Iterable{
 
         @Override
         public boolean hasNext() {
-            if (cursor == 7){
-                return false;
-            }
-            return (rows[cursor+1] instanceof Row);
+            return cursor != 7 && (rows[cursor + 1] != null);
         }
 
         @Override

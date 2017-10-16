@@ -44,10 +44,7 @@ public class Row implements Iterable<Square>{
 
         @Override
         public boolean hasNext() {
-            if (cursor==7){
-                return false;
-            }
-            return (spaces[cursor+1] instanceof Square);
+            return cursor != 7 && (spaces[cursor + 1] instanceof Square);
         }
 
         @Override
@@ -61,7 +58,6 @@ public class Row implements Iterable<Square>{
             }
         }
     }
-
 
     @Override
     public Iterator<Square> iterator() {
