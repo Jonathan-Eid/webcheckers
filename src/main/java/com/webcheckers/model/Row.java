@@ -18,4 +18,12 @@ public class Row {
         return index;
     }
 
+    public Square getSpace(int cellIdx){
+        return spaces[cellIdx];
+    }
+
+    public void setSpace(int cellIdx, Square.spotType spotType){
+        spaces[cellIdx] = new Square(cellIdx,spotType);
+    }
+
 }
