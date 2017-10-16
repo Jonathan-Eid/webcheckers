@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -115,6 +116,8 @@ public class GetGameRoute implements Route {
                     vm.put("whitePlayer", player2);
                 }
             }
+            vm.put("activeColor", Piece.color.RED);
+            vm.put("board", new Board());
         }
         else{
             return error("You must be signed in to play", request, response);
