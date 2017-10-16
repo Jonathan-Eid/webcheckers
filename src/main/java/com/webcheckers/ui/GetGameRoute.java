@@ -15,7 +15,7 @@ import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 
 /**
- *
+ * Renders the game view page
  * Created by Andrew Didycz, Disney, Ani, Johnny on 10/12/17.
  */
 public class GetGameRoute implements Route {

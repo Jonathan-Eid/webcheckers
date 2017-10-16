@@ -28,7 +28,7 @@ public class PlayerLobby {
 
     /**
      * Validates the name and signs the player in. Stores the player in the PlayerList
-     * @param name
+     * @param name String
      * @return SignInResult Enum
      */
     public SignInResult signInPlayer(String name) {
@@ -45,8 +45,8 @@ public class PlayerLobby {
 
     /**
      * Signs the player out, removing them from the PlayerList.
-     * @param name
-     * @return
+     * @param name String
+     * @return SignInResult
      */
     public SignInResult signOutPlayer(String name) {
         if (invalidInput(name)) {
@@ -61,8 +61,8 @@ public class PlayerLobby {
 
     /**
      * Validates the name. A name cannot be empty and cannot contain the (") character
-     * @param name
-     * @return
+     * @param name String
+     * @return boolean
      */
     private boolean invalidInput(String name) {
         return name.contains("\"") || name.equals("");
@@ -70,8 +70,8 @@ public class PlayerLobby {
 
     /**
      * Fetches the Player Object from the PlayerList based on the name.
-     * @param name
-     * @return
+     * @param name String
+     * @return Player
      */
     public Player getPlayer(String name) {
         if (!invalidInput(name)) {
@@ -88,7 +88,7 @@ public class PlayerLobby {
 
     /**
      * Get's the total number of players signed in.
-     * @return
+     * @return String
      */
     public String getNumPlayers() {
         return Integer.toString(playerList.size());
@@ -96,8 +96,8 @@ public class PlayerLobby {
 
     /**
      * Check that a player is signed in.
-     * @param name
-     * @return
+     * @param name String
+     * @return boolean
      */
     private boolean isLoggedIn(String name) {
         return playerList.contains(new Player(name));
@@ -105,8 +105,8 @@ public class PlayerLobby {
 
     /**
      * List out the Players so that the HomePage can display them.
-     * @param name
-     * @return
+     * @param name String
+     * @return String
      */
     public String playerList(String name){
         /*
@@ -139,7 +139,7 @@ public class PlayerLobby {
 
     /**
      * adds a player to the list of players in games
-     * @param player
+     * @param player Player
      */
     public void addToGame(Player player, Player player1){
         inGameMap.put(player, player1);
@@ -147,7 +147,7 @@ public class PlayerLobby {
 
     /**
      * removes a player from the lsit of players in games
-     * @param player
+     * @param player Player
      */
     public void removeFromGame(Player player){
         inGameMap.remove(player);
