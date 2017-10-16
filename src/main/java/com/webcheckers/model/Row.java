@@ -38,7 +38,7 @@ public class Row implements Iterable<Square>{
         Square current;
 
         public RowIterator(){
-            cursor = 0;
+            cursor = -1;
             current = spaces[0];
         }
 

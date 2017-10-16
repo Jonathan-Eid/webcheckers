@@ -92,7 +92,7 @@ public class Board implements Iterable{
         int i = 0;
         while(!rowStack.empty()){
             board.rows[i] = rowStack.pop();
-            i++
+            i++;
         }
         return board;
     }
@@ -105,7 +105,7 @@ public class Board implements Iterable{
         Row current;
 
         public BoardIterator(){
-            cursor = 0;
+            cursor = -1;
             current = rows[0];
         }
 
@@ -117,7 +117,7 @@ public class Board implements Iterable{
         @Override
         public Row next() {
             if(hasNext()){
-                cursor += 1;
+                cursor++;
                 current = rows[cursor];
                 return current;
             }else{
