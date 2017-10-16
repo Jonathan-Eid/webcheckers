@@ -60,6 +60,17 @@ public class WebServer {
     public static final String SIGN_OUT_URL = "/signOut";
 
     //
+    // Ajax URLs
+    //
+
+    public static final String VALIDATE_MOVE_URL = "/validateMove";
+    public static final String CHECK_TURN_URL = "/checkTurn";
+    public static final String SUBMIT_TURN_URL = "/submitTurn";
+    public static final String BACKUP_MOVE_URL = "/backupMove";
+    public static final String RESIGN_GAME_URL = "/resignGame";
+
+
+    //
     // Attributes
     //
 
@@ -154,6 +165,10 @@ public class WebServer {
 
         //Sign Out
         get(SIGN_OUT_URL, new GetSignOutRoute(playerLobby));
+
+        //Ajax Routes
+        post(CHECK_TURN_URL, new PostCheckTurnRoute(playerLobby));
+        post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(playerLobby));
 
         //
         LOG.config("WebServer is initialized.");
