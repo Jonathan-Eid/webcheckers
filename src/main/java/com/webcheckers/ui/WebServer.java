@@ -168,7 +168,7 @@ public class WebServer {
 
         //Ajax Routes
         post(CHECK_TURN_URL, new PostCheckTurnRoute(playerLobby));
-        post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(playerLobby));
+        post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(playerLobby, gson));
 
         //
         LOG.config("WebServer is initialized.");

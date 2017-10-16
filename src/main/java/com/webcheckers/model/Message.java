@@ -5,7 +5,7 @@ package com.webcheckers.model;
  */
 public class Message {
     private String text;
-    private enum type {INFO, ERROR}
+    public enum type {INFO, ERROR}
     private type messageType;
 
     public Message(String messageText, type messageType){

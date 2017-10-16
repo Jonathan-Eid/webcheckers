@@ -124,13 +124,20 @@ public class GetGameRoute implements Route {
                 }
             }
             vm.put("activeColor", Piece.color.RED);
-            if (((Player) session.attribute("player")).getColor().equals(Piece.color.RED)){
-                vm.put("board", new Board());
+            Board board;
+            if (session.attribute("board") == null){
+                board = new Board();
+                session.attribute("board", board);
             }
             else{
-                vm.put("board", new Board().reverse());
+                board = session.attribute("board");
             }
-
+            if (((Player) session.attribute("player")).getColor().equals(Piece.color.RED)){
+                vm.put("board", board);
+            }
+            else{
+                vm.put("board", board.reverse());
+            }
         }
         else{
             return error("You must be signed in to play", request, response);
