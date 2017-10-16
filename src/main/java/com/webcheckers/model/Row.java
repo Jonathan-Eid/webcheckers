@@ -24,6 +24,11 @@ public class Row implements Iterable<Square>{
         return spaces[cellIdx];
     }
 
+    /**
+     * Set space in a given cell index in the row with a specified color
+     * @param cellIdx
+     * @param color
+     */
     public void setSpace(int cellIdx, Square.color color){
         spaces[cellIdx] = new Square(cellIdx,color);
     }

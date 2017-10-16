@@ -11,6 +11,9 @@ public class Board implements Iterable{
 
     private Row[] rows;
 
+    /**
+     * Initializes the board with Rows containing spaces that contain pieces
+     */
     public Board(){
         this.rows = new Row[8];
         for (int y = 0; y < 8; y++){
@@ -79,6 +82,9 @@ public class Board implements Iterable{
         }
     }
 
+    /**
+     * Iterates over the rows of the board
+     */
     private class BoardIterator implements Iterator<Row>{
         int cursor;
         Row current;
