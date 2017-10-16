@@ -6,13 +6,13 @@ package com.webcheckers.model;
  */
 public class Square {
     private int cellIdx;
-    public enum spotType{RED, EMPTY_WHITE}
-    private spotType spot;
+    public enum color{RED, EMPTY_WHITE}
+    private color color;
     private Piece piece = null;
 
-    public Square(int cellLocation, spotType spot){
+    public Square(int cellLocation, color color){
         this.cellIdx=cellLocation;
-        this.spot = spot;
+        this.color = color;
     }
 
 
@@ -21,8 +21,8 @@ public class Square {
     }
 
 
-    public spotType getSpot() {
-        return spot;
+    public color getSpot() {
+        return color;
     }
 
     public Piece getPiece() {
@@ -38,7 +38,7 @@ public class Square {
     }
 
     public boolean isValid(){
-        return (spot.equals(spotType.RED) & !hasPiece());
+        return (color.equals(color.RED) & !hasPiece());
 
     }
 }

@@ -13,7 +13,7 @@ public class Row implements Iterable<Square>{
 
     public Row(int index){
         this.index=index;
-        this.spaces = new Square[7];
+        this.spaces = new Square[8];
     }
 
     public int getIndex(){
@@ -24,8 +24,8 @@ public class Row implements Iterable<Square>{
         return spaces[cellIdx];
     }
 
-    public void setSpace(int cellIdx, Square.spotType spotType){
-        spaces[cellIdx] = new Square(cellIdx,spotType);
+    public void setSpace(int cellIdx, Square.color color){
+        spaces[cellIdx] = new Square(cellIdx,color);
     }
 
     private class RowIterator implements Iterator<Square> {
@@ -39,6 +39,9 @@ public class Row implements Iterable<Square>{
 
         @Override
         public boolean hasNext() {
+            if (cursor==7){
+                return false;
+            }
             return (spaces[cursor+1] instanceof Square);
         }
 

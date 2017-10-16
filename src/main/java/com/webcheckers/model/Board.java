@@ -12,64 +12,66 @@ public class Board implements Iterable{
     private Row[] rows;
 
     public Board(){
-        this.rows = new Row[7];
+        this.rows = new Row[8];
         for (int y = 0; y < 8; y++){
+            Row row = new Row(y);
+            rows[y] = row;
             for (int x = 0; x < 8; x++){
                 if (y < 3){
                     if(y % 2 == 0){
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                             rows[y].getSpace(x).setPiece(new Piece(Piece.color.WHITE));
                         }
                     }
                     else{
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                             rows[y].getSpace(x).setPiece(new Piece(Piece.color.WHITE));
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                     }
                 }
                 else if (y > 4){
                     if(y % 2 == 0){
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                             rows[y].getSpace(x).setPiece(new Piece(Piece.color.RED));
                         }
                     }
                     else{
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                             rows[y].getSpace(x).setPiece(new Piece(Piece.color.RED));
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                     }
                 }
                 else{
                     if(y % 2 == 0){
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                         }
                     }
                     else{
                         if (x % 2 == 0){
-                            rows[y].setSpace(x, Square.spotType.RED);
+                            rows[y].setSpace(x, Square.color.RED);
                         }
                         else{
-                            rows[y].setSpace(x, Square.spotType.EMPTY_WHITE);
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
                         }
                     }
                 }
@@ -88,6 +90,9 @@ public class Board implements Iterable{
 
         @Override
         public boolean hasNext() {
+            if (cursor == 7){
+                return false;
+            }
             return (rows[cursor+1] instanceof Row);
         }
 
