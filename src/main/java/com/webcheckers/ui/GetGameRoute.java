@@ -7,10 +7,10 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import static com.webcheckers.ui.GetHomeRoute.PLAYER_NAME_ATTR;
+import java.util.stream.Collectors;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 
@@ -37,6 +37,13 @@ public class GetGameRoute implements Route {
         this.playerLobby = playerLobby;
     }
 
+    private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+        return map.entrySet()
+                .stream()
+                .filter(entry -> Objects.equals(entry.getValue(), value))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
+    }
 
 
     public String error(String error, Request request, Response response){
@@ -60,8 +67,7 @@ public class GetGameRoute implements Route {
      * @return the rendered HTML for the Home page
      */
     public Object handle(Request request, Response response) {
-        return error("Test", request, response);
-        /*
+
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
@@ -69,49 +75,51 @@ public class GetGameRoute implements Route {
         Player player;
         Player opponent;
 
-        if (request.session().attribute("signedin")) {
-            if (request.queryParams("name") != null) { //Player who clicked button.
-                player = playerLobby.getPlayer(request.session().attribute("player"));
-                opponent = playerLobby.getPlayer(request.queryParams("name"));
+        if (request.session().attribute("player") != null) { //Check that player is logged in.
+            player = request.session().attribute("player");
+            if (request.queryParams("name") != null) {
+                opponent = playerLobby.getPlayer(request.queryParams("opponent"));
                 if ((!(playerLobby.isInGame(player))) && (!(playerLobby.isInGame(opponent)))) {
+                    player.setColor(Piece.color.RED);
+                    opponent.setColor(Piece.color.WHITE);
                     playerLobby.addToGame(player, opponent);
                     response.redirect("/game");
                 }
-                else if (!playerLobby.isInGame(player)){
+                else if (playerLobby.isInGame(player)){
                     //Player is already in a game.
                     error(player.getName() + " is already in a game", request, response);
                 }
-                else {
+                else if (playerLobby.isInGame(opponent)) {
                     //Opponent is already in a game.
                     error(opponent.getName() + " is already in a game", request, response);
                 }
             }
-        }
-        if (session.attribute("player") != null){ //Current player has to be signed in.
-            if (request.queryParams("opponent") != null){
-                //This is the player who clicked the button.
-
+            else{
                 player = session.attribute("player");
-                String opponentName = request.queryParams("opponent");
-                opponent = playerLobby.getPlayer(opponentName);
+                if (playerLobby.isInGame(player)) {
+                    if (player.getColor().equals(Piece.color.WHITE)) {
+                        opponent = player;
+                        Map<Player, Player> hashMap = playerLobby.getinGameMap();
+                        Set set = getKeysByValue(hashMap, opponent);
+                        Player player1 = (Player) set.iterator().next();
+                        vm.put("currentPlayer", opponent);
+                        vm.put("redPlayer", player1);
+                        vm.put("whitePlayer", opponent);
+                    } else {
+                        Player player2 = playerLobby.getinGameMap().get(player);
+                        vm.put("currentPlayer", player);
+                        vm.put("redPlayer", player);
+                        vm.put("whitePlayer", player2);
+                    }
+                } else {
+                    return error("You are not in a game!", request, response);
+                }
 
             }
-            else{ //This is the player who's name was clicked.
-                player = session.attribute("player");
-                opponent = null;
-            }
         }
-        else {
-            throw new NullPointerException("player attribute is null");
+        else{
+            return error("You must be signed in to play", request, response);
         }
-
-        vm.put("currentPlayer", player);
-        vm.put("viewMode", viewMode.PLAY);
-        vm.put("redPlayer", player);
-        vm.put("whitePlayer", opponent);
-        vm.put("activeColor", Piece.color.RED);
-
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
-    */
     }
 }

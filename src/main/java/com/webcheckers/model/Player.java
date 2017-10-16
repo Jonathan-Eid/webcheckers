@@ -7,6 +7,7 @@ package com.webcheckers.model;
 
 public class Player implements Comparable<Player>{
     private String name;
+    private Piece.color color;
 
     public Player(String name) {
         this.name = name;
@@ -38,5 +39,13 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player player) {
         return this.name.compareTo(player.name);
+    }
+
+    public Piece.color getColor() {
+        return color;
+    }
+
+    public void setColor(Piece.color color) {
+        this.color = color;
     }
 }

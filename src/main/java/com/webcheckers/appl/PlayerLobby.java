@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.ui.WebServer;
 
@@ -103,6 +104,15 @@ public class PlayerLobby {
         return playerList.contains(new Player(name));
     }
 
+    public Piece.color getColor(Player player){
+        for (Player player1 : playerList){
+            if (player.equals(player)){
+                return player.getColor();
+            }
+        }
+        return null;
+    }
+
     /**
      * List out the Players so that the HomePage can display them.
      * @param name String
@@ -151,6 +161,10 @@ public class PlayerLobby {
      */
     public void removeFromGame(Player player){
         inGameMap.remove(player);
+    }
+
+    public Map<Player, Player> getinGameMap(){
+        return inGameMap;
     }
 
 }
