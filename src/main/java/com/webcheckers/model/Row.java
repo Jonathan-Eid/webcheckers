@@ -5,6 +5,16 @@ package com.webcheckers.model;
  */
 public class Row {
 
-    private int
+    private int index;
+    private Square[] spaces;
+
+    public Row(int index){
+        this.index=index;
+        this.spaces = new Square[7];
+    }
+
+    public int getIndex(){
+        return index;
+    }
 
 }
