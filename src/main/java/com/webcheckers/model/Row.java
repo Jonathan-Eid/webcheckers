@@ -1,10 +1,12 @@
 package com.webcheckers.model;
 
+import java.util.Iterator;
+
 /**
  * Initializes the rows for the board
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
-public class Row {
+public class Row implements Iterable{
 
     private int index;
     private Square[] spaces;
@@ -26,4 +28,35 @@ public class Row {
         spaces[cellIdx] = new Square(cellIdx,spotType);
     }
 
+    private class RowIterator implements Iterator {
+        int cursor;
+        Square current;
+
+        public RowIterator(){
+            cursor = 0;
+            current = spaces[0];
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (spaces[cursor+1] instanceof Square);
+        }
+
+        @Override
+        public Square next() {
+            if(hasNext()){
+                cursor += 1;
+                current = spaces[cursor];
+                return current;
+            }else{
+                return null;
+            }
+        }
+    }
+
+
+    @Override
+    public Iterator iterator() {
+        return new RowIterator();
+    }
 }
