@@ -71,13 +71,14 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
+        vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put("viewMode", "PLAY");
         Player player;
         Player opponent;
 
         if (request.session().attribute("player") != null) { //Check that player is logged in.
             player = request.session().attribute("player");
-            if (request.queryParams("name") != null) {
+            if (request.queryParams("opponent") != null) {
                 opponent = playerLobby.getPlayer(request.queryParams("opponent"));
                 if ((!(playerLobby.isInGame(player))) && (!(playerLobby.isInGame(opponent)))) {
                     player.setColor(Piece.color.RED);
@@ -96,25 +97,23 @@ public class GetGameRoute implements Route {
             }
             else{
                 player = session.attribute("player");
-                if (playerLobby.isInGame(player)) {
-                    if (player.getColor().equals(Piece.color.WHITE)) {
-                        opponent = player;
-                        Map<Player, Player> hashMap = playerLobby.getinGameMap();
-                        Set set = getKeysByValue(hashMap, opponent);
-                        Player player1 = (Player) set.iterator().next();
-                        vm.put("currentPlayer", opponent);
-                        vm.put("redPlayer", player1);
-                        vm.put("whitePlayer", opponent);
-                    } else {
-                        Player player2 = playerLobby.getinGameMap().get(player);
-                        vm.put("currentPlayer", player);
-                        vm.put("redPlayer", player);
-                        vm.put("whitePlayer", player2);
-                    }
+                Piece.color color = player.getColor();
+                if (color.equals(Piece.color.WHITE)) {
+                    opponent = player;
+                    Map<Player, Player> hashMap = playerLobby.getinGameMap();
+                    Set set = getKeysByValue(hashMap, opponent);
+                    Player player1 = (Player) set.iterator().next();
+                    vm.put("activeColor", opponent.getColor());
+                    vm.put("currentPlayer", opponent);
+                    vm.put("redPlayer", player1);
+                    vm.put("whitePlayer", opponent);
                 } else {
-                    return error("You are not in a game!", request, response);
+                    Player player2 = playerLobby.getinGameMap().get(player);
+                    vm.put("activeColor", player.getColor());
+                    vm.put("currentPlayer", player);
+                    vm.put("redPlayer", player);
+                    vm.put("whitePlayer", player2);
                 }
-
             }
         }
         else{

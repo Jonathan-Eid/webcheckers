@@ -129,13 +129,13 @@ public class PlayerLobby {
         String result = "";
         for (Player player : playerList){
             if (!player.getName().equals(name)) {
-                result = result.concat("<form action=" + WebServer.GAME_URL +
-                        " method=\"Get\" <label for=\"opponent\"></label><button type = \"submit\">" +
-                        player.getName() + "</button> </form> <br/>");
+                result = result.concat("<form action=\"/game\" method=\"GET\"> <input type=\"hidden\" id=\"name\" name=\"opponent\" value=\"" +
+                        player.getName() + "\"> <button type=\"submit\" >" + player.getName() + "</button> </div> </form>");
             }
         }
         LOG.config(result);
         return result;
+        //<button name="subject" type="submit" value="HTML">HTML</button>
     }
 
     /**
