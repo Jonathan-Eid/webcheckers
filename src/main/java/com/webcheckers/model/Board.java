@@ -86,10 +86,11 @@ public class Board implements Iterable{
     public Board reverse(){
         Board board = new Board();
         Stack<Row> rowStack = new Stack<>();
-        for (Row row : rows){
-            rowStack.push(row);
-        }
         int i = 0;
+        for (Row row : rows){
+            rowStack.push(row.reverse(i));
+        }
+        i = 0;
         while(!rowStack.empty()){
             board.rows[i] = rowStack.pop();
             i++;

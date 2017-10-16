@@ -1,6 +1,9 @@
 package com.webcheckers.model;
 
+import spark.Route;
+
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * Initializes the rows for the board
@@ -14,6 +17,20 @@ public class Row implements Iterable<Square>{
     public Row(int index){
         this.index=index;
         this.spaces = new Square[8];
+    }
+
+    public Row reverse(int index){
+        Row row = new Row(index);
+        Stack<Square> squareStack = new Stack<>();
+        for (Square square: spaces){
+            squareStack.push(square);
+        }
+        int i = 0;
+        while (!squareStack.empty()){
+            row.spaces[i] = squareStack.pop();
+            i++;
+        }
+        return row;
     }
 
     public int getIndex(){
