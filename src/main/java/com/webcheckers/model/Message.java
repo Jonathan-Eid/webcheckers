@@ -12,4 +12,13 @@ public class Message {
         text = messageText;
         messageType = messageType;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public type getMessageType() {
+        return messageType;
+    }
+
 }

@@ -83,6 +83,24 @@ public class Board implements Iterable{
         }
     }
 
+    public boolean isValidMove(Move move){
+        int startX = move.getStart().getCell();
+        int startY = move.getStart().getRow();
+        int endX = move.getEnd().getCell();
+        int endY = move.getEnd().getRow();
+        int deltaX = endX - startX;
+        int deltaY = endY - startY;
+        Piece startPiece = rows[startY].getSpace(startX).getPiece();
+        if (!rows[endY].getSpace(endX).hasPiece()) {
+            if (startPiece.getColor().equals(Piece.color.WHITE)) {
+                return (deltaY == 1 & Math.abs(deltaX) == 1);
+            } else if (startPiece.getColor().equals(Piece.color.RED)) {
+                return (deltaY == -1 & Math.abs(deltaX) == 1);
+            }
+        }
+        return false;
+    }
+
     public Board reverse(){
         Board board = new Board();
         Stack<Row> rowStack = new Stack<>();
