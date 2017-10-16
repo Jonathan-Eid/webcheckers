@@ -10,7 +10,7 @@ public class Message {
 
     public Message(String messageText, type messageType){
         text = messageText;
-        messageType = messageType;
+        this.messageType = messageType;
     }
 
     public String getText() {

@@ -36,11 +36,12 @@ public class PostValidateMoveRoute implements Route {
         Board board = session.attribute("board");
         Message message;
         if (board.isValidMove(move)){
-             message = new Message("Valid Move", Message.type.INFO);
+            message = new Message("Valid Move", Message.type.INFO);
         }
         else{
             message = new Message("Invalid Move", Message.type.ERROR);
         }
-        return null;
+        response.header(message.getText(), message.getMessageType().toString());
+        response.redirect(WebServer.GAME_URL);
     }
 }
