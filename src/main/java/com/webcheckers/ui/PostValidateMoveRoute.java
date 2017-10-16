@@ -15,6 +15,8 @@ import spark.Session;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import static spark.Spark.halt;
+
 /**
  * Created by dis446 on 10/16/17.
  */
@@ -36,12 +38,14 @@ public class PostValidateMoveRoute implements Route {
         Board board = session.attribute("board");
         Message message;
         if (board.isValidMove(move)){
-            message = new Message("Valid Move", Message.type.INFO);
+            message = new Message("Valid Move", Message.type.info);
         }
         else{
-            message = new Message("Invalid Move", Message.type.ERROR);
+            message = new Message("Invalid Move", Message.type.error);
         }
-        response.header(message.getText(), message.getMessageType().toString());
+        response.body(gson.toJson(message));
         response.redirect(WebServer.GAME_URL);
+        halt();
+        return null;
     }
 }

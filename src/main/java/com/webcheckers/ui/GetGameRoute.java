@@ -102,6 +102,9 @@ public class GetGameRoute implements Route {
                     //Opponent is already in a game.
                     error(opponent.getName() + " is already in a game", request, response);
                 }
+                vm.put("currentPlayer", player);
+                vm.put("redPlayer", player);
+                vm.put("whitePlayer", opponent);
             }
             else{
                 player = session.attribute("player");
