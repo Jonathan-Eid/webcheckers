@@ -1,12 +1,14 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Piece;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
+
 
 /**
  * Created by Andrew Didycz on 10/12/17.
@@ -14,6 +16,7 @@ import java.util.logging.Logger;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+    private enum viewMode {PLAY, SPECTATOR, REPLAY};
     private final TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
 
@@ -39,8 +42,39 @@ public class GetGameRoute implements Route {
     public Object handle(Request request, Response response) {
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
-        //TODO make the board
+        Session session = request.session();
+        Player player; //Player who hit the button.
+        Player opponent; //Player who's name was clicked.
+
+        if (session.attribute("player") != null){ //Current player has to be signed in.
+            if (request.queryParams("opponent") != null){
+                //This is the player who clicked the button.
+                player = session.attribute("player");
+                String opponentName = request.queryParams("opponent");
+                opponent = playerLobby.getPlayer(opponentName);
+                if (playerLobby.isInGame(player)){
+                    session.attribute("inGameError", true);
+                }
+                if (playerLobby.isInGame(opponent)){
+                    session.attribute("inGameError", true);
+                }
+            }
+            else{ //This is the player who's name was clicked.
+                player = session.attribute("player");
+            }
+        }
+        else {
+            throw new NullPointerException("player attribute is null");
+        }
+
+        vm.put("currentPlayer", player);
+        vm.put("viewMode", viewMode.PLAY);
+        vm.put("redPlayer", player);
+        vm.put("whitePlayer", opponent);
+        vm.put("activeColor", Piece.colors.RED);
+
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }
+
 
 }

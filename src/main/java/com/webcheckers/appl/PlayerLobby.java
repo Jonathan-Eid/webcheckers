@@ -4,19 +4,21 @@ import com.webcheckers.model.Player;
 import com.webcheckers.ui.WebServer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
     private static List<Player> playerList;
-    private static List<Player> playersInGamesList;
+    private static Map<Player, Player> inGameMap;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
         playerList = new ArrayList<>();
-        playersInGamesList = new ArrayList<>();
+        inGameMap = new HashMap<>();
     }
 
     /**
@@ -127,15 +129,15 @@ public class PlayerLobby {
      * @return true if the player is in a game right now, false otherwise
      */
     public boolean isInGame(Player player){
-        return playersInGamesList.contains(player);
+        return inGameMap.keySet().contains(player) || inGameMap.values().contains(player);
     }
 
     /**
      * adds a player to the list of players in games
      * @param player
      */
-    public void addToGame(Player player){
-        playersInGamesList.add(player);
+    public void addToGame(Player player, Player player1){
+        inGameMap.put(player, player1);
     }
 
     /**
@@ -143,7 +145,7 @@ public class PlayerLobby {
      * @param player
      */
     public void removeFromGame(Player player){
-        playersInGamesList.remove(player);
+        inGameMap.remove(player);
     }
 
 }
