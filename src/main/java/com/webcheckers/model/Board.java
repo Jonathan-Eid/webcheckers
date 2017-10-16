@@ -1,12 +1,13 @@
 package com.webcheckers.model;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
  *creates a template for the board
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
-public class Board {
+public class Board implements Iterable{
 
     private Row[] rows;
 
@@ -76,9 +77,36 @@ public class Board {
         }
     }
 
+    private class BoardIterator implements Iterator{
+        int cursor;
+        Row current;
+
+        public BoardIterator(){
+            cursor = 0;
+            current = rows[0];
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (rows[cursor+1] instanceof Row);
+        }
+
+        @Override
+        public Row next() {
+            if(hasNext()){
+                cursor += 1;
+                current = rows[cursor];
+                return current;
+            }else{
+                return null;
+            }
+        }
+    }
 
 
-
-
+    @Override
+    public Iterator iterator() {
+        return new BoardIterator();
+    }
 }
 
