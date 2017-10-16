@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  *creates a template for the board
@@ -79,6 +81,20 @@ public class Board implements Iterable{
                 }
             }
         }
+    }
+
+    public Board reverse(){
+        Board board = new Board();
+        Stack<Row> rowStack = new Stack<>();
+        for (Row row : rows){
+            rowStack.push(row);
+        }
+        int i = 0;
+        while(!rowStack.empty()){
+            board.rows[i] = rowStack.pop();
+            i++
+        }
+        return board;
     }
 
     /**

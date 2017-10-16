@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Home page.
@@ -62,12 +63,18 @@ public class GetHomeRoute implements Route {
         if (!session.isNew()){//The user is signed in
             if (session.attribute("player") != null) {
                 Player player = session.attribute("player");
+                if (playerLobby.isInGame(player)){
+                    response.redirect(WebServer.GAME_URL);
+                    halt();
+                    return null;
+                }
                 Objects.requireNonNull(player, "player must not be null");
                 vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
                 vm.put(PLAYER_NAME_ATTR, player.getName());
                 vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
             }
         }
+
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 
