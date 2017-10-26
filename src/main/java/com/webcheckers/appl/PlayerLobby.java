@@ -103,13 +103,13 @@ public class PlayerLobby {
         return playerList.contains(new Player(name));
     }
 
-    public Piece.color getColor(Player player){
+    public Piece.color getColor(Player player) throws IllegalStateException{
         for (Player player1 : playerList){
-            if (player.equals(player)){
+            if (player1.equals(player)){
                 return player.getColor();
             }
         }
-        return null;
+        throw new IllegalStateException("Invalid player color lookup");
     }
 
     /**
@@ -118,13 +118,6 @@ public class PlayerLobby {
      * @return String
      */
     public String playerList(String name){
-        /*
-        <form action="./signingIn" method="POST">
-              <label for="user">username:</label>
-              <input type="text" id="user" name="username">
-              <button type="submit">Sign In</button>
-          </form>
-        */
         String result = "";
         for (Player player : playerList){
             if (!player.getName().equals(name)) {
@@ -134,7 +127,6 @@ public class PlayerLobby {
         }
         LOG.config(result);
         return result;
-        //<button name="subject" type="submit" value="HTML">HTML</button>
     }
 
     /**
@@ -143,7 +135,7 @@ public class PlayerLobby {
      * @return true if the player is in a game right now, false otherwise
      */
     public boolean isInGame(Player player){
-        return inGameMap.keySet().contains(player) || inGameMap.values().contains(player);
+        return inGameMap.keySet().contains(player);
     }
 
     /**
@@ -152,13 +144,19 @@ public class PlayerLobby {
      */
     public void addToGame(Player player, Player player1){
         inGameMap.put(player, player1);
+        inGameMap.put(player1, player);
+    }
+
+    public Player getPlayerOpponent(Player player){
+        return inGameMap.get(player);
     }
 
     /**
-     * removes a player from the lsit of players in games
+     * removes a player from the map of players in games
      * @param player Player
      */
     public void removeFromGame(Player player){
+        inGameMap.remove(inGameMap.get(player));
         inGameMap.remove(player);
     }
 

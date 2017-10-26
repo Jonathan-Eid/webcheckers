@@ -38,14 +38,6 @@ public class GetGameRoute implements Route {
         this.playerLobby = playerLobby;
     }
 
-    private static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-        return map.entrySet()
-                .stream()
-                .filter(entry -> Objects.equals(entry.getValue(), value))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
-    }
-
 
     /**
      * Renders the home page with a given error message. This is called when something goes wrong but not fatally.
@@ -111,9 +103,7 @@ public class GetGameRoute implements Route {
                 Piece.color color = player.getColor();
                 if (color.equals(Piece.color.WHITE)) {
                     opponent = player;
-                    Map<Player, Player> hashMap = playerLobby.getinGameMap();
-                    Set set = getKeysByValue(hashMap, opponent);
-                    Player player1 = (Player) set.iterator().next();
+                    Player player1 = playerLobby.getPlayerOpponent(opponent);
                     vm.put("activeColor", opponent.getColor());
                     vm.put("currentPlayer", opponent);
                     vm.put("redPlayer", player1);
