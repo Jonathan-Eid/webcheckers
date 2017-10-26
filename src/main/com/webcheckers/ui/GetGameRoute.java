@@ -8,10 +8,8 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
+
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 
