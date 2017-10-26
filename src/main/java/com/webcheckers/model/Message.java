@@ -6,19 +6,19 @@ package com.webcheckers.model;
 public class Message {
     private String text;
     public enum type {info, error}
-    private type messageType;
+    private type type;
 
-    public Message(String messageText, type messageType){
+    public Message(String messageText, type type){
         text = messageText;
-        this.messageType = messageType;
+        this.type = type;
     }
 
     public String getText() {
         return text;
     }
 
-    public type getMessageType() {
-        return messageType;
+    public type getType() {
+        return type;
     }
 
 }
