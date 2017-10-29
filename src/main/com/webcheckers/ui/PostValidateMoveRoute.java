@@ -5,15 +5,10 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
-import jdk.nashorn.internal.parser.JSONParser;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
-
-import java.io.InputStreamReader;
-import java.io.Reader;
 
 import static spark.Spark.halt;
 
