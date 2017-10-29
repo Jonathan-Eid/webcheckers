@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
-    private static List<Player> playerList;
-    private static Map<Player, Player> inGameMap;
+    List<Player> playerList;
+    Map<Player, Player> inGameMap;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
