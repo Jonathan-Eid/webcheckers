@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 import java.util.Iterator;
 import java.util.Stack;

@@ -1,6 +1,4 @@
-package com.webcheckers.model;
-
-import java.lang.reflect.Type;
+package webcheckers.model;
 
 /**
  * creates a template for the piece object

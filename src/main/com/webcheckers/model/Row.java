@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 import spark.Route;
 

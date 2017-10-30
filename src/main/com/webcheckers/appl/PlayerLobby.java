@@ -1,7 +1,7 @@
-package com.webcheckers.appl;
+package webcheckers.appl;
 
-import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
+import webcheckers.model.Piece;
+import webcheckers.model.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;

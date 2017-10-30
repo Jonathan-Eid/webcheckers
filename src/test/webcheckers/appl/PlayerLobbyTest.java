@@ -1,6 +1,7 @@
-package com.webcheckers.appl;
+package webcheckers.appl;
 
-import com.webcheckers.model.Player;
+import webcheckers.appl.PlayerLobby;
+import webcheckers.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ public class PlayerLobbyTest {
 
     @Test
     public void signOutPlayer() throws Exception {
-        when(CuT.signInPlayer("test")).then();
+        when(CuT.signInPlayer("test"));
     }
 
     @Test

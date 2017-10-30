@@ -1,4 +1,4 @@
-package com.webcheckers.ui;
+package webcheckers.ui;
 
 import spark.*;
 

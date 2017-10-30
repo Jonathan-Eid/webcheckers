@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 /**
  * Initializes position ot be used for the pieces and squares in the checkers game

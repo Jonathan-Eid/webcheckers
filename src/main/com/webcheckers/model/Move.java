@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 /**
  * a class for the action of moving a piece

@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 /**
  * creates a template for the squares on the board

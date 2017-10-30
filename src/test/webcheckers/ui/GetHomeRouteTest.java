@@ -1,6 +1,6 @@
-package com.webcheckers.ui;
+package webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
+import webcheckers.appl.PlayerLobby;
 import org.junit.Before;
 import org.junit.Test;
 import spark.*;

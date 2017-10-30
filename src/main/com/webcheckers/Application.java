@@ -1,8 +1,8 @@
-package com.webcheckers;
+package webcheckers;
 
 import com.google.gson.Gson;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.ui.WebServer;
+import webcheckers.appl.PlayerLobby;
+import webcheckers.ui.WebServer;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
 
