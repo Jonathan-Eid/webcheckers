@@ -24,7 +24,7 @@ public class GetHomeRouteTest {
     /**
      * The component-under-test (CuT).
      */
-    private GetHomeRoute CuT;
+    private com.webcheckers.ui.GetHomeRoute CuT;
 
     private Request request;
     private Session session;
@@ -57,7 +57,7 @@ public class GetHomeRouteTest {
     @Test
     public void new_session() {
         when(session.isNew()).thenReturn(true);
-        final MyModelAndView myModelView = new MyModelAndView();
+        final com.webcheckers.ui.MyModelAndView myModelView = new MyModelAndView();
         when(engine.render(any(ModelAndView.class))).thenAnswer(MyModelAndView.makeAnswer(myModelView));
 
         CuT.handle(request, response);

@@ -70,22 +70,23 @@ public class PlayerLobbyTest {
     public void getPlayer() throws Exception {
         CuT.signInPlayer(player1Name);
         assertNotNull(CuT.getPlayer(player1Name));
-        assertEquals("Player of name test should exist", player1, CuT.getPlayer(player1Name));
+        assertEquals("Player of name test should exist", new Player(player1Name), CuT.getPlayer(player1Name));
         assertNull(CuT.getPlayer(player2Name));
     }
 
     @Test
     public void getNumPlayers() throws Exception {
-        assertSame(0, CuT.getNumPlayers());
+        assertEquals(Integer.toString(0), CuT.getNumPlayers());
         CuT.signInPlayer(player1Name);
-        assertSame(1, CuT.getNumPlayers());
+        assertEquals(Integer.toString(1), CuT.getNumPlayers());
     }
 
     @Test
     public void getColor() throws Exception {
         CuT.signInPlayer(player1Name);
-        when(player1.getColor()).thenReturn(Piece.color.RED);
-        assertEquals(CuT.getColor(player1Name), Piece.color.RED);
+        CuT.getPlayer(player1Name).setColor(Piece.color.WHITE);
+        //when(player1.getColor()).thenReturn(Piece.color.WHITE);
+        assertEquals(CuT.getColor(player1Name), Piece.color.WHITE);
     }
 
     @Test
