@@ -25,6 +25,8 @@ public class GetGameRoute implements Route {
     private final TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
 
+    static final String VIEW_MODE_ATTR = "viewMode";
+
     /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /game} HTTP request.
@@ -73,7 +75,7 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
-        vm.put("viewMode", "PLAY");
+        vm.put(VIEW_MODE_ATTR, viewMode.PLAY);
         Player player;
         Player opponent;
 
