@@ -49,23 +49,6 @@ public class GetGameRouteTest {
 
     @Test
     public void newGame() {
-        final MyModelAndView myModelView = new MyModelAndView();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(MyModelAndView.makeAnswer(myModelView));
-
-        try{
-            CuT.handle(request,response);
-            final Object model = myModelView.model;
-            final Map<String, Object> vm = (Map<String, Object>)model;
-            assertNotNull(model);
-            assertTrue(model instanceof Map);
-            assertNotNull(engine);
-            assertNotNull(playerLobby);
-
-            assertEquals(vm.get(VIEW_MODE_ATTR), "play");
-
-        }catch (HaltException e){
-
-        }
     }
 
 }
