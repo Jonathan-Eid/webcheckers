@@ -20,4 +20,16 @@ public class Position {
     public int getCell() {
         return cell;
     }
+
+    public boolean equals (Object obj){
+        if (obj instanceof Position){
+            Position p = (Position)obj;
+            if(p.row == this.row){
+                if(p.cell == this.cell){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
