@@ -27,6 +27,7 @@ public class MessageTest {
         CuT = new Message(null, Message.type.info);
     }
 
+
     @Test
     public void errorMessage() throws Exception {
         CuT = new Message("Error World!", Message.type.error);
