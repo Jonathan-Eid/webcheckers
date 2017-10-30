@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import spark.*;
@@ -10,6 +11,7 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
 /**
@@ -31,6 +33,7 @@ public class GetSignOutRouteTest {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
+        playerLobby = mock(PlayerLobby.class);
 
         // create a unique CuT for each test
         CuT = new GetSignOutRoute(playerLobby);
@@ -38,6 +41,7 @@ public class GetSignOutRouteTest {
     @Test (expected = HaltException.class)
     public void handle() throws Exception {
         final MyModelAndView myModelView = new MyModelAndView();
+        when(session.attribute("player")).thenReturn(new Player("player1"));
         when(engine.render(any(ModelAndView.class))).thenAnswer(MyModelAndView.makeAnswer(myModelView));
         // Invoke the test (ignore the output)
         CuT.handle(request, response);
