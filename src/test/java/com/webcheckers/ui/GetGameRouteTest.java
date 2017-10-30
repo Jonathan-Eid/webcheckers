@@ -4,12 +4,13 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.TemplateEngine;
+import spark.*;
 
+import java.util.Map;
+
+import static com.webcheckers.ui.GetGameRoute.VIEW_MODE_ATTR;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,8 +48,24 @@ public class GetGameRouteTest {
     }
 
     @Test
-    public void handle() throws Exception {
+    public void newGame() {
+        final MyModelAndView myModelView = new MyModelAndView();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(MyModelAndView.makeAnswer(myModelView));
 
+        try{
+            CuT.handle(request,response);
+            final Object model = myModelView.model;
+            final Map<String, Object> vm = (Map<String, Object>)model;
+            assertNotNull(model);
+            assertTrue(model instanceof Map);
+            assertNotNull(engine);
+            assertNotNull(playerLobby);
+
+            assertEquals(vm.get(VIEW_MODE_ATTR), "play");
+
+        }catch (HaltException e){
+
+        }
     }
 
 }
