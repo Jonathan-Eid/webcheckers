@@ -1,9 +1,9 @@
-package webcheckers.appl;
+package com.webcheckers.appl;
 
-import webcheckers.model.Player;
-import webcheckers.ui.WebServer;
+import com.webcheckers.model.Player;
+import com.webcheckers.ui.WebServer;
 import spark.Response;
-import webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby;
 
 import static spark.Spark.halt;
 

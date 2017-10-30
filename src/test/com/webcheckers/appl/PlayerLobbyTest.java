@@ -1,7 +1,7 @@
-package webcheckers.appl;
+package com.webcheckers.appl;
 
-import webcheckers.appl.PlayerLobby;
-import webcheckers.model.Player;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 

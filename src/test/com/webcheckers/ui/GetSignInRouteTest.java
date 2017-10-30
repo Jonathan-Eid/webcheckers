@@ -1,4 +1,4 @@
-package webcheckers.ui;
+package com.webcheckers.ui;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 /**
  * Created by dis446 on 10/26/17.
  */
-public class PostCheckTurnRouteTest {
+public class GetSignInRouteTest {
     @Before
     public void setUp() throws Exception {
 

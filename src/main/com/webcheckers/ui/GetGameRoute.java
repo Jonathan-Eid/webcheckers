@@ -1,16 +1,16 @@
-package webcheckers.ui;
+package com.webcheckers.ui;
 
-import webcheckers.appl.PlayerLobby;
-import webcheckers.model.Board;
-import webcheckers.model.Piece;
-import webcheckers.model.Player;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Piece;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 
 
 /**

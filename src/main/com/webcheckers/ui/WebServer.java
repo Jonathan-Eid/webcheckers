@@ -1,7 +1,8 @@
-package webcheckers.ui;
+package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -99,6 +100,7 @@ public class WebServer {
         this.gson = gson;
         this.playerLobby = playerLobby;
     }
+
 
     //
     // Public methods

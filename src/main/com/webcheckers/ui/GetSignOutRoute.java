@@ -1,7 +1,7 @@
-package webcheckers.ui;
+package com.webcheckers.ui;
 
-import webcheckers.appl.PlayerLobby;
-import webcheckers.model.Player;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.Objects;
