@@ -103,7 +103,8 @@ public class PlayerLobby {
         return playerList.contains(new Player(name));
     }
 
-    public Piece.color getColor(Player player) throws IllegalStateException{
+    public Piece.color getColor(String name) throws IllegalStateException{
+        Player player = getPlayer(name);
         for (Player player1 : playerList){
             if (player1.equals(player)){
                 return player.getColor();
@@ -121,8 +122,9 @@ public class PlayerLobby {
         String result = "";
         for (Player player : playerList){
             if (!player.getName().equals(name)) {
-                result = result.concat("<form action=\"/game\" method=\"GET\"> <input type=\"hidden\" id=\"name\" name=\"opponent\" value=\"" +
-                        player.getName() + "\"> <button type=\"submit\" >" + player.getName() + "</button> </div> </form>");
+                result = result.concat("<form action=\"/game\" method=\"GET\"> <input type=\"hidden\" id=\"name\" " +
+                        "name=\"opponent\" value=\"" + player.getName() + "\"> <button type=\"submit\" >" +
+                        player.getName() + "</button> </div> </form>");
             }
         }
         LOG.config(result);
