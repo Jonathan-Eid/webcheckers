@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
-    List<Player> playerList;
-    Map<Player, Player> inGameMap;
+    Map <String, Player> playerList;
+    List<Game> GameList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
-        playerList = new ArrayList<>();
-        inGameMap = new HashMap<>();
+        playerList = new HashMap<>();
+        GameList  = new ArrayList<>();
     }
 
     /**
@@ -37,8 +37,7 @@ public class PlayerLobby {
         } else if (isLoggedIn(name)) {
             return SignInResult.INVALID_PLAYER;
         } else {
-            Player playerLogin = new Player(name);
-            playerList.add(playerLogin);
+            playerList.put(name, new Player(name));
             return SignInResult.SIGNED_IN;
         }
     }
@@ -54,7 +53,7 @@ public class PlayerLobby {
         } else if (!isLoggedIn(name)) {
             return SignInResult.INVALID_PLAYER;
         } else {
-            playerList.remove(new Player(name));
+            playerList.remove(name);
             return SignInResult.SIGNED_OUT;
         }
     }
@@ -76,11 +75,7 @@ public class PlayerLobby {
     public Player getPlayer(String name) {
         if (!invalidInput(name)) {
             if (isLoggedIn(name)) {
-                for (Player player : playerList){
-                    if (player.getName().equals(name)){
-                        return player;
-                    }
-                }
+                return playerList.get(name);
             }
         }
         return null;
@@ -100,10 +95,10 @@ public class PlayerLobby {
      * @return boolean
      */
     private boolean isLoggedIn(String name) {
-        return playerList.contains(new Player(name));
+        return playerList.containsKey(name);
     }
 
-    public Piece.color getColor(String name) throws IllegalStateException{
+    /**public Piece.color getColor(String name) throws IllegalStateException{
         Player player = getPlayer(name);
         for (Player player1 : playerList){
             if (player1.equals(player)){
@@ -111,7 +106,7 @@ public class PlayerLobby {
             }
         }
         throw new IllegalStateException("Invalid player color lookup");
-    }
+    }*/
 
     /**
      * List out the Players so that the HomePage can display them.
@@ -137,7 +132,13 @@ public class PlayerLobby {
      * @return true if the player is in a game right now, false otherwise
      */
     public boolean isInGame(Player player){
-        return inGameMap.keySet().contains(player);
+        for (Game game: GameList) {
+            if (game.getPlayer1() == player || game.getPlayer2() == player){
+                return true;
+            }
+
+        }
+        return false;
     }
 
     /**
@@ -145,12 +146,19 @@ public class PlayerLobby {
      * @param player Player
      */
     public void addToGame(Player player, Player player1){
-        inGameMap.put(player, player1);
-        inGameMap.put(player1, player);
+        GameList.add(new Game(player,player1));
     }
 
     public Player getPlayerOpponent(Player player){
-        return inGameMap.get(player);
+        for (Game game: GameList) {
+            if (game.getPlayer1() == player){
+                return game.getPlayer2();
+            }
+            else if (game.getPlayer2() == player){
+                return game.getPlayer2();
+            }
+        }
+        return null;
     }
 
     /**
@@ -158,12 +166,18 @@ public class PlayerLobby {
      * @param player Player
      */
     public void removeFromGame(Player player){
-        inGameMap.remove(inGameMap.get(player));
-        inGameMap.remove(player);
+        for (Game game: GameList) {
+            if (game.getPlayer1() == player){
+                game.RemovePlayer1(player);
+            }
+            else if (game.getPlayer2() == player){
+                game.RemovePlayer2(player);
+            }
+        }
     }
 
-    public Map<Player, Player> getinGameMap(){
-        return inGameMap;
+    public List<Game> getinGameList(){
+        return GameList;
     }
 
 }
