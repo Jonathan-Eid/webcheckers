@@ -82,7 +82,7 @@ public class Board implements Iterable{
         }
     }
 
-    public boolean isValidMove(Move move){
+    public Move.moveType isValidMove(Move move){
         int startX = move.getStart().getCell();
         int startY = move.getStart().getRow();
         int endX = move.getEnd().getCell();
@@ -92,12 +92,30 @@ public class Board implements Iterable{
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
         if (!rows[endY].getSpace(endX).hasPiece()) {
             if (startPiece.getColor().equals(Piece.color.WHITE)) {
+                if(Math.abs(deltaX) == 1 && deltaY == 1 || ){
+                    return Move.moveType.SINGLE;
+                } else if (Math.abs(deltaX) == 2 && Math.abs(deltaY) == 2){
+
+                } else {
+                    return Move.moveType.INVALID;
+                }
                 return (deltaY == 1 & Math.abs(deltaX) == 1);
+
             } else if (startPiece.getColor().equals(Piece.color.RED)) {
-                return (deltaY == -1 & Math.abs(deltaX) == 1);
+
+                return (Math.abs(deltaX) == 1 & deltaY == -1);
+
             }
         }
         return false;
+    }
+
+    /**
+     * takes a move object and make a change to the board, assuming the move is valid
+     * @param move any validated Move object
+     */
+    public void makeMove(Move move, Move.moveType type){
+        //TODO
     }
 
     public Board reverse(){

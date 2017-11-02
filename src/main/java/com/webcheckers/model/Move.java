@@ -5,6 +5,8 @@ package com.webcheckers.model;
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Move {
+    public enum moveType{INVALID, SINGLE, CAPTURE}
+
     private Position start;
     private Position end;
 
