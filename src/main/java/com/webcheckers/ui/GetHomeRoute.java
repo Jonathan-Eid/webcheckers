@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
 import static spark.Spark.halt;
 
 /**
@@ -63,17 +66,22 @@ public class GetHomeRoute implements Route {
         Session session = request.session();
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-        if (!session.isNew()){//The user is signed in
-            if (session.attribute("player") != null) {
-                Player player = session.attribute("player");
-                playerLobbyController.redirectHomeToGame(player, response);
+
+        if (!session.isNew()){
+            if (session.attribute(USER_SIGNED_IN_ATTR) != null){
+                Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
-                vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
+                //If the player is already in a game, redirect to the game page.
+                if (playerLobby.isInGame(player)) {
+                    response.redirect(WebServer.START_GAME_URL);
+                    halt();
+                    return null;
+                }
+                vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(PLAYER_NAME_ATTR, player.getName());
                 vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
             }
         }
-
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
 
