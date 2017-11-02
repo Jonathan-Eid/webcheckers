@@ -64,7 +64,7 @@ public class GetGameRoute implements Route {
         vm.put("error", error);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put(USER_SIGNED_IN_ATTR, true);
-        vm.put(GetHomeRoute.PLAYER_NAME_ATTR, player.getName());
+        vm.put(USER_ATTR, player.getName());
         vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }

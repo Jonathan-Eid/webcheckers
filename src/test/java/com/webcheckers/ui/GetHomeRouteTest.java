@@ -90,8 +90,8 @@ public class GetHomeRouteTest {
         assertNotNull(engine);
         assertNotNull(playerLobby);
         assertEquals(playerLobby.getNumPlayers(), Integer.toString(1));
-        assertNotNull(vm.get(PostSignInRoute.PLAYER_SIGNED_IN_ATTR));
-        assertTrue((boolean)vm.get(PostSignInRoute.PLAYER_SIGNED_IN_ATTR));
+        assertNotNull(vm.get(PostSignInRoute.USER_SIGNED_IN_ATTR));
+        assertTrue((boolean)vm.get(PostSignInRoute.USER_SIGNED_IN_ATTR));
         assertNotNull(vm.get(PLAYER_NAME_ATTR));
         assertNotNull(vm.get(PLAYER_LIST_ATTR));
         assertEquals(vm.get(PLAYER_LIST_ATTR), playerLobby.playerList(player.getName()));
@@ -121,8 +121,8 @@ public class GetHomeRouteTest {
             assertNotNull(engine);
             assertNotNull(playerLobby);
             assertEquals(playerLobby.getNumPlayers(), Integer.toString(2));
-            assertNotNull(vm.get(PostSignInRoute.PLAYER_SIGNED_IN_ATTR));
-            assertTrue((boolean)vm.get(PostSignInRoute.PLAYER_SIGNED_IN_ATTR));
+            assertNotNull(vm.get(PostSignInRoute.USER_SIGNED_IN_ATTR));
+            assertTrue((boolean)vm.get(PostSignInRoute.USER_SIGNED_IN_ATTR));
             assertNotNull(vm.get(PLAYER_NAME_ATTR));
             assertNotNull(vm.get(PLAYER_LIST_ATTR));
             assertEquals(vm.get(PLAYER_LIST_ATTR), playerLobby.playerList(player.getName()));

@@ -10,6 +10,10 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
+import static com.webcheckers.ui.WebServer.GAME_URL;
+import static com.webcheckers.ui.WebServer.START_GAME_URL;
 import static spark.Spark.halt;
 
 /**
@@ -20,7 +24,6 @@ import static spark.Spark.halt;
  */
 public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
-    public static final String PLAYER_NAME_ATTR = "playerName";
 
     private final TemplateEngine templateEngine;
 
@@ -61,11 +64,16 @@ public class GetHomeRoute implements Route {
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
         if (!session.isNew()){//The user is signed in
-            if (session.attribute("player") != null) {
-                Player player = session.attribute("player");
+            if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
+                Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
-                vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
-                vm.put(PLAYER_NAME_ATTR, player.getName());
+                if(playerLobby.isInGame(player)){
+                    response.redirect(START_GAME_URL);
+                    halt();
+                    return null;
+                }
+                vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
+                vm.put(USER_ATTR, player.getName());
                 vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
             }
         }

@@ -11,7 +11,6 @@ import java.util.Objects;
 
 import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
 import static com.webcheckers.ui.GetHomeRoute.NUM_PLAYERS_ATTR;
-import static com.webcheckers.ui.GetHomeRoute.PLAYER_NAME_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
@@ -35,12 +34,13 @@ public class GetStartGameRoute implements Route {
     public String error(String error, Request request, Response response){
         final Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
-        Player player = session.attribute("player");
+        Player player = session.attribute(USER_ATTR);
         vm.put("message", true);
         vm.put("error", error);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put(USER_SIGNED_IN_ATTR, true);
-        vm.put(PLAYER_NAME_ATTR, player.getName());
+        vm.put(USER_ATTR, player.getName());
+        vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }

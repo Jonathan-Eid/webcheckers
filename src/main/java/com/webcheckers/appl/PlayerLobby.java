@@ -22,9 +22,9 @@ public class PlayerLobby {
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
-        playerMap = new HashMap<>();
+        playerMap = new HashMap<>();        //associates Strings to Players
         GameList  = new ArrayList<>();
-        playerPlayerMap = new HashMap<>();
+        playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
     }
 
     /**
