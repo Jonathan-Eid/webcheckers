@@ -76,6 +76,7 @@ public class GetStartGameRoute implements Route {
                 }
             }
             else{
+
                 //Player is the user who was dragged into the game. They are player 2.
                 Player opponent = playerLobby.getPlayerOpponent(player);
                 Objects.requireNonNull(player, "Player must not be null");
