@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.PlayerLobbyController;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -29,7 +28,6 @@ public class GetHomeRoute implements Route {
     static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
     private PlayerLobby playerLobby;
-    private PlayerLobbyController playerLobbyController;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -44,7 +42,6 @@ public class GetHomeRoute implements Route {
         //
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
-        this.playerLobbyController = new PlayerLobbyController(playerLobby);
         //
         LOG.config("GetHomeRoute is initialized.");
     }
@@ -66,7 +63,6 @@ public class GetHomeRoute implements Route {
         if (!session.isNew()){//The user is signed in
             if (session.attribute("player") != null) {
                 Player player = session.attribute("player");
-                playerLobbyController.redirectHomeToGame(player, response);
                 Objects.requireNonNull(player, "player must not be null");
                 vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
                 vm.put(PLAYER_NAME_ATTR, player.getName());

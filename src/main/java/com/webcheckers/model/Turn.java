@@ -11,6 +11,7 @@ public class Turn {
     private Piece.color color;
     private Stack<Board> undoBoards;
 
+
     public Turn(Player player, Piece.color color){
         this.player=player;
         this.color = color;
