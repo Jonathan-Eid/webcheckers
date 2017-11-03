@@ -36,6 +36,8 @@ public class PostValidateMoveRoute implements Route {
         Board board = game.getBoard();
         Message message;
         if (!board.isValidMove(move).equals(Move.moveType.INVALID)){
+            move.setType(board.isValidMove(move));
+            game.makeMove(move);
             message = new Message("", Message.type.info);
         }
         else{

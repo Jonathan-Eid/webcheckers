@@ -89,20 +89,30 @@ public class GetGameRoute implements Route {
         Player currentPlayer = session.attribute(USER_ATTR);
 
         //Add to the viewMap all attributes that won't change.
-        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put(VIEW_MODE_ATTR, viewMode.PLAY);
         vm.put(RED_PlAYER_ATTR, player1);
         vm.put(WHITE_PLAYER_ATTR, player2);
+        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
 
         if (currentPlayer.equals(player1)){
             //Current user is the first player.
-            vm.put(ACTIVE_COLOR_ATTR, Piece.color.RED);
+            if (game.checkTurn(currentPlayer)){
+                vm.put(ACTIVE_COLOR_ATTR, Piece.color.RED);
+            }
+            else{
+                vm.put(ACTIVE_COLOR_ATTR, Piece.color.WHITE);
+            }
             vm.put(BOARD_VIEW_ATTR, game.getBoard());
         }
         else if (currentPlayer.equals(player2)){
             //Current user is the second player.
-            vm.put(ACTIVE_COLOR_ATTR, Piece.color.WHITE);
+            if (game.checkTurn(currentPlayer)){
+                vm.put(ACTIVE_COLOR_ATTR, Piece.color.WHITE);
+            }
+            else{
+                vm.put(ACTIVE_COLOR_ATTR, Piece.color.RED);
+            }
             vm.put(BOARD_VIEW_ATTR, game.getBoard().reverse());
         }
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));

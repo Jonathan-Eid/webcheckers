@@ -59,6 +59,7 @@ public class Turn {
     public void makeMove(Move move) throws IllegalStateException{
         if (!undoBoards.peek().isValidMove(move).equals(Move.moveType.INVALID)){
             Board newBoard = new Board(undoBoards.peek());
+            newBoard.makeMove(move);
             undoBoards.push(newBoard);
             return;
         }

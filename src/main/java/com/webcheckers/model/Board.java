@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import javafx.geometry.Pos;
+
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -146,8 +148,17 @@ public class Board implements Iterable{
      * takes a move object and make a change to the board, assuming the move is valid
      * @param move any validated Move object
      */
-    public void makeMove(Move move, Move.moveType type){
-        //TODO
+    public void makeMove(Move move){
+        Position start = move.getStart();
+        Position end = move.getEnd();
+        Square startSquare = rows[start.getRow()].getSpace(start.getCell());
+        Square endSquare = rows[end.getRow()].getSpace(end.getCell());
+        endSquare.setPiece(startSquare.getPiece());
+        startSquare.setPiece(null);
+        //TODO Check if capture move and change the board accordingly.
+        if (move.type.equals(Move.moveType.CAPTURE)) {
+            //TODO
+        }
     }
 
     public Board reverse(){

@@ -43,6 +43,12 @@ public class PlayerLobby {
         }
     }
 
+    public Game newGame(Player player1, Player player2){
+        Game newGame = new Game(player1, player2);
+        this.GameList.add(newGame);
+        return newGame;
+    }
+
     /**
      * Signs the player out, removing them from the PlayerList.
      * @param name String
@@ -82,6 +88,14 @@ public class PlayerLobby {
         return null;
     }
 
+    public Game getGameFromPlayer(Player player){
+        for (Game game: GameList) {
+            if (game.getPlayer2().equals(player)){
+                return game;
+            }
+        }
+        throw new IllegalStateException("Get Game from Player called when player not in a game");
+    }
     /**
      * Get's the total number of players signed in.
      * @return String
@@ -147,7 +161,6 @@ public class PlayerLobby {
      * @param player Player
      */
     public void addToGame(Player player, Player player1){
-        GameList.add(new Game(player,player1));
         playerPlayerMap.put(player, player1);
         playerPlayerMap.put(player1, player);
     }

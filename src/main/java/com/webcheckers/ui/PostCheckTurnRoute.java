@@ -36,10 +36,9 @@ public class PostCheckTurnRoute implements Route {
         if (game.checkTurn(player)){
             message = new Message("true", Message.type.info);
         }
-        else{
+        else {
             message = new Message("false", Message.type.info);
-        return gson.toJson(message, Message.class);
         }
-        return message;
+        return gson.toJson(message, Message.class);
     }
 }

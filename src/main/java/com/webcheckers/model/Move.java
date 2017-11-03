@@ -9,10 +9,16 @@ public class Move {
 
     private Position start;
     private Position end;
+    public moveType type;
 
     public Move(Position start, Position end){
         this.start = start;
         this.end = end;
+        type = moveType.INVALID;
+    }
+
+    public void setType(moveType type){
+        this.type = type;
     }
 
     public Position getStart() {
