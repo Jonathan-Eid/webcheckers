@@ -14,9 +14,10 @@ public class Game {
     private Player player2;
     private Piece.color player1Color;
     private Piece.color player2Color;
-
     private int turnCount;
     private Board board;
+    public enum turn {Player_1, Player_2}
+    private turn playerTurn;
 
     public Game(Player player1, Player player2){
         this.player1 = player1;
@@ -25,6 +26,8 @@ public class Game {
         turnCount = 0;
         player1Color = Piece.color.RED;
         player2Color = Piece.color.WHITE;
+        playerTurn = turn.Player_1;
+
     }
 
     public int getTurnCount() {
@@ -50,5 +53,14 @@ public class Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public boolean checkTurn(Player player) {
+        if (playerTurn == turn.Player_1){
+            return player.equals(player1);
+        }
+        else{
+            return player.equals(player2);
+        }
     }
 }
