@@ -82,6 +82,11 @@ public class Board implements Iterable{
         }
     }
 
+    /**
+     * determine if a move is valid, and whether is a single or capture move
+     * @param move a move that may or may not be valid
+     * @return the type of the move that was passed in (INVALID, SINGLE, CAPTURE)
+     */
     public Move.moveType isValidMove(Move move){
         int startX = move.getStart().getCell();
         int startY = move.getStart().getRow();
@@ -92,22 +97,42 @@ public class Board implements Iterable{
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
         if (!rows[endY].getSpace(endX).hasPiece()) {
             if (startPiece.getColor().equals(Piece.color.WHITE)) {
-                if(Math.abs(deltaX) == 1 && deltaY == 1 || ){
+                if(Math.abs(deltaX) == 1 && (deltaY == 1 || (deltaY == -1 && startPiece.getType() == Piece.pieceType.KING))){
                     return Move.moveType.SINGLE;
-                } else if (Math.abs(deltaX) == 2 && Math.abs(deltaY) == 2){
-
+                } else if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
+                    Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
+                    if(jumpedPiece instanceof Piece){
+                        if(jumpedPiece.getColor() != startPiece.getColor()) {
+                            return Move.moveType.CAPTURE;
+                        } else {
+                            return Move.moveType.INVALID;
+                        }
+                    } else {
+                        return Move.moveType.INVALID;
+                    }
                 } else {
                     return Move.moveType.INVALID;
                 }
-                return (deltaY == 1 & Math.abs(deltaX) == 1);
-
             } else if (startPiece.getColor().equals(Piece.color.RED)) {
-
-                return (Math.abs(deltaX) == 1 & deltaY == -1);
-
+                if(Math.abs(deltaX) == 1 && (deltaY == -1 || (deltaY == 1 && startPiece.getType() == Piece.pieceType.KING))){
+                    return Move.moveType.SINGLE;
+                } else if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
+                    Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
+                    if(jumpedPiece instanceof Piece){
+                        if(jumpedPiece.getColor() != startPiece.getColor()) {
+                            return Move.moveType.CAPTURE;
+                        } else {
+                            return Move.moveType.INVALID;
+                        }
+                    } else {
+                        return Move.moveType.INVALID;
+                    }
+                } else {
+                    return Move.moveType.INVALID;
+                }
             }
         }
-        return false;
+        return Move.moveType.INVALID;
     }
 
     /**
