@@ -7,32 +7,79 @@ import java.util.Stack;
  */
 public class Turn {
 
-    private Player player;
-    private Piece.color color;
-    private Stack<Board> undoBoards;
+    /**
+     * The Player who's turn it is.
+     */
+    Player player;
 
+    /**
+     * The Color of the player who's turn it is.
+     */
+    Piece.color color;
 
-    public Turn(Player player, Piece.color color){
+    /**
+     * The stack of boards. Doing it this way allows moves to be "unmade" by popping of the stack and a move to be made
+     * by pushing onto the stack.
+     */
+    Stack<Board> undoBoards;
+
+    /**
+     * Set up the turn
+     * @param player
+     * @param color
+     * @param initialBoard
+     */
+    public Turn(Player player, Piece.color color, Board initialBoard){
         this.player=player;
         this.color = color;
         undoBoards = new Stack<>();
+        undoBoards.push(initialBoard);
     }
 
+    /**
+     * Getter for the player
+     * @return
+     */
     public Player getPlayer() {
         return player;
     }
 
-    public Piece.color getColor() {
-        return color;
+    /**
+     * Getter for the color of the player
+     * @return
+     */
+    public Piece.color getColor() { return color; }
+
+    /**
+     * Make a move. Create a copy of the board of the top of the stack, make the move on that copy and then push that
+     * copy to the top of the stack
+     * @param move The move to be made
+     */
+    public void makeMove(Move move) throws IllegalStateException{
+        if (undoBoards.peek().isValidMove(move)){
+            Board newBoard = new Board(undoBoards.peek());
+            undoBoards.push(newBoard);
+            return;
+        }
+        throw new IllegalStateException("Invalid Move");
     }
 
-    public void pushBoards(Board board){
-        undoBoards.push(board);
+    /**
+     * Undo a move by popping of the top of the stack after checking that the stack has at least one board in it.
+     */
+    public void undo() throws IllegalStateException{
+        if (undoBoards.size() > 1){
+            undoBoards.pop();
+            return;
+        }
+        throw new IllegalStateException("No more moves to undo");
     }
 
-    public Board undo(){
-        return undoBoards.pop();
+    /**
+     * This method is called when the turn is over and the board needs to be finalized.
+     */
+    public Board getBoard(){
+        return undoBoards.peek();
     }
-
 
 }

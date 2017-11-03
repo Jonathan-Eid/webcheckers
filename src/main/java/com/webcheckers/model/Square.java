@@ -15,13 +15,19 @@ public class Square {
         this.color = color;
     }
 
+    public Square(Square other){
+        this.cellIdx = other.cellIdx;
+        this.color = other.color;
+        this.piece = other.piece;
+    }
+
 
     public int getCellIdx() {
         return cellIdx;
     }
 
 
-    public color getSpot() {
+    public color getColor() {
         return color;
     }
 
