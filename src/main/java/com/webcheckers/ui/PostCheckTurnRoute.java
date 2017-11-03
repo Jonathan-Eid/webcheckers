@@ -22,7 +22,6 @@ public class PostCheckTurnRoute implements Route {
 
 
     public PostCheckTurnRoute(PlayerLobby playerLobby, Gson gson) {
-
         this.playerLobby = playerLobby;
         this.gson = gson;
     }
@@ -39,16 +38,8 @@ public class PostCheckTurnRoute implements Route {
         }
         else{
             message = new Message("false", Message.type.info);
-
-        }
-        /*if (!board.isValidMove(move).equals(Move.moveType.INVALID)){
-            message = new Message("", Message.type.info);
-        }
-        else{
-            message = new Message("Invalid Move", Message.type.error);
-        }
         return gson.toJson(message, Message.class);
-    }*/
+        }
         return message;
     }
 }

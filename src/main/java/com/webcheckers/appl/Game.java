@@ -16,8 +16,9 @@ public class Game {
     private Piece.color player2Color;
     private int turnCount;
     private Board board;
-    public enum turn {Player_1, Player_2}
-    private turn playerTurn;
+    private Turn turn;
+    public enum turnTracker {Player_1, Player_2}
+    private turnTracker playerTurn;
 
     public Game(Player player1, Player player2){
         this.player1 = player1;
@@ -26,8 +27,7 @@ public class Game {
         turnCount = 0;
         player1Color = Piece.color.RED;
         player2Color = Piece.color.WHITE;
-        playerTurn = turn.Player_1;
-
+        playerTurn = turnTracker.Player_1;
     }
 
     public int getTurnCount() {
@@ -37,6 +37,32 @@ public class Game {
     public Player getPlayer1() {
         return player1;
 
+    }
+
+    public void startTurn(){
+        Player activePlayer;
+        Piece.color color;
+        if (this.turn == null){
+            if (this.playerTurn == turnTracker.Player_1){
+                this.playerTurn = turnTracker.Player_2;
+                activePlayer = player2;
+                color = player2Color;
+            }
+            else{
+                this.playerTurn = turnTracker.Player_1;
+                activePlayer = player1;
+                color = player1Color;
+            }
+            this.turn = new Turn(activePlayer, color, this.board);
+            return;
+        }
+        throw new IllegalStateException("Illegal State. Game trying to start a turn before previous turn ended");
+    }
+
+    public void finishTurn(){
+        this.board = this.turn.getBoard();
+        this.turn = null;
+        this.turnCount++;
     }
 
     public Player getPlayer2() {
@@ -56,11 +82,12 @@ public class Game {
     }
 
     public boolean checkTurn(Player player) {
-        if (playerTurn == turn.Player_1){
-            return player.equals(player1);
+        if (player1.equals(player)){
+            return playerTurn.equals(turnTracker.Player_1);
         }
-        else{
-            return player.equals(player2);
+        else if (player2.equals(player)){
+            return playerTurn.equals(turnTracker.Player_2);
         }
+        return false;
     }
 }
