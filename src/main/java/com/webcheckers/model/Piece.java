@@ -15,6 +15,11 @@ public class Piece {
         this.pieceColor = pieceColor;
     }
 
+    public Piece(Piece other){
+        this.type = other.type;
+        this.pieceColor = other.pieceColor;
+    }
+
     public void kingMe(){
         type = pieceType.KING;
     }

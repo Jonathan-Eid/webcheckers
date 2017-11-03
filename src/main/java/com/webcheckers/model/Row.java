@@ -19,6 +19,17 @@ public class Row implements Iterable<Square>{
         this.spaces = new Square[8];
     }
 
+    /**Copy Constructor
+     * @param other
+     */
+    public Row(Row other){
+        this.index = other.getIndex();
+        this.spaces = new Square[other.spaces.length];
+        for (int i = 0; i < other.spaces.length; i++){
+            this.spaces[i] = new Square(other.spaces[i]);
+        }
+    }
+
     public Row reverse(int index){
         Row row = new Row(index);
         Stack<Square> squareStack = new Stack<>();

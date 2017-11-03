@@ -7,7 +7,7 @@ import java.util.Stack;
  *creates a template for the board
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
-public class Board implements Iterable{
+public class Board implements Iterable, Cloneable{
 
     private Row[] rows;
 
@@ -82,6 +82,13 @@ public class Board implements Iterable{
         }
     }
 
+    public Board(Board other){
+        this.rows = new Row[other.rows.length];
+        for (int x = 0; x < other.rows.length; x ++){
+            this.rows[x] = new Row(other.rows[x]);
+        }
+    }
+
     public Move.moveType isValidMove(Move move){
         int startX = move.getStart().getCell();
         int startY = move.getStart().getRow();
@@ -92,22 +99,14 @@ public class Board implements Iterable{
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
         if (!rows[endY].getSpace(endX).hasPiece()) {
             if (startPiece.getColor().equals(Piece.color.WHITE)) {
-                if(Math.abs(deltaX) == 1 && deltaY == 1 || ){
-                    return Move.moveType.SINGLE;
-                } else if (Math.abs(deltaX) == 2 && Math.abs(deltaY) == 2){
-
-                } else {
-                    return Move.moveType.INVALID;
-                }
-                return (deltaY == 1 & Math.abs(deltaX) == 1);
-
+                //TODO
+                //return (deltaY == 1 & Math.abs(deltaX) == 1);
             } else if (startPiece.getColor().equals(Piece.color.RED)) {
-
-                return (Math.abs(deltaX) == 1 & deltaY == -1);
-
+                //TODO
+                //return (deltaY == -1 & Math.abs(deltaX) == 1);
             }
         }
-        return false;
+        return Move.moveType.INVALID;
     }
 
     /**
