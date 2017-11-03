@@ -32,7 +32,7 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(request.body(), Move.class);
         Board board = session.attribute("board");
         Message message;
-        if (board.isValidMove(move)){
+        if (!board.isValidMove(move).equals(Move.moveType.INVALID)){
             message = new Message("", Message.type.info);
         }
         else{
