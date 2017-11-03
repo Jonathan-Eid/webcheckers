@@ -22,8 +22,9 @@ public class PostSignInRoute implements Route {
     private final PlayerLobby playerLobby;
 
     static final String INVALID_SIGN_IN_ATTR = "invalidSignInMessage";
-    static final String PLAYER_SIGNED_IN_ATTR = "playerSignedIn";
+    static final String USER_SIGNED_IN_ATTR = "userSignedIn";
     static final String PLAYER_LIST_ATTR = "playerList";
+    static final String USER_ATTR = "user";
 
 
     public PostSignInRoute(TemplateEngine templateEngine, PlayerLobby playerLobby) {
@@ -51,7 +52,8 @@ public class PostSignInRoute implements Route {
             case SIGNED_IN:
                 final Session session = request.session();
                 //Store the Player Object into the session.
-                session.attribute("player", playerLobby.getPlayer(userName));
+                session.attribute(USER_SIGNED_IN_ATTR, true);
+                session.attribute(USER_ATTR, playerLobby.getPlayer(userName));
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;

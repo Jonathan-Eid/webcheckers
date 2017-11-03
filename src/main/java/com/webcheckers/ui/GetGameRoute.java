@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.Game;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.*;
 
 
 /**
@@ -26,6 +26,13 @@ public class GetGameRoute implements Route {
     private PlayerLobby playerLobby;
 
     static final String VIEW_MODE_ATTR = "viewMode";
+    static final String GAME_ATTR = "game";
+    static final String CURRENT_PLAYER_ATTR = "currentPlayer";
+    static final String RED_PlAYER_ATTR = "redPlayer";
+    static final String WHITE_PLAYER_ATTR = "whitePlayer";
+    static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String BOARD_VIEW_ATTR = "board";
+    static final String MESSAGE_ATTR = "message";
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -56,8 +63,8 @@ public class GetGameRoute implements Route {
         vm.put("message", true);
         vm.put("error", error);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
-        vm.put(PostSignInRoute.PLAYER_SIGNED_IN_ATTR, true);
-        vm.put(GetHomeRoute.PLAYER_NAME_ATTR, player.getName());
+        vm.put(USER_SIGNED_IN_ATTR, true);
+        vm.put(USER_ATTR, player.getName());
         vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
@@ -74,69 +81,29 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
+
+        //Fetch game and players from the session
+        Game game = session.attribute(GAME_ATTR);
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
+        Player currentPlayer = session.attribute(USER_ATTR);
+
+        //Add to the viewMap all attributes that won't change.
+        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put(VIEW_MODE_ATTR, viewMode.PLAY);
-        Player player;
-        Player opponent;
+        vm.put(RED_PlAYER_ATTR, player1);
+        vm.put(WHITE_PLAYER_ATTR, player2);
 
-        if (request.session().attribute("player") != null) { //Check that player is logged in.
-            player = request.session().attribute("player");
-            if (request.queryParams("opponent") != null) {
-                opponent = playerLobby.getPlayer(request.queryParams("opponent"));
-                if ((!(playerLobby.isInGame(player))) && (!(playerLobby.isInGame(opponent)))) {
-                    player.setColor(Piece.color.RED);
-                    opponent.setColor(Piece.color.WHITE);
-                    playerLobby.addToGame(player, opponent);
-                    response.redirect("/game");
-                }
-                else if (playerLobby.isInGame(player)){
-                    //Player is already in a game.
-                    error(player.getName() + " is already in a game", request, response);
-                }
-                else if (playerLobby.isInGame(opponent)) {
-                    //Opponent is already in a game.
-                    error(opponent.getName() + " is already in a game", request, response);
-                }
-                vm.put("currentPlayer", player);
-                vm.put("redPlayer", player);
-                vm.put("whitePlayer", opponent);
-            }
-            else{
-                player = session.attribute("player");
-                Piece.color color = player.getColor();
-                if (color.equals(Piece.color.WHITE)) {
-                    opponent = player;
-                    Player player1 = playerLobby.getPlayerOpponent(opponent);
-                    vm.put("activeColor", opponent.getColor());
-                    vm.put("currentPlayer", opponent);
-                    vm.put("redPlayer", player1);
-                    vm.put("whitePlayer", opponent);
-                } else {
-                    Player player2 = playerLobby.getinGameMap().get(player);
-                    vm.put("activeColor", player.getColor());
-                    vm.put("currentPlayer", player);
-                    vm.put("redPlayer", player);
-                    vm.put("whitePlayer", player2);
-                }
-            }
-            vm.put("activeColor", Piece.color.RED);
-            Board board;
-            if (session.attribute("board") == null){
-                board = new Board();
-                session.attribute("board", board);
-            }
-            else{
-                board = session.attribute("board");
-            }
-            if (((Player) session.attribute("player")).getColor().equals(Piece.color.RED)){
-                vm.put("board", board);
-            }
-            else{
-                vm.put("board", board.reverse());
-            }
+        if (currentPlayer.equals(player1)){
+            //Current user is the first player.
+            vm.put(ACTIVE_COLOR_ATTR, Piece.color.RED);
+            vm.put(BOARD_VIEW_ATTR, game.getBoard());
         }
-        else{
-            return error("You must be signed in to play", request, response);
+        else if (currentPlayer.equals(player2)){
+            //Current user is the second player.
+            vm.put(ACTIVE_COLOR_ATTR, Piece.color.WHITE);
+            vm.put(BOARD_VIEW_ATTR, game.getBoard().reverse());
         }
         return templateEngine.render(new ModelAndView(vm, "game.ftl"));
     }

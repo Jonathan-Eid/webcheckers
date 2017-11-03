@@ -54,16 +54,16 @@ public class PlayerLobbyTest {
 
         //A player cannot sign in with a name already taken.
         assertEquals(PlayerLobby.SignInResult.INVALID_PLAYER, CuT.signInPlayer(player1Name));
-        assertSame(1, CuT.playerList.size());
+        assertSame(1, CuT.playerMap.size());
     }
 
 
     @Test
     public void signOutPlayer() throws Exception {
         CuT.signInPlayer(player1Name);
-        assertSame(1, CuT.playerList.size());
+        assertSame(1, CuT.playerMap.size());
         assertEquals(PlayerLobby.SignInResult.SIGNED_OUT, CuT.signOutPlayer(player1Name));
-        assertSame(0, CuT.playerList.size());
+        assertSame(0, CuT.playerMap.size());
     }
 
     @Test
@@ -79,15 +79,6 @@ public class PlayerLobbyTest {
         assertEquals(Integer.toString(0), CuT.getNumPlayers());
         CuT.signInPlayer(player1Name);
         assertEquals(Integer.toString(1), CuT.getNumPlayers());
-    }
-
-    @Test
-    public void getColor() throws Exception {
-
-        CuT.signInPlayer(player1Name);
-        CuT.getPlayer(player1Name).setColor(Piece.color.RED);
-        // when(player1.getColor()).thenReturn(Piece.color.RED);
-        assertEquals(CuT.getColor(player1Name), Piece.color.RED);
     }
 
     @Test
@@ -117,7 +108,7 @@ public class PlayerLobbyTest {
         HashMap<Player, Player> expectedMap = new HashMap<>();
         expectedMap.put(player1, player2);
         expectedMap.put(player2, player1);
-        assertEquals(CuT.inGameMap,expectedMap);
+        assertEquals(CuT.playerPlayerMap,expectedMap);
     }
 
     @Test
@@ -131,7 +122,7 @@ public class PlayerLobbyTest {
         assertFalse(CuT.isInGame(player1));
         assertFalse(CuT.isInGame(player2));
     }
-
+/*
     @Test
     public void getinGameMap() throws Exception {
         CuT.addToGame(player1, player2);
@@ -140,5 +131,5 @@ public class PlayerLobbyTest {
         testMap.put(player2, player1);
         assertEquals(testMap, CuT.getinGameMap());
     }
-
+*/
 }

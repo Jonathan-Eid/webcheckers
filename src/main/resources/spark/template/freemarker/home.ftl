@@ -22,8 +22,8 @@
         ${error} <br/>
       </#if>
 
-      <#if playerSignedIn??>
-        Your name is ${playerName} <br/></br>
+      <#if userSignedIn??>
+        Your name is ${user} <br/></br>
         Here are the players currently signed in </br>
         ${playerList} <br/>
         <a href="./signOut">Sign Out</a>
