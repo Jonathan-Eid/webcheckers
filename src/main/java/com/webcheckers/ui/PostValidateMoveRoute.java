@@ -38,10 +38,6 @@ public class PostValidateMoveRoute implements Route {
         else{
             message = new Message("Invalid Move", Message.type.error);
         }
-        String jsonString = gson.toJson(message, Message.class);
-        response.body(jsonString);
-        response.redirect(WebServer.GAME_URL);
-        halt();
-        return null;
+        return gson.toJson(message, Message.class);
     }
 }
