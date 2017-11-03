@@ -82,6 +82,13 @@ public class Board implements Iterable{
         }
     }
 
+    public Board(Board other){
+        this.rows = new Row[other.rows.length];
+        for (int i = 0; i < this.rows.length; i++){
+            this.rows[i] = new Row(other.rows[i]);
+        }
+    }
+
     /**
      * determine if a move is valid, and whether is a single or capture move
      * @param move a move that may or may not be valid

@@ -56,7 +56,7 @@ public class Turn {
      * @param move The move to be made
      */
     public void makeMove(Move move) throws IllegalStateException{
-        if (undoBoards.peek().isValidMove(move)){
+        if (!undoBoards.peek().isValidMove(move).equals(Move.moveType.INVALID)){
             Board newBoard = new Board(undoBoards.peek());
             undoBoards.push(newBoard);
             return;

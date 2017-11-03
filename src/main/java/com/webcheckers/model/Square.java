@@ -18,7 +18,7 @@ public class Square {
     public Square(Square other){
         this.cellIdx = other.cellIdx;
         this.color = other.color;
-        this.piece = other.piece;
+        this.piece = new Piece(other.piece);
     }
 
 
