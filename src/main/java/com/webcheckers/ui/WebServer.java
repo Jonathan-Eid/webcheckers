@@ -171,7 +171,7 @@ public class WebServer {
         get(SIGN_OUT_URL, new GetSignOutRoute(playerLobby));
 
         //Ajax Routes
-        post(CHECK_TURN_URL, new PostCheckTurnRoute(playerLobby));
+        post(CHECK_TURN_URL, new PostCheckTurnRoute(playerLobby, gson));
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(playerLobby, gson));
 
         //
