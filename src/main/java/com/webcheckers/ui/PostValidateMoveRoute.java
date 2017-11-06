@@ -6,12 +6,14 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
 
 import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static spark.Spark.halt;
 
 /**
@@ -32,9 +34,15 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();
         Move move = gson.fromJson(request.body(), Move.class);
+        Player activePlayer = session.attribute(USER_ATTR);
         Game game = session.attribute(GAME_ATTR);
         Board board = game.getBoard();
         Message message;
+
+        if (activePlayer.equals(game.getPlayer2())){
+            move = board.reverseMove(move);
+        }
+
         if (!board.isValidMove(move).equals(Move.moveType.INVALID)){
             move.setType(board.isValidMove(move));
             game.makeMove(move);
