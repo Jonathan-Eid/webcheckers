@@ -65,6 +65,15 @@ public class Game {
         this.turnCount++;
     }
 
+    public void undo(){
+        if (this.turn != null){
+            this.turn.undo();
+            return;
+        }
+        throw new IllegalStateException("Exception. Trying to Undo a move when not one's turn.");
+
+    }
+
     public Player getPlayer2() {
         return player2;
     }
