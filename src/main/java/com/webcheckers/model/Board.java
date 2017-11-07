@@ -199,8 +199,70 @@ public class Board implements Iterable{
                         Position currentPosition = new Position(currentRow.getIndex(), currentSquare.getCellIdx());
 
                         if(currentPiece.getType().equals(Piece.pieceType.KING)){    //checks for possible king piece moves
+                            if(currentSquare.getCellIdx() > 0 && currentRow.getIndex() > 0){    //forward-left regular move?
+                                Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()-1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
 
-                        } else {    //tests for possible non-king piece moves
+                            if(currentSquare.getCellIdx() < 7 && currentRow.getIndex() > 0){    //forward-right regular move?
+                                Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()+1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() > 1){    //forward-left capture move?
+                                Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()-2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() < 6){    //forward-right capture move?
+                                Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()+2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 0 && currentRow.getIndex() < 7){    //backward-left regular move?
+                                Position newPosition = new Position(currentRow.getIndex()+1, currentSquare.getCellIdx()-1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() < 7 && currentRow.getIndex() < 7){    //backward-right regular move?
+                                Position newPosition = new Position(currentRow.getIndex()+1, currentSquare.getCellIdx()+1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() < 6){    //backward-left capture move?
+                                Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()-2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() < 6 && currentRow.getIndex() < 6){    //backward-right capture move?
+                                Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()+2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+                        } else {    //checks for possible non-king piece moves (these are a subset of the previous checks)
 
                             if(currentSquare.getCellIdx() > 0 && currentRow.getIndex() > 0){    //forward-left regular move?
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()-1);
