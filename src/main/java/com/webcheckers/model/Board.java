@@ -14,6 +14,7 @@ public class Board implements Iterable{
     private Row[] rows;
 
     /**
+     * standard constructor
      * Initializes the board with Rows containing spaces that contain pieces
      */
     public Board(){
@@ -84,6 +85,10 @@ public class Board implements Iterable{
         }
     }
 
+    /**
+     * copy constructor, creates a deep copy of board
+     * @param other the board to copy
+     */
     public Board(Board other){
         this.rows = new Row[other.rows.length];
         for (int i = 0; i < this.rows.length; i++){
@@ -92,7 +97,7 @@ public class Board implements Iterable{
     }
 
     /**
-     * determine if a move is valid, and whether is a single or capture move
+     * determine if a move is valid, and whether it is a single or capture move
      * @param move a move that may or may not be valid
      * @return the type of the move that was passed in (INVALID, SINGLE, CAPTURE)
      */
@@ -161,6 +166,11 @@ public class Board implements Iterable{
         }
     }
 
+    /**
+     * create a version of the board rotated 180 degrees
+     * this rotated board represents the board a seen by the other player in a checkers game
+     * @return a board that has had all of its rows and cells reversed
+     */
     public Board reverse(){
         Board board = new Board();
         Stack<Row> rowStack = new Stack<>();
@@ -178,22 +188,24 @@ public class Board implements Iterable{
 
     /**
      * determines if the game is over for the player whose turn it is
-     * this is accomplished by iterating over the board an checking for the existence of pieces belonging to the active player
-     * once such a piece is found, possible moves are checked for validity
-     * if no valid move is found for any friendly piece on the board, the game is over
+     * this is accomplished by iterating over the board and checking for the existence of pieces belonging to the active player
+     * every time such a piece is found, possible moves are checked for validity
+     * if no valid move is found for any active-player-owned piece on the board, the game is over
      * @given the board is assumed to be reversed if and only if it is the white player's turn (ie Piece.color.WHITE is passed in)
      * @param color the color of the active player, whose pieces must be chacked for valid moves
      * @return true if the active player has no pieces with any valid moves, false if they are able to make a valid move this turn
      */
     public boolean checkGameOver(Piece.color color){
-        boolean ret = false;
+        boolean ret = true;
         Iterator<Row> boardIter = new BoardIterator();
-        while (!ret && boardIter.hasNext()){    //iterate over the rows of the board
-            Row currentRow = boardIter.next();
+        Row currentRow;
+        Square currentSquare;
+        while (ret && boardIter.hasNext()){    //iterate over the rows of the board
+            currentRow = boardIter.next();
             Iterator<Square> rowIter = currentRow.iterator();
-            while(!ret && rowIter.hasNext()){   //iterate over the squares of the row
-                Square currentSquare = rowIter.next();
-                if(currentSquare.hasPiece()){   //check for the existence of a piece in this square
+            while(ret && rowIter.hasNext()){       //iterate over the squares of the row
+                currentSquare = rowIter.next();
+                if(currentSquare.hasPiece()){           //check for the existence of a piece in this square
                     if(currentSquare.getPiece().getColor().equals(color)){  //check if the piece belongs to the active player
                         Piece currentPiece = currentSquare.getPiece();
                         Position currentPosition = new Position(currentRow.getIndex(), currentSquare.getCellIdx());
@@ -203,7 +215,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()-1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -211,7 +223,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()+1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -219,7 +231,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -227,7 +239,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()+2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -235,7 +247,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()+1, currentSquare.getCellIdx()-1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -243,7 +255,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()+1, currentSquare.getCellIdx()+1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -251,7 +263,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -259,7 +271,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()+2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
                         } else {    //checks for possible non-king piece moves (these are a subset of the previous checks)
@@ -268,7 +280,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()-1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -276,7 +288,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()+1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -284,7 +296,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
 
@@ -292,7 +304,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()+2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = true;
+                                    ret = false;
                                 }
                             }
                         }
