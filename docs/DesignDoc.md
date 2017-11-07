@@ -14,11 +14,13 @@ geometry: margin=1in
     * Disney Ganbaatar
 
 ## Executive Summary
+The application allows players to play checkers with other players who are currently signed-in.
+The game user interface (UI) supports a game experience using drag-and-drop browser capabilities for making moves.
 
-This is a summary of the project.
 
 ### Purpose
 > Provide a very brief statement about the project and most important user group and user goals.
+
 
 ### Glossary and Acronyms
 > Provide a table of terms and acronyms.
@@ -32,10 +34,22 @@ This is a summary of the project.
 
 This section describes the features of the application.
 
+Player Sign In: A user may sign in to the server and reserve that name for themselves. They may also sign out.
+
+Start Game: A user, once signed in, may choose to start a game with another user who is also signed in.
+
+Make Move: A player may move one of their pieces on the board and, assuming it's a valid move, that move will change the board.
+
+Undo Move: A player may decide to undo a move within their turn.
+
 > In this section you do not need to be exhaustive and list every story.  Focus on top-level features from the Vision document and maybe Epics and critical Stories.
 
 ### Definition of MVP
-> Provide a simple description of the Minimum Viable Product.
+
+Every player must sign-in before playing a game.
+Two players must be able to play a game of checkers based upon the American rules.
+Either player of a game may choose to resign, which ends the game.
+
 
 ### MVP Features
 > Provide a list of top-level Epics and/or Stories of the MVP.
