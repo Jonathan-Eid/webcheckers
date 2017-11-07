@@ -177,6 +177,36 @@ public class Board implements Iterable{
     }
 
     /**
+     * determines if the game is over for the player whose turn it is
+     * this is accomplished by iterating over the board an checking for the existence of pieces belonging to the active player
+     * once such a piece is found, possible moves are checked for validity
+     * if no valid move is found for any friendly piece on the board, the game is over
+     * @given the board is assumed to be reversed if and only if it is the white player's turn (ie Piece.color.WHITE is passed in)
+     * @param color the color of the active player, whose pieces must be chacked for valid moves
+     * @return true if the active player has no pieces with any valid moves, false if they are able to make a valid move this turn
+     */
+    public boolean checkGameOver(Piece.color color){
+        boolean ret = false;
+        Iterator<Row> boardIter = new BoardIterator();
+        while (!ret && boardIter.hasNext()){    //iterate over the rows of the board
+            Row currentRow = boardIter.next();
+            Iterator<Square> rowIter = currentRow.iterator();
+            while(!ret && rowIter.hasNext()){   //iterate over the squares of the row
+                Square currentSquare = rowIter.next();
+                if(currentSquare.hasPiece()){   //check for the existence of a piece in this square
+                    if(currentSquare.getPiece().getColor().equals(color)){  //check if the piece belongs to the active player
+
+
+
+                    }
+                }
+
+            }
+        }
+        return ret;
+    }
+
+    /**
      * Iterates over the rows of the board
      */
     private class BoardIterator implements Iterator<Row>{
