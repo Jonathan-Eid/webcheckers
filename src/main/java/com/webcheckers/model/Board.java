@@ -201,15 +201,21 @@ public class Board implements Iterable{
      * @param move any validated Move object
      */
     public void makeMove(Move move){
+        if (move.type == null){
+            throw new IllegalStateException("Move has not moveType");
+        }
         Position start = move.getStart();
         Position end = move.getEnd();
         Square startSquare = rows[start.getRow()].getSpace(start.getCell());
         Square endSquare = rows[end.getRow()].getSpace(end.getCell());
         endSquare.setPiece(startSquare.getPiece());
         startSquare.setPiece(null);
-        //TODO Check if capture move and change the board accordingly.
         if (move.type.equals(Move.moveType.CAPTURE)) {
-            //TODO
+            int y = (end.getRow() + start.getRow()) / 2;
+            int x = (end.getCell() + start.getCell()) / 2;
+            Square middleSquare = this.rows[y].getSpace(x);
+            middleSquare.setPiece(null);
+            this.lastCapture = end;
         }
     }
 
