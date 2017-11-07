@@ -167,6 +167,7 @@ public class Board implements Iterable{
         int i = 0;
         for (Row row : rows){
             rowStack.push(row.reverse(i));
+            i++;
         }
         i = 0;
         while(!rowStack.empty()){
