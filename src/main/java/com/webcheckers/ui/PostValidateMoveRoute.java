@@ -33,13 +33,13 @@ public class PostValidateMoveRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();
-        Player player = session.attribute(USER_ATTR);
         Move move = gson.fromJson(request.body(), Move.class);
         Game game = session.attribute(GAME_ATTR);
         Board board = game.getBoard();
         Message message;
-        if (!board.isValidMove(move).equals(Move.moveType.INVALID)){
-            move.setType(board.isValidMove(move));
+        Move.moveType moveType = board.isValidMove(move);
+        if (!moveType.equals(Move.moveType.INVALID)){
+            move.setType(moveType);
             game.makeMove(move);
             message = new Message("", Message.type.info);
         }

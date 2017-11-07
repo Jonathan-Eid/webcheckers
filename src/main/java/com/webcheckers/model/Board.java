@@ -12,11 +12,15 @@ import java.util.Stack;
 public class Board implements Iterable{
 
     private Row[] rows;
+    public enum state{NO_MOVE, SINGLE_MOVE, CAPTURE_MOVE};
+    private state boardState;
+
 
     /**
      * Initializes the board with Rows containing spaces that contain pieces
      */
     public Board(){
+        this.boardState = state.NO_MOVE;
         this.rows = new Row[8];
         for (int y = 0; y < 8; y++){
             Row row = new Row(y);
@@ -85,6 +89,7 @@ public class Board implements Iterable{
     }
 
     public Board(Board other){
+        this.boardState = other.boardState;
         this.rows = new Row[other.rows.length];
         for (int i = 0; i < this.rows.length; i++){
             this.rows[i] = new Row(other.rows[i]);

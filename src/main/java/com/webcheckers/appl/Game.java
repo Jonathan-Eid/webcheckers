@@ -32,7 +32,6 @@ public class Game {
     }
 
     public void startTurn(){
-       Piece.color color;
         if (this.turn == null){
             this.turn = new Turn(activePlayer, activeColor, this.board);
             return;
@@ -74,7 +73,7 @@ public class Game {
     }
 
     public Board getBoard() {
-        return board;
+        return turn.getBoard();
     }
 
     public boolean checkTurn(Player player) {
