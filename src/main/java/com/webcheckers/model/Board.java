@@ -14,6 +14,7 @@ public class Board implements Iterable{
     private Row[] rows;
     public enum state{NO_MOVE, SINGLE_MOVE, CAPTURE_MOVE};
     private state boardState;
+    private Position lastCapture;
 
 
     /**
@@ -102,6 +103,7 @@ public class Board implements Iterable{
      * @return the type of the move that was passed in (INVALID, SINGLE, CAPTURE)
      */
     public Move.moveType isValidMove(Move move){
+
         int startX = move.getStart().getCell();
         int startY = move.getStart().getRow();
         int endX = move.getEnd().getCell();
@@ -109,42 +111,87 @@ public class Board implements Iterable{
         int deltaX = endX - startX;
         int deltaY = endY - startY;
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
-        if (!rows[endY].getSpace(endX).hasPiece()) {
-            if (startPiece.getColor().equals(Piece.color.WHITE)) {
-                if(Math.abs(deltaX) == 1 && (deltaY == 1 || (deltaY == -1 && startPiece.getType() == Piece.pieceType.KING))){
-                    return Move.moveType.SINGLE;
-                } else if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
-                    Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
-                    if(jumpedPiece instanceof Piece){
-                        if(jumpedPiece.getColor() != startPiece.getColor()) {
-                            return Move.moveType.CAPTURE;
+
+
+        switch (boardState) {
+            case NO_MOVE:
+                if (!rows[endY].getSpace(endX).hasPiece()) {
+                    if (startPiece.getColor().equals(Piece.color.WHITE)) {
+                        if(Math.abs(deltaX) == 1 && (deltaY == 1 || (deltaY == -1 && startPiece.getType() == Piece.pieceType.KING))){
+                            return Move.moveType.SINGLE;
+                        } else if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
+                            Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
+                            if(jumpedPiece instanceof Piece){
+                                if(jumpedPiece.getColor() != startPiece.getColor()) {
+                                    return Move.moveType.CAPTURE;
+                                } else {
+                                    return Move.moveType.INVALID;
+                                }
+                            } else {
+                                return Move.moveType.INVALID;
+                            }
                         } else {
                             return Move.moveType.INVALID;
                         }
-                    } else {
-                        return Move.moveType.INVALID;
-                    }
-                } else {
-                    return Move.moveType.INVALID;
-                }
-            } else if (startPiece.getColor().equals(Piece.color.RED)) {
-                if(Math.abs(deltaX) == 1 && (deltaY == -1 || (deltaY == 1 && startPiece.getType() == Piece.pieceType.KING))){
-                    return Move.moveType.SINGLE;
-                } else if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
-                    Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
-                    if(jumpedPiece instanceof Piece){
-                        if(jumpedPiece.getColor() != startPiece.getColor()) {
-                            return Move.moveType.CAPTURE;
+                    } else if (startPiece.getColor().equals(Piece.color.RED)) {
+                        if(Math.abs(deltaX) == 1 && (deltaY == -1 || (deltaY == 1 && startPiece.getType() == Piece.pieceType.KING))){
+                            return Move.moveType.SINGLE;
+                        } else if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
+                            Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
+                            if(jumpedPiece instanceof Piece){
+                                if(jumpedPiece.getColor() != startPiece.getColor()) {
+                                    return Move.moveType.CAPTURE;
+                                } else {
+                                    return Move.moveType.INVALID;
+                                }
+                            } else {
+                                return Move.moveType.INVALID;
+                            }
                         } else {
                             return Move.moveType.INVALID;
                         }
-                    } else {
-                        return Move.moveType.INVALID;
                     }
-                } else {
-                    return Move.moveType.INVALID;
                 }
-            }
+                return Move.moveType.INVALID;
+            case SINGLE_MOVE:
+                return Move.moveType.INVALID;
+            case CAPTURE_MOVE:
+                if(move.getStart().equals(lastCapture)){
+                    if (startPiece.getColor().equals(Piece.color.WHITE)) {
+                        if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))) {
+                            Piece jumpedPiece = rows[startY + deltaY / 2].getSpace(startX + deltaX / 2).getPiece();
+                            if (jumpedPiece instanceof Piece) {
+                                if (jumpedPiece.getColor() != startPiece.getColor()) {
+                                    return Move.moveType.CAPTURE;
+                                } else {
+                                    return Move.moveType.INVALID;
+                                }
+                            } else {
+                                return Move.moveType.INVALID;
+                            }
+                        } else {
+                            return Move.moveType.INVALID;
+                        }
+                    } else if (startPiece.getColor().equals(Piece.color.RED)) {
+                        if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))) {
+                            Piece jumpedPiece = rows[startY + deltaY / 2].getSpace(startX + deltaX / 2).getPiece();
+                            if (jumpedPiece instanceof Piece) {
+                                if (jumpedPiece.getColor() != startPiece.getColor()) {
+                                    return Move.moveType.CAPTURE;
+                                } else {
+                                    return Move.moveType.INVALID;
+                                }
+                            } else {
+                                return Move.moveType.INVALID;
+                            }
+                        } else {
+                            return Move.moveType.INVALID;
+                        }
+                    }
+                }
+                break;
+            default:
+                throw new IllegalStateException("the move was null");
         }
         return Move.moveType.INVALID;
     }
