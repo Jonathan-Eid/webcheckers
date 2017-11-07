@@ -14,13 +14,18 @@ public class Row implements Iterable<Square>{
     private int index;
     private Square[] spaces;
 
+    /**
+     * standard constructor
+     * @param index the index of this row in a checkers board, with a value of 0 to 7
+     */
     public Row(int index){
         this.index=index;
         this.spaces = new Square[8];
     }
 
     /**Copy Constructor
-     * @param other
+     * creates a deep copy of the row provided
+     * @param other the row to copy
      */
     public Row(Row other){
         this.index = other.getIndex();
@@ -30,6 +35,11 @@ public class Row implements Iterable<Square>{
         }
     }
 
+    /**
+     * reverse the order of squares in a row, creating a new row object
+     * @param index the index of the row produced by this method
+     * @return a row with the index provided, but with all of this row's squares in reverse order
+     */
     public Row reverse(int index){
         Row row = new Row(index);
         Stack<Square> squareStack = new Stack<>();
@@ -53,18 +63,24 @@ public class Row implements Iterable<Square>{
     }
 
     /**
-     * Set space in a given cell index in the row with a specified color
-     * @param cellIdx
-     * @param color
+     * Set square at a given cell index in the row to a specified color
+     * @param cellIdx the index of the square being recolored
+     * @param color the new color for the square
      */
     public void setSpace(int cellIdx, Square.color color){
         spaces[cellIdx] = new Square(cellIdx,color);
     }
 
+    /**
+     * Private class for a row iterator
+     */
     private class RowIterator implements Iterator<Square> {
         int cursor;
         Square current;
 
+        /**
+         * constructor for the row iterator
+         */
         public RowIterator(){
             cursor = -1;
             current = spaces[0];

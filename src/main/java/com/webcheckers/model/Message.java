@@ -8,6 +8,11 @@ public class Message {
     public enum type {info, error}
     private type type;
 
+    /**
+     * standard constructor
+     * @param messageText the text of the message, for the user to see
+     * @param type whether the type of this message is INFO or ERROR
+     */
     public Message(String messageText, type type){
         text = messageText;
         this.type = type;
