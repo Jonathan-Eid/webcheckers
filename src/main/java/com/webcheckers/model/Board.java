@@ -195,8 +195,45 @@ public class Board implements Iterable{
                 Square currentSquare = rowIter.next();
                 if(currentSquare.hasPiece()){   //check for the existence of a piece in this square
                     if(currentSquare.getPiece().getColor().equals(color)){  //check if the piece belongs to the active player
+                        Piece currentPiece = currentSquare.getPiece();
+                        Position currentPosition = new Position(currentRow.getIndex(), currentSquare.getCellIdx());
 
+                        if(currentPiece.getType().equals(Piece.pieceType.KING)){    //checks for possible king piece moves
 
+                        } else {    //tests for possible non-king piece moves
+
+                            if(currentSquare.getCellIdx() > 0 && currentRow.getIndex() > 0){    //forward-left regular move?
+                                Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()-1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() < 7 && currentRow.getIndex() > 0){    //forward-right regular move?
+                                Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()+1);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() > 1){    //forward-left capture move?
+                                Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()-2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() > 6){    //forward-right capture move?
+                                Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()+2);
+                                Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
+                                if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
+                                    ret = true;
+                                }
+                            }
+                        }
 
                     }
                 }
