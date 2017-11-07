@@ -17,6 +17,10 @@ public class Move {
         type = moveType.INVALID;
     }
 
+    /**
+     *Sets move type to tell other objects how to handle this move
+     * @param type
+     */
     public void setType(moveType type){
         this.type = type;
     }
