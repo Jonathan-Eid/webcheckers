@@ -22,6 +22,10 @@ public class Message {
         return text;
     }
 
+    /**
+     * returns what type of message this is, which is an enum
+     * @return INFO or ERROR
+     */
     public type getType() {
         return type;
     }

@@ -7,20 +7,24 @@ package com.webcheckers.model;
 
 public class Player implements Comparable<Player>{
     private String name;
+
+    /**
+     * standard constructor
+     * @param name the player's name, which can be any String
+     */
     public Player(String name) {
         this.name = name;
     }
 
-    /**
-     * Getter for the Name
-     * @return
-     */
     public String getName() {
         return name;
     }
 
 
     @Override
+    /**
+     * equality is determined by the name of the player
+     */
     public boolean equals(Object obj) {
         if (obj instanceof Player) {
             Player other = (Player) obj;

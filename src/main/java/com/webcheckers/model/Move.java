@@ -39,11 +39,14 @@ public class Move {
         return end;
     }
 
+    /*
+    //this is unused and can probably be removed
     public Move reverse() {
         Position start = new Position(7-this.getStart().getRow(),7-this.getStart().getCell());
         Position end = new Position(7-this.getEnd().getRow(),7-this.getEnd().getCell());
         return new Move(start,end);
     }
+     */
 
 
 

@@ -6,7 +6,7 @@ package com.webcheckers.model;
  */
 public class Square {
     private int cellIdx;
-    public enum color{RED, EMPTY_WHITE}
+    public enum color{RED, EMPTY_WHITE}     //white squares cannot contain pieces and are always empty
     private color color;
     private Piece piece = null;
 

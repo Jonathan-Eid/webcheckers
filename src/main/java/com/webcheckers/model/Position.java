@@ -26,6 +26,11 @@ public class Position {
         return cell;
     }
 
+    /**
+     * equality is determined by the values in row and cell
+     * @param obj this can be any object, but it must be another Position to return true
+     * @return true if obj is a Position and its row and cell values are equal to this position's, else false
+     */
     public boolean equals (Object obj){
         if (obj instanceof Position){
             Position p = (Position)obj;

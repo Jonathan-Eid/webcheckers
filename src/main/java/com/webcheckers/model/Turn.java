@@ -8,27 +8,27 @@ import java.util.Stack;
 public class Turn {
 
     /**
-     * The Player who's turn it is.
+     * The Player whose turn it is.
      */
     Player player;
 
     /**
-     * The Color of the player who's turn it is.
+     * The Color of the player whose turn it is.
      */
     Piece.color color;
 
     /**
-     * The stack of boards. Doing it this way allows moves to be "unmade" by popping of the stack and a move to be made
-     * by pushing onto the stack.
+     * The stack of boards. Each board represents a move made during this turn. Doing it this way allows moves to
+     * be "unmade" by popping of the stack and a move to be made by pushing onto the stack.
      */
     Stack<Board> undoBoards;
 
 
     /**
      * Set up the turn
-     * @param player
-     * @param color
-     * @param initialBoard
+     * @param player the player object who is allowed to make moves this turn
+     * @param color the color of pieces the active player controls
+     * @param initialBoard the single board object that represents the state of the board at the end of the previous turn
      */
     public Turn(Player player, Piece.color color, Board initialBoard){
         this.player=player;
@@ -57,8 +57,8 @@ public class Turn {
      * @param move The move to be made
      */
     public void makeMove(Move move) throws IllegalStateException{
-        if (!undoBoards.peek().isValidMove(move).equals(Move.moveType.INVALID)){
-            Board newBoard = new Board(undoBoards.peek());
+        if (!undoBoards.peek().isValidMove(move).equals(Move.moveType.INVALID)){    //is move valid on the top board of undoBoards?
+            Board newBoard = new Board(undoBoards.peek());                          //make the move by adding a new board to the stack
             newBoard.makeMove(move);
             undoBoards.push(newBoard);
             return;

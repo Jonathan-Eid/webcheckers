@@ -24,11 +24,11 @@ public class Board implements Iterable{
     public Board(){
         this.boardState = state.NO_MOVE;
         this.rows = new Row[8];
-        for (int y = 0; y < 8; y++){
+        for (int y = 0; y < 8; y++){            //iterate over the Rows in this Board
             Row row = new Row(y);
             rows[y] = row;
-            for (int x = 0; x < 8; x++){
-                if (y < 3){
+            for (int x = 0; x < 8; x++){        //iterate over the Squares in this Row
+                if (y < 3){                     //the first three rows should contain white checkers, but only on the black squares
                     if(y % 2 == 0){
                         if (x % 2 == 0){
                             rows[y].setSpace(x, Square.color.EMPTY_WHITE);
@@ -48,7 +48,7 @@ public class Board implements Iterable{
                         }
                     }
                 }
-                else if (y > 4){
+                else if (y > 4){                //the last three rows should contain red checkers, but only on the black squares
                     if(y % 2 == 0){
                         if (x % 2 == 0){
                             rows[y].setSpace(x, Square.color.EMPTY_WHITE);
@@ -68,7 +68,7 @@ public class Board implements Iterable{
                         }
                     }
                 }
-                else{
+                else{                           //the two rows in the middle of the board do not initially contain checkers
                     if(y % 2 == 0){
                         if (x % 2 == 0){
                             rows[y].setSpace(x, Square.color.EMPTY_WHITE);
@@ -91,7 +91,8 @@ public class Board implements Iterable{
     }
 
     /**
-     * copy constructor, creates a deep copy of board
+     * copy constructor, creates a deep copy of other
+     * this constructor recursively calls the copy constructors of Row, Square, and Piece
      * @param other the board to copy
      */
     public Board(Board other){

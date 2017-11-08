@@ -29,12 +29,16 @@ public class Piece {
     }
 
     /**
-     * make the piece a king
+     * make this piece a king
      */
     public void kingMe(){
         type = pieceType.KING;
     }
 
+    /**
+     * returns the type of this piece, which is an enum
+     * @return SINGLE or KING
+     */
     public pieceType getType(){
         return type;
     }

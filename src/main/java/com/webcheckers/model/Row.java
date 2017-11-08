@@ -16,14 +16,15 @@ public class Row implements Iterable<Square>{
 
     /**
      * standard constructor
-     * @param index the index of this row in a checkers board, with a value of 0 to 7
+     * @param index the index of this row in a checkers board, with a value between 0 and 7, inclusive
      */
     public Row(int index){
         this.index=index;
         this.spaces = new Square[8];
     }
 
-    /**Copy Constructor
+    /**
+     * Copy Constructor
      * creates a deep copy of the row provided
      * @param other the row to copy
      */
@@ -31,12 +32,12 @@ public class Row implements Iterable<Square>{
         this.index = other.getIndex();
         this.spaces = new Square[other.spaces.length];
         for (int i = 0; i < other.spaces.length; i++){
-            this.spaces[i] = new Square(other.spaces[i]);
+            this.spaces[i] = new Square(other.spaces[i]);   //the copy constructor recursively calls the copy constructor of Square
         }
     }
 
     /**
-     * reverse the order of squares in a row, creating a new row object
+     * reverse the order of squares in this row, creating a new row object
      * @param index the index of the row produced by this method
      * @return a row with the index provided, but with all of this row's squares in reverse order
      */
@@ -104,6 +105,9 @@ public class Row implements Iterable<Square>{
     }
 
     @Override
+    /**
+     * method to create a RowIterator
+     */
     public Iterator<Square> iterator() {
         return new RowIterator();
     }
