@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.Message;
 import org.junit.Before;
 import org.junit.Test;
 

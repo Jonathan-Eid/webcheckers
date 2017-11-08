@@ -20,8 +20,8 @@ public class GetSignOutRoute implements Route{
     private PlayerLobby playerLobby;
 
     /**
-     *
-     * @param playerLobby
+     * Constructor for GetSignOutRoute.
+     * @param playerLobby the single playerLobby in the entire program.
      */
     public GetSignOutRoute(PlayerLobby playerLobby) {
         Objects.requireNonNull(playerLobby, "player lobby cannot be null");

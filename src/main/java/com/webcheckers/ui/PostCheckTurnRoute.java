@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.Game;
+import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
 import spark.Request;
@@ -18,15 +19,23 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 public class PostCheckTurnRoute implements Route {
 
     private Gson gson;
-    private PlayerLobby playerLobby;
 
-
-    public PostCheckTurnRoute(PlayerLobby playerLobby, Gson gson) {
-        this.playerLobby = playerLobby;
+    /**
+     * Constructor
+     * @param gson Gson Interpreter
+     */
+    public PostCheckTurnRoute(Gson gson) {
         this.gson = gson;
     }
 
 
+    /**
+     * Check if the other player's turn is over.
+     * @param request
+     * @param response
+     * @return Message either containing true (if the other player's turn is over) or false.
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();

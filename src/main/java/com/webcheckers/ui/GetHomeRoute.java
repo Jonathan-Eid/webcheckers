@@ -63,7 +63,8 @@ public class GetHomeRoute implements Route {
         Session session = request.session();
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-        if (!session.isNew()){//The user is signed in
+        if (!session.isNew()){
+            //The user is signed in
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");

@@ -19,12 +19,18 @@ import static spark.Spark.halt;
 
 /**
  * Created by dis446 on 10/31/17.
+ * This class starts a game between two players.
  */
 public class GetStartGameRoute implements Route {
 
     private TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
 
+    /**
+     *
+     * @param engine the Template engine to render the html.
+     * @param playerLobby the single playerLobby object in the entire program.
+     */
     public GetStartGameRoute(final TemplateEngine engine, PlayerLobby playerLobby){
         Objects.requireNonNull(engine, "TemplateEngine must not be null");
         Objects.requireNonNull(playerLobby, "PlayerLobby must not be null");
@@ -32,6 +38,13 @@ public class GetStartGameRoute implements Route {
         this.playerLobby = playerLobby;
     }
 
+    /**
+     * Renders the home page with a given error message. This is called when something goes wrong but not fatally.
+     * @param error String message to display to user
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return
+     */
     public String error(String error, Request request, Response response){
         final Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
@@ -47,6 +60,13 @@ public class GetStartGameRoute implements Route {
     }
 
 
+    /**
+     * Tries to start a game between two players. If any errors occur, call error();
+     * @param request
+     * @param response
+     * @return String of html code
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Game game;
@@ -60,6 +80,7 @@ public class GetStartGameRoute implements Route {
                 String opponentName = request.queryParams("opponent");
                 Player opponent = playerLobby.getPlayer(opponentName);
                 if ((!(playerLobby.isInGame(player))) && (!(playerLobby.isInGame(opponent)))) {
+                    //Neither players are in a game currently.
                     //Mark the players as being in a game.
                     playerLobby.addToGame(player, opponent);
                     //Create the game object

@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
 /**
  * Created by Juna on 10/15/2017.
