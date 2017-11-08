@@ -5,13 +5,17 @@ package com.webcheckers.model;
  * Created by Juna, Disney, Andy, Ani on 10/15/2017.
  */
 public class Move {
-
     public enum moveType{INVALID, SINGLE, CAPTURE}
 
     private Position start;
     private Position end;
     public moveType type;
 
+    /**
+     * standard constructor
+     * @param start the position (of a piece) before it moves
+     * @param end the position (of a piece) after it moves
+     */
     public Move(Position start, Position end){
         this.start = start;
         this.end = end;
@@ -19,8 +23,9 @@ public class Move {
     }
 
     /**
-     *Sets move type to tell other objects how to handle this move
-     * @param type
+     * change the type of the move
+     * moves are initially INVALID, but may be changed to SINGLE or CAPTURE once they are validated
+     * @param type the type to change this move to (INVALID, SINGLE, CAPTURE)
      */
     public void setType(moveType type){
         this.type = type;
