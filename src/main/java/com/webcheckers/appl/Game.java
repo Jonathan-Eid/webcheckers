@@ -89,4 +89,14 @@ public class Game {
     public boolean checkTurn(Player player) {
         return this.activePlayer.equals(player);
     }
+
+    public boolean checkGameOver(){
+        Board tempBoard;
+        if(activeColor.equals(Piece.color.RED)){
+            tempBoard = board;
+        } else {
+            tempBoard = board.reverse();
+        }
+        return tempBoard.checkGameOver(activeColor);
+    }
 }

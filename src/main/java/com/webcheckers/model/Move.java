@@ -11,12 +11,22 @@ public class Move {
     private Position end;
     public moveType type;
 
+    /**
+     * standard constructor
+     * @param start the position (of a piece) before it moves
+     * @param end the position (of a piece) after it moves
+     */
     public Move(Position start, Position end){
         this.start = start;
         this.end = end;
         type = moveType.INVALID;
     }
 
+    /**
+     * change the type of the move
+     * moves are initially INVALID, but may be changed to SINGLE or CAPTURE once they are validated
+     * @param type the type to change this move to (INVALID, SINGLE, CAPTURE)
+     */
     public void setType(moveType type){
         this.type = type;
     }
