@@ -255,7 +255,9 @@ public class Board implements Iterable{
 
         Position newStart = new Position(7 - startX, 7 - startY);
         Position newEnd = new Position(7 - endX, 7 - endY);
-        return new Move(newStart, newEnd);
+        Move newMove = new Move(newStart, newEnd);
+        newMove.setType(move.type);
+        return newMove;
     }
 
     /**

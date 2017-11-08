@@ -174,7 +174,7 @@ public class WebServer {
         post(CHECK_TURN_URL, new PostCheckTurnRoute(playerLobby, gson));
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(playerLobby, gson));
         post(BACKUP_MOVE_URL, new PostBackUpMove(playerLobby,gson));
-
+        post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson));
         //
         LOG.config("WebServer is initialized.");
     }

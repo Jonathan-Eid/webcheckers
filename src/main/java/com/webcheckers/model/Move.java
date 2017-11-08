@@ -43,7 +43,6 @@ public class Move {
         Position start = new Position(7-this.getStart().getRow(),7-this.getStart().getCell());
         Position end = new Position(7-this.getEnd().getRow(),7-this.getEnd().getCell());
         return new Move(start,end);
-
     }
 
 
