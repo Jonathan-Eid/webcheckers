@@ -54,6 +54,18 @@ Either player of a game may choose to resign, which ends the game.
 ### MVP Features
 > Provide a list of top-level Epics and/or Stories of the MVP.
 
+Player Sign-in
+Start a game
+Capture move
+Regular move
+Undo move
+Chain capture move
+Make king
+King move
+King capture move
+Remove capture piece
+Resign
+
 ### Roadmap of Enhancements
 > Provide a list of top-level features in the order you plan to consider them.
 
