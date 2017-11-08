@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
@@ -43,6 +44,12 @@ public class PlayerLobby {
         }
     }
 
+    /**
+     * Create a new Game object and associate it with two players.
+     * @param player1
+     * @param player2
+     * @return
+     */
     public Game newGame(Player player1, Player player2){
         Game newGame = new Game(player1, player2);
         this.GameList.add(newGame);
@@ -113,16 +120,6 @@ public class PlayerLobby {
         return playerMap.containsKey(name);
     }
 
-    /**public Piece.color getColor(String name) throws IllegalStateException{
-     Player player = getPlayer(name);
-     for (Player player1 : playerMap){
-     if (player1.equals(player)){
-     return player.getColor();
-     }
-     }
-     throw new IllegalStateException("Invalid player color lookup");
-     }*/
-
     /**
      * List out the Players so that the HomePage can display them.
      * @param name String
@@ -165,6 +162,11 @@ public class PlayerLobby {
         playerPlayerMap.put(player1, player);
     }
 
+    /***
+     * Fetch the player that is the opponent of a given player.
+     * @param player Player whose opponent is wanted.
+     * @return
+     */
     public Player getPlayerOpponent(Player player){
         return playerPlayerMap.get(player);
     }
@@ -178,9 +180,4 @@ public class PlayerLobby {
         playerPlayerMap.remove(player);
         playerPlayerMap.remove(second);
     }
-
-    public List<Game> getinGameList(){
-        return GameList;
-    }
-
 }

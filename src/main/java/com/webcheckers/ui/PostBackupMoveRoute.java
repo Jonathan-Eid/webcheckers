@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.appl.Game;
+import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import spark.Request;
 import spark.Response;

@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.Game;
+import com.webcheckers.model.Game;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
