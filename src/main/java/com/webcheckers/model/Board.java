@@ -245,6 +245,19 @@ public class Board implements Iterable{
         return board;
     }
 
+    public Move reverseMove(Move move){
+        Position start = move .getStart();
+        Position end = move .getEnd();
+        int startX = start.getRow();
+        int startY = start.getCell();
+        int endX = end.getRow();
+        int endY = end.getCell();
+
+        Position newStart = new Position(7 - startX, 7 - startY);
+        Position newEnd = new Position(7 - endX, 7 - endY);
+        return new Move(newStart, newEnd);
+    }
+
     /**
      * determines if the game is over for the player whose turn it is
      * this is accomplished by iterating over the board and checking for the existence of pieces belonging to the active player
