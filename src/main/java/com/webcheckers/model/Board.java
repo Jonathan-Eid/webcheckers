@@ -12,6 +12,7 @@ import java.util.Stack;
 public class Board implements Iterable{
 
     private Row[] rows;
+
     public enum state{NO_MOVE, SINGLE_MOVE, CAPTURE_MOVE};
     private state boardState;
     private Position lastCapture;
@@ -101,6 +102,13 @@ public class Board implements Iterable{
         for (int i = 0; i < this.rows.length; i++){
             this.rows[i] = new Row(other.rows[i]);
         }
+    }
+    /**
+     * resets the board state to NO_MOVE at the start of a player's turn
+     * Should be called at the start of a player's turn
+     */
+    public void startTurn() {
+        this.boardState = state.NO_MOVE;
     }
 
     /**
@@ -209,6 +217,13 @@ public class Board implements Iterable{
     public void makeMove(Move move){
         if (move.type == null){
             throw new IllegalStateException("Move has not moveType");
+        }
+        if(move.type.equals(Move.moveType.SINGLE)){
+            this.boardState = state.SINGLE_MOVE;
+        }else if(move.type.equals((Move.moveType.CAPTURE))){
+            this.boardState = state.CAPTURE_MOVE;
+        }else{
+            throw new IllegalStateException("Invalid board state");
         }
         Position start = move.getStart();
         Position end = move.getEnd();
