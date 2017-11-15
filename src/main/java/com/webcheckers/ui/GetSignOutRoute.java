@@ -7,6 +7,8 @@ import spark.*;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
 import static spark.Spark.halt;
 
 /**
@@ -40,8 +42,9 @@ public class GetSignOutRoute implements Route{
     public Object handle(Request request, Response response) throws Exception {
         LOG.config("GetSignOutRoute handle called.");
         final Session session = request.session();
-        Player p = session.attribute("player");
-        session.removeAttribute("player");
+        Player p = session.attribute(USER_ATTR);
+        session.removeAttribute(USER_ATTR);
+        session.removeAttribute(USER_SIGNED_IN_ATTR);
         playerLobby.signOutPlayer(p.getName());
         response.redirect(WebServer.HOME_URL); //Redirect to home page
         halt();
