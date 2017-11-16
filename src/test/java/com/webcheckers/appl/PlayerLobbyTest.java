@@ -46,21 +46,21 @@ public class PlayerLobbyTest {
     @Test
     public void signInPlayer(){
         assertEquals("Player sign in must return SignInResult.SIGNED_IN", PlayerLobby.SignInResult.SIGNED_IN,
-                CuT.signInPlayer(player1Name));
+                CuT.signInPlayer(player1Name, "password"));
         assertNotNull("Player of name test must not be null", CuT.getPlayer(player1Name));
         assertEquals("An empty name should return an INVALID_INPUT", PlayerLobby.SignInResult.INVALID_INPUT,
-                CuT.signInPlayer(""));
-        assertEquals(PlayerLobby.SignInResult.INVALID_INPUT, CuT.signInPlayer("\""));
+                CuT.signInPlayer("", ""));
+        assertEquals(PlayerLobby.SignInResult.INVALID_INPUT, CuT.signInPlayer("\"", ""));
 
         //A player cannot sign in with a name already taken.
-        assertEquals(PlayerLobby.SignInResult.INVALID_PLAYER, CuT.signInPlayer(player1Name));
+        assertEquals(PlayerLobby.SignInResult.INVALID_PLAYER, CuT.signInPlayer(player1Name, "password"));
         assertSame(1, CuT.playerMap.size());
     }
 
 
     @Test
     public void signOutPlayer() throws Exception {
-        CuT.signInPlayer(player1Name);
+        CuT.signInPlayer(player1Name, "");
         assertSame(1, CuT.playerMap.size());
         assertEquals(PlayerLobby.SignInResult.SIGNED_OUT, CuT.signOutPlayer(player1Name));
         assertSame(0, CuT.playerMap.size());
@@ -68,7 +68,7 @@ public class PlayerLobbyTest {
 
     @Test
     public void getPlayer() throws Exception {
-        CuT.signInPlayer(player1Name);
+        CuT.signInPlayer(player1Name, "");
         assertNotNull(CuT.getPlayer(player1Name));
         //assertEquals("Player of name test should exist", player1, CuT.getPlayer(player1Name));
         assertNull(CuT.getPlayer(player2Name));
@@ -77,14 +77,14 @@ public class PlayerLobbyTest {
     @Test
     public void getNumPlayers() throws Exception {
         assertEquals(Integer.toString(0), CuT.getNumPlayers());
-        CuT.signInPlayer(player1Name);
+        CuT.signInPlayer(player1Name, "");
         assertEquals(Integer.toString(1), CuT.getNumPlayers());
     }
 
     @Test
     public void playerList() throws Exception {
-        CuT.signInPlayer(player1Name);
-        CuT.signInPlayer(player2Name);
+        CuT.signInPlayer(player1Name, "");
+        CuT.signInPlayer(player2Name, "");
         assertEquals("<form action=\"/game\" method=\"GET\"> <input type=\"hidden\" id=\"name\" " +
                         "name=\"opponent\" value=\"" + player1Name + "\"> <button type=\"submit\" >" + player1Name +
                         "</button> </div> </form>",
@@ -93,8 +93,8 @@ public class PlayerLobbyTest {
 
     @Test
     public void isInGame() throws Exception {
-        CuT.signInPlayer(player1Name);
-        CuT.signInPlayer(player2Name);
+        CuT.signInPlayer(player1Name, "");
+        CuT.signInPlayer(player2Name, "");
         CuT.addToGame(player1, player2);
         assertTrue(CuT.isInGame(player1));
         assertFalse(CuT.isInGame(player3));
@@ -102,8 +102,8 @@ public class PlayerLobbyTest {
 
     @Test
     public void addToGame() throws Exception {
-        CuT.signInPlayer(player1Name);
-        CuT.signInPlayer(player2Name);
+        CuT.signInPlayer(player1Name, "");
+        CuT.signInPlayer(player2Name, "");
         CuT.addToGame(player1,player2);
         HashMap<Player, Player> expectedMap = new HashMap<>();
         expectedMap.put(player1, player2);
@@ -113,8 +113,8 @@ public class PlayerLobbyTest {
 
     @Test
     public void removeFromGame() throws Exception {
-        CuT.signInPlayer(player1Name);
-        CuT.signInPlayer(player2Name);
+        CuT.signInPlayer(player1Name, "");
+        CuT.signInPlayer(player2Name, "");
         CuT.addToGame(player1, player2);
         assertTrue(CuT.isInGame(player1));
         assertTrue(CuT.isInGame(player2));

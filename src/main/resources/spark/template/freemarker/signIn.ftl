@@ -26,6 +26,8 @@
           <form action="./signingIn" method="POST">
               <label for="user">username:</label>
               <input type="text" id="user" name="username">
+              <label for="password">password:</label>
+              <input type="text" id = "password" name = "password">
               <button type="submit">Sign In</button>
           </form>
 

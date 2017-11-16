@@ -44,7 +44,7 @@ public class PostSignInRouteTest {
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
         playerLobby = new PlayerLobby();
-        playerLobby.signInPlayer(ALREADY_IN);
+        playerLobby.signInPlayer(ALREADY_IN, "");
 
         CuT = new PostSignInRoute(engine,playerLobby);
 
