@@ -1,6 +1,8 @@
 package com.webcheckers.model;
 
 
+import java.util.Optional;
+
 /**
  * Created by Juna on 10/31/2017.
  */
@@ -101,18 +103,17 @@ public class Game {
 
     /**
      * Remove player 1 from the game.
-     * @param player1
      */
-    public void RemovePlayer1(Player player1) {
-        this.player1 = null;
+    public void RemovePlayer1() {
+
+        this.player1 = new Player("\"");
     }
 
     /**
      * Remove player 2 from the game
-     * @param player2
      */
-    public void RemovePlayer2(Player player2) {
-        this.player2 = null;
+    public void RemovePlayer2() {
+        this.player2 = new Player("\"");
     }
 
     /**
