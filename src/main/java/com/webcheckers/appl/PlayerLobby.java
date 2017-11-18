@@ -97,7 +97,7 @@ public class PlayerLobby {
 
     public Game getGameFromPlayer(Player player){
         for (Game game: GameList) {
-            if (game.getPlayer2().equals(player)){
+            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
         }
@@ -175,9 +175,19 @@ public class PlayerLobby {
      * removes a player from the map of players in games
      * @param player Player
      */
-    public void removeFromGame(Player player){
-        Player second = playerPlayerMap.get(player);
+    public void quitGame(Player player){
         playerPlayerMap.remove(player);
-        playerPlayerMap.remove(second);
+        Game game = GameList.get(GameList.indexOf(getGameFromPlayer(player)));
+        if(player.equals(game.getPlayer1())){
+            game.RemovePlayer1();
+        }
+        if(player.equals(game.getPlayer2())){
+            game.RemovePlayer2();
+        }
+    }
+
+    public void endResignedGame(Player player){
+        playerPlayerMap.remove(player);
+        GameList.remove(GameList.indexOf(getGameFromPlayer(player)));
     }
 }
