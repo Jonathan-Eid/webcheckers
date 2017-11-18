@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.*;
@@ -18,13 +19,15 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 public class PostCheckTurnRoute implements Route {
 
     private Gson gson;
+    private PlayerLobby playerLobby;
 
     /**
      * Constructor
      * @param gson Gson Interpreter
      */
-    public PostCheckTurnRoute(Gson gson) {
+    public PostCheckTurnRoute(Gson gson, PlayerLobby playerLobby) {
         this.gson = gson;
+        this.playerLobby = playerLobby;
     }
 
 
@@ -41,7 +44,10 @@ public class PostCheckTurnRoute implements Route {
         Player player = session.attribute(USER_ATTR);
         Game game = session.attribute(GAME_ATTR);
         Message message;
-        if (game.checkTurn(player)){
+        if (!playerLobby.isInGame(playerLobby.getPlayerOpponent(player))){
+            message = new Message("true", Message.type.info);
+        }
+        else if (game.checkTurn(player)){
             message = new Message("true", Message.type.info);
         }
         else {

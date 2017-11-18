@@ -10,7 +10,6 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
-import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 
 /**
@@ -31,11 +30,16 @@ public class PostResignRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();
-        playerLobby.endGame(session.attribute(USER_ATTR));
+        Player quitter = session.attribute(USER_ATTR);
         Message message;
-        message = new Message("Resigned", Message.type.info);
+        if (playerLobby.isInGame(playerLobby.getPlayerOpponent(quitter))){
+            playerLobby.quitGame(quitter);
+            message = new Message("Resigned", Message.type.info);
+        }
+        else{
+            message = new Message("Error: Could not resign", Message.type.error);
+        }
         return gson.toJson(message, Message.class);
-        //TODO End game for the other player who didn't initiate the resign
     }
 }
 
