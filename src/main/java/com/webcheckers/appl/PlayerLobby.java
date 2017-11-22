@@ -97,7 +97,7 @@ public class PlayerLobby {
 
     public Game getGameFromPlayer(Player player){
         for (Game game: GameList) {
-            if (game.getPlayer2().equals(player)){
+            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
         }
