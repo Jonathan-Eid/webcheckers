@@ -24,7 +24,7 @@ public class PostCheckTurnRoute implements Route {
     private Gson gson;
     private PlayerLobby playerLobby;
 
-    static final String GAME_OVER_ATTR = "gameOver";
+    static final String OPPONENT_RESIGNED_ATTR = "opponentResigned";
     /**
      * Constructor
      * @param gson Gson Interpreter
@@ -50,7 +50,7 @@ public class PostCheckTurnRoute implements Route {
         Message message;
         if (!playerLobby.isInGame(playerLobby.getPlayerOpponent(player))){
             //Opponent resigned.
-            session.attribute(GAME_OVER_ATTR, true);
+            session.attribute(OPPONENT_RESIGNED_ATTR, true);
             message = new Message("true", Message.type.info);
         }
         else if (game.checkTurn(player)){
