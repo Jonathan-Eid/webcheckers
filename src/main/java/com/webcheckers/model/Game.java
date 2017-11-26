@@ -55,6 +55,7 @@ public class Game {
      */
     public void startTurn(){
         if (this.turn == null){
+            this.board.startTurn();
             this.turn = new Turn(activePlayer, activeColor, this.board);
             return;
         }
