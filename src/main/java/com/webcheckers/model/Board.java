@@ -125,7 +125,16 @@ public class Board implements Iterable{
         int deltaX = endX - startX;
         int deltaY = endY - startY;
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
-
+        if (endY == 7){
+            if (startPiece.getColor().equals(Piece.color.WHITE)){
+                startPiece.kingMe();
+            }
+        }
+        else if (endY == 0){
+            if (startPiece.getColor().equals(Piece.color.RED)){
+                startPiece.kingMe();
+            }
+        }
 
         switch (boardState) {
             case NO_MOVE:
@@ -135,7 +144,7 @@ public class Board implements Iterable{
                             return Move.moveType.SINGLE;
                         } else if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
                             Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
-                            if(jumpedPiece instanceof Piece){
+                            if(jumpedPiece != null){
                                 if(jumpedPiece.getColor() != startPiece.getColor()) {
                                     return Move.moveType.CAPTURE;
                                 } else {
@@ -150,9 +159,9 @@ public class Board implements Iterable{
                     } else if (startPiece.getColor().equals(Piece.color.RED)) {
                         if(Math.abs(deltaX) == 1 && (deltaY == -1 || (deltaY == 1 && startPiece.getType() == Piece.pieceType.KING))){
                             return Move.moveType.SINGLE;
-                        } else if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))){
+                        } else if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == 2 && startPiece.getType() == Piece.pieceType.KING))){
                             Piece jumpedPiece = rows[startY + deltaY/2].getSpace(startX + deltaX/2).getPiece();
-                            if(jumpedPiece instanceof Piece){
+                            if(jumpedPiece != null){
                                 if(jumpedPiece.getColor() != startPiece.getColor()) {
                                     return Move.moveType.CAPTURE;
                                 } else {
@@ -174,7 +183,7 @@ public class Board implements Iterable{
                     if (startPiece.getColor().equals(Piece.color.WHITE)) {
                         if (Math.abs(deltaX) == 2 && (deltaY == 2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))) {
                             Piece jumpedPiece = rows[startY + deltaY / 2].getSpace(startX + deltaX / 2).getPiece();
-                            if (jumpedPiece instanceof Piece) {
+                            if (jumpedPiece != null) {
                                 if (jumpedPiece.getColor() != startPiece.getColor()) {
                                     return Move.moveType.CAPTURE;
                                 } else {
@@ -187,9 +196,9 @@ public class Board implements Iterable{
                             return Move.moveType.INVALID;
                         }
                     } else if (startPiece.getColor().equals(Piece.color.RED)) {
-                        if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == -2 && startPiece.getType() == Piece.pieceType.KING))) {
+                        if (Math.abs(deltaX) == 2 && (deltaY == -2 || (deltaY == 2 && startPiece.getType() == Piece.pieceType.KING))) {
                             Piece jumpedPiece = rows[startY + deltaY / 2].getSpace(startX + deltaX / 2).getPiece();
-                            if (jumpedPiece instanceof Piece) {
+                            if (jumpedPiece != null) {
                                 if (jumpedPiece.getColor() != startPiece.getColor()) {
                                     return Move.moveType.CAPTURE;
                                 } else {
