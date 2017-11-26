@@ -54,11 +54,11 @@ public class PostSignInRoute implements Route {
         if (playerLobby.hasAccount(userName)){
             //User is trying to sign in to a pre-existing account.
             Player player = playerLobby.getPlayer(userName);
-            if (player.isSignedIn()){
+            /*if (player.isSignedIn()){
                 vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
                 vm.put(INVALID_SIGN_IN_ATTR, "ERROR. This username has already been taken.");
                 return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-            }
+            }*/
             if(player.checkPassword(password)){
                 player.signIn();
                 session.attribute(USER_SIGNED_IN_ATTR, true);

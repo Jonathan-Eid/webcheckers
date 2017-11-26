@@ -22,6 +22,7 @@
             </#if>
           </p>
           <p>${signInMessage}</p>
+          <p>${signInHelp}</p>
 
           <form action="./signingIn" method="POST">
               <label for="user">username:</label>

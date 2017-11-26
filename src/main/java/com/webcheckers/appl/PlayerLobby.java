@@ -20,6 +20,7 @@ public class PlayerLobby {
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
     List<Game> GameList;
+
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
@@ -42,6 +43,20 @@ public class PlayerLobby {
             playerMap.put(name, new Player(name, password));
             return SignInResult.SIGNED_IN;
         }
+    }
+
+    /**
+     * Check if a given player is currently signed in.
+     * @param player
+     * @return
+     */
+    public boolean isSignedIn(Player player) {
+        for (Player player1 : this.playerMap.values()){
+            if (player1.isSignedIn() && player.equals(player1)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -98,7 +113,7 @@ public class PlayerLobby {
 
     public Game getGameFromPlayer(Player player){
         for (Game game: GameList) {
-            if (game.getPlayer2().equals(player)){
+            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
         }
