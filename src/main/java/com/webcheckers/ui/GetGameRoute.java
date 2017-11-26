@@ -11,7 +11,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.PostCheckTurnRoute.GAME_OVER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.*;
+import static com.webcheckers.ui.WebServer.HOME_URL;
+import static spark.Spark.halt;
 
 
 /**
@@ -33,6 +36,7 @@ public class GetGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String BOARD_VIEW_ATTR = "board";
     static final String MESSAGE_ATTR = "message";
+    static final String MESSAGE = "error";
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -60,8 +64,8 @@ public class GetGameRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
         Player player = session.attribute("player");
-        vm.put("message", true);
-        vm.put("error", error);
+        vm.put(MESSAGE_ATTR, true);
+        vm.put(MESSAGE, error);
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);
         vm.put(USER_SIGNED_IN_ATTR, true);
         vm.put(USER_ATTR, player.getName());
@@ -81,6 +85,13 @@ public class GetGameRoute implements Route {
         LOG.config("GetGameRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
+
+        if (session.attribute(GAME_OVER_ATTR) != null){
+            //Game is over. Go to the home page.
+            response.redirect(HOME_URL);
+            halt();
+            return null;
+        }
 
         //Fetch game and players from the session
         Game game = session.attribute(GAME_ATTR);

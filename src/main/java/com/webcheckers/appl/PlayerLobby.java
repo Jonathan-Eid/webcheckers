@@ -19,12 +19,12 @@ public class PlayerLobby {
 
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
-    List<Game> GameList;
+    List<Game> gameList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     public PlayerLobby() {
         playerMap = new HashMap<>();        //associates Strings to Players
-        GameList  = new ArrayList<>();
+        gameList = new ArrayList<>();
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
     }
 
@@ -52,7 +52,7 @@ public class PlayerLobby {
      */
     public Game newGame(Player player1, Player player2){
         Game newGame = new Game(player1, player2);
-        this.GameList.add(newGame);
+        this.gameList.add(newGame);
         return newGame;
     }
 
@@ -96,7 +96,7 @@ public class PlayerLobby {
     }
 
     public Game getGameFromPlayer(Player player){
-        for (Game game: GameList) {
+        for (Game game: gameList) {
             if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
@@ -145,7 +145,7 @@ public class PlayerLobby {
      * @return true if the player is in a game right now, false otherwise
      */
     public boolean isInGame(Player player){
-        for (Game game: GameList) {
+        for (Game game: gameList) {
             if (game.getPlayer1().equals(player) || game.getPlayer2().equals(player)){
                 return true;
             }
@@ -177,7 +177,7 @@ public class PlayerLobby {
      */
     public void quitGame(Player player){
         playerPlayerMap.remove(player);
-        Game game = GameList.get(GameList.indexOf(getGameFromPlayer(player)));
+        Game game = gameList.get(gameList.indexOf(getGameFromPlayer(player)));
         if(player.equals(game.getPlayer1())){
             game.RemovePlayer1();
         }
@@ -187,7 +187,9 @@ public class PlayerLobby {
     }
 
     public void endResignedGame(Player player){
+        Player opponent = this.getPlayerOpponent(player);
+        playerPlayerMap.remove(opponent);
         playerPlayerMap.remove(player);
-        GameList.remove(GameList.indexOf(getGameFromPlayer(player)));
+        gameList.remove(gameList.indexOf(getGameFromPlayer(player)));
     }
 }

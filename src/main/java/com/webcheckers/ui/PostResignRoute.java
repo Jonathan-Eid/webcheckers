@@ -31,9 +31,10 @@ public class PostResignRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();
         Player quitter = session.attribute(USER_ATTR);
+        Player opponent = playerLobby.getPlayerOpponent(quitter);
         Message message;
-        if (playerLobby.isInGame(playerLobby.getPlayerOpponent(quitter))){
-            playerLobby.quitGame(quitter);
+        if (playerLobby.isInGame(opponent) && playerLobby.isInGame(quitter)){
+            playerLobby.endResignedGame(quitter);
             message = new Message("Resigned", Message.type.info);
         }
         else{

@@ -118,7 +118,7 @@ public class PlayerLobbyTest {
         CuT.addToGame(player1, player2);
         assertTrue(CuT.isInGame(player1));
         assertTrue(CuT.isInGame(player2));
-        CuT.removeFromGame(player1);
+        CuT.quitGame(player1);
         assertFalse(CuT.isInGame(player1));
         assertFalse(CuT.isInGame(player2));
     }
