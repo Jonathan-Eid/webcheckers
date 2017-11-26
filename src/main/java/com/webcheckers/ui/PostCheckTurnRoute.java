@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.*;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
+import freemarker.template.Template;
+import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
@@ -18,6 +19,7 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 public class PostCheckTurnRoute implements Route {
 
     private Gson gson;
+
 
     /**
      * Constructor

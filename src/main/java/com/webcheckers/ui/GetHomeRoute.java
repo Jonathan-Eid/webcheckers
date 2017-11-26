@@ -30,6 +30,7 @@ public class GetHomeRoute implements Route {
     static final String TITLE_ATTR = "title";
     static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
+    static final String GAMES_ATTR = "gameList";
     private PlayerLobby playerLobby;
 
     /**
@@ -68,14 +69,15 @@ public class GetHomeRoute implements Route {
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
-                if(playerLobby.isInGame(player)){
+                /*if(playerLobby.isInGame(player)){
                     response.redirect(START_GAME_URL);
                     halt();
                     return null;
-                }
+                }*/
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());
                 vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
+                vm.put(GAMES_ATTR, playerLobby.gameList(player.getName()));
             }
         }
 

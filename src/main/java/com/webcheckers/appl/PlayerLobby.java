@@ -97,7 +97,7 @@ public class PlayerLobby {
 
     public Game getGameFromPlayer(Player player){
         for (Game game: GameList) {
-            if (game.getPlayer2().equals(player)){
+            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
         }
@@ -135,6 +135,21 @@ public class PlayerLobby {
                         player.getName() + "</button> </div> </form>");
             }
         }
+        LOG.config(result);
+        return result;
+    }
+
+    public String gameList(String name){
+        String gameStr = "";
+        String result = "";
+        for (Game game: GameList) {
+            if (game.getPlayer2().getName().equals(name) || game.getPlayer1().getName().equals(name)){
+                gameStr = game.toString();
+            }
+        }
+        result = result.concat("<form action=\"/startGame\" method=\"GET\"> <input type=\"hidden\" id=\"name\" " +
+                "name=\"opponent\" value=\"" + gameStr + "\"> <button type=\"submit\" >" +
+                gameStr + "</button> </div> </form>");
         LOG.config(result);
         return result;
     }

@@ -53,6 +53,7 @@ public class Game {
      */
     public void startTurn(){
         if (this.turn == null){
+            this.board.startTurn();
             this.turn = new Turn(activePlayer, activeColor, this.board);
             return;
         }
@@ -144,5 +145,13 @@ public class Game {
             tempBoard = board.reverse();
         }
         return tempBoard.checkGameOver(activeColor);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                player1.getName() +
+                " vs." + player2.getName() +
+                '}';
     }
 }
