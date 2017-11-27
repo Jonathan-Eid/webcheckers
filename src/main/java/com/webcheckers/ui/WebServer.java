@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import spark.TemplateEngine;
 
 import java.util.Objects;
@@ -79,6 +81,7 @@ public class WebServer {
     private final TemplateEngine templateEngine;
     private final Gson gson;
     private PlayerLobby playerLobby;
+    private GameCenter gameCenter;
 
     //
     // Constructor
@@ -87,17 +90,21 @@ public class WebServer {
     /**
      * The constructor for the Web Server.
      *
+     *
+     * @param gameCenter
      * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
      * @param gson           The Google JSON parser object used to render Ajax responses.
      * @throws NullPointerException If any of the parameters are {@code null}.
      */
-    public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final PlayerLobby playerLobby, GameCenter gameCenter, final TemplateEngine templateEngine, final Gson gson) {
         // validation
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
         Objects.requireNonNull(playerLobby, "player ");
         //
         this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
         this.gson = gson;
         this.playerLobby = playerLobby;
     }
@@ -155,7 +162,7 @@ public class WebServer {
         //// code clean; using small classes.
 
         // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
+        get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby, gameCenter));
 
         //Sign in Page
         get(SIGN_IN_URL, new GetSignInRoute(templateEngine));
@@ -164,7 +171,7 @@ public class WebServer {
         post(SIGNING_IN_URL, new PostSignInRoute(templateEngine, playerLobby));
 
         //Get Game page
-        get(START_GAME_URL, new GetStartGameRoute(templateEngine, playerLobby));
+        get(START_GAME_URL, new GetStartGameRoute(templateEngine, playerLobby, gameCenter));
         get(GAME_URL, new GetGameRoute(templateEngine, playerLobby));
 
         //Sign Out

@@ -22,8 +22,11 @@ public class PlayerLobby {
     List<Game> GameList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
+    /**
+     * Initilize the playerMap, gameList and playerPlayerMap
+     */
     public PlayerLobby() {
-        playerMap = new HashMap<>();        //associates Strings to Players
+        playerMap = new HashMap<>();        //associates Strings (name) to Players
         GameList  = new ArrayList<>();
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
     }
@@ -42,18 +45,6 @@ public class PlayerLobby {
             playerMap.put(name, new Player(name));
             return SignInResult.SIGNED_IN;
         }
-    }
-
-    /**
-     * Create a new Game object and associate it with two players.
-     * @param player1
-     * @param player2
-     * @return
-     */
-    public Game newGame(Player player1, Player player2){
-        Game newGame = new Game(player1, player2);
-        this.GameList.add(newGame);
-        return newGame;
     }
 
     /**
@@ -95,14 +86,6 @@ public class PlayerLobby {
         return null;
     }
 
-    public Game getGameFromPlayer(Player player){
-        for (Game game: GameList) {
-            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
-                return game;
-            }
-        }
-        throw new IllegalStateException("Get Game from Player called when player not in a game");
-    }
     /**
      * Get's the total number of players signed in.
      * @return String
@@ -135,23 +118,9 @@ public class PlayerLobby {
                         player.getName() + "</button> </div> </form>");
             }
         }
-        LOG.config(result);
         return result;
     }
 
-    /**
-     * report whether a player is already in a game
-     * @param player a player who has signed in, and may or may not be in a game
-     * @return true if the player is in a game right now, false otherwise
-     */
-    public boolean isInGame(Player player){
-        for (Game game: GameList) {
-            if (game.getPlayer1().equals(player) || game.getPlayer2().equals(player)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * adds a player to the list of players in games

@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.Before;
@@ -31,6 +32,7 @@ public class GetHomeRouteTest {
     private Response response;
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
+    private GameCenter gameCenter;
 
     public static final String PLAYER_NAME_ATTR = "playerName";
 
@@ -43,11 +45,12 @@ public class GetHomeRouteTest {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
+        gameCenter = mock(GameCenter.class);
 
         playerLobby = new PlayerLobby();
 
         // create a unique CuT for each test
-        CuT = new GetHomeRoute(engine, playerLobby);
+        CuT = new GetHomeRoute(engine, playerLobby, gameCenter);
     }
 
 

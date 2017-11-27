@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -31,6 +32,7 @@ public class GetHomeRoute implements Route {
     static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
     private PlayerLobby playerLobby;
+    private GameCenter gameCenter;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -38,13 +40,16 @@ public class GetHomeRoute implements Route {
      *
      * @param templateEngine the HTML template rendering engine
      */
-    public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+    public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby, final GameCenter gameCenter) {
+
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         //
         this.templateEngine = templateEngine;
         this.playerLobby = playerLobby;
+        this.gameCenter = gameCenter;
         //
         LOG.config("GetHomeRoute is initialized.");
     }
@@ -68,7 +73,7 @@ public class GetHomeRoute implements Route {
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
-                if(playerLobby.isInGame(player)){
+                if(gameCenter.isInGame(player)){
                     response.redirect(START_GAME_URL);
                     halt();
                     return null;
