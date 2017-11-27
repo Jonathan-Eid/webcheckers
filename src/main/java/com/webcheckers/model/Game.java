@@ -17,7 +17,7 @@ public class Game {
 
     /**
      * Create a new game between two players.
-      * @param player1
+     * @param player1
      * @param player2
      */
     public Game(Player player1, Player player2){
@@ -144,9 +144,9 @@ public class Game {
     public boolean checkGameOver(){
         Board tempBoard;
         if(activeColor.equals(Piece.color.RED)){
-            tempBoard = board;
+            tempBoard = turn.getBoard();
         } else {
-            tempBoard = board.reverse();
+            tempBoard = turn.getBoard().reverse();
         }
         return tempBoard.checkGameOver(activeColor);
     }

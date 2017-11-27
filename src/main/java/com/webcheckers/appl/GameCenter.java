@@ -53,4 +53,14 @@ public class GameCenter {
         }
         throw new IllegalStateException("Get Game from Player called when player not in a game");
     }
+
+    /**
+     * removes a provided game from the gameList in the game center
+     * @param game
+     * @return true if the specified game existed in the list before removal, false otherwise
+     */
+    public boolean removeGame(Game game){
+        return gameList.remove(game);
+    }
+
 }

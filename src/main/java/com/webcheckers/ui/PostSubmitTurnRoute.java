@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import spark.Request;
@@ -15,14 +16,13 @@ import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
  */
 public class PostSubmitTurnRoute implements Route {
 
+    final static String GAME_OVER_ATTR = "gg";
     private Gson gson;
+    GameCenter gameCenter;
 
-    /**
-     * Constructor
-     * @param gson Gson interpreter.
-     */
-    public PostSubmitTurnRoute(Gson gson){
+    public PostSubmitTurnRoute(Gson gson, GameCenter gameCenter) {
         this.gson = gson;
+        this.gameCenter = gameCenter;
     }
 
     /**
@@ -39,6 +39,12 @@ public class PostSubmitTurnRoute implements Route {
         Game game = session.attribute(GAME_ATTR);
         game.finishTurn();
         game.startTurn();
+        if(game.checkGameOver()) {
+            gameCenter.removeGame(game);
+            session.attribute(GAME_OVER_ATTR, true);
+
+        }
+
         return gson.toJson(new Message("Valid Turn", Message.type.info), Message.class);
     }
 }
