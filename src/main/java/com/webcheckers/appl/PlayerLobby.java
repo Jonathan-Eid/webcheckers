@@ -22,6 +22,9 @@ public class PlayerLobby {
     List<Game> gameList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
+    /**
+     * Initilize the playerMap, gameList and playerPlayerMap
+     */
     public PlayerLobby() {
         playerMap = new HashMap<>();        //associates Strings to Players
         gameList = new ArrayList<>();
@@ -135,7 +138,6 @@ public class PlayerLobby {
                         player.getName() + "</button> </div> </form>");
             }
         }
-        LOG.config(result);
         return result;
     }
 

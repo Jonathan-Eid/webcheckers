@@ -134,6 +134,10 @@ public class Game {
         return this.activePlayer.equals(player);
     }
 
+    public Move.moveType isValidMove(Move move){
+        return this.board.isValidMove(move);
+    }
+
     /**
      * Check that a game is not over. Just call game over of the board object.
      * @return
