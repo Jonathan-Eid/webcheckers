@@ -42,9 +42,8 @@ public class PostValidateMoveRoute implements Route {
         //Fetch the game from the session.
         Game game = session.attribute(GAME_ATTR);
         //Fetch the board from the game
-        Board board = game.getBoard();
         Message message;
-        Move.moveType moveType = board.isValidMove(move);
+        Move.moveType moveType = game.isValidMove(move);
 
         if (!moveType.equals(Move.moveType.INVALID)){
             //Move is valid. Set the type of the move so that the makeMove method can handle it properly.
