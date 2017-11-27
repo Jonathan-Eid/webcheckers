@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -10,9 +11,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
+import static com.webcheckers.ui.GetGameRoute.MESSAGE_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
+import static com.webcheckers.ui.PostSubmitTurnRoute.GAME_OVER_ATTR;
 import static com.webcheckers.ui.WebServer.GAME_URL;
 import static com.webcheckers.ui.WebServer.START_GAME_URL;
 import static spark.Spark.halt;
@@ -73,7 +77,15 @@ public class GetHomeRoute implements Route {
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
-                if(gameCenter.isInGame(player)){
+                if(session.attribute(GAME_OVER_ATTR) != null){
+                    Game game = session.attribute(GAME_ATTR);
+                    if(game.getWinner().equals(player)){
+                        vm.put(MESSAGE_ATTR, "You Win!");
+                    } else {
+                        vm.put(MESSAGE_ATTR, "You Lose!");
+                    }
+                }
+                else if(gameCenter.isInGame(player)){
                     response.redirect(START_GAME_URL);
                     halt();
                     return null;

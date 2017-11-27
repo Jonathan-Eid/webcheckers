@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.Player;
@@ -21,10 +22,12 @@ public class PostSubmitTurnRoute implements Route {
     final static String GAME_OVER_ATTR = "gg";
     private Gson gson;
     GameCenter gameCenter;
+    PlayerLobby playerLobby;
 
-    public PostSubmitTurnRoute(Gson gson, GameCenter gameCenter) {
+    public PostSubmitTurnRoute(Gson gson, GameCenter gameCenter, PlayerLobby playerLobby) {
         this.gson = gson;
         this.gameCenter = gameCenter;
+        this.playerLobby = playerLobby;
     }
 
     /**
@@ -40,17 +43,18 @@ public class PostSubmitTurnRoute implements Route {
         Session session = request.session();
         Game game = session.attribute(GAME_ATTR);
         Player loser = session.attribute(USER_ATTR);
-        Player winner = playerLobby.getPlayerOpponent(loser);
+        Player winner = gameCenter.getOpponentFromPlayer(loser);
         Message message;
         game.finishTurn();
         game.startTurn();
         if(game.checkGameOver()) {
-            gameCenter.removeGame(game);
-            session.attribute(GAME_OVER_ATTR, true);
-            if(playerLobby.isInGame(loser) && playerLobby.isInGame(winner)){
-
+            if(gameCenter.isInGame(loser) && gameCenter.isInGame(winner)){
+                session.attribute(GAME_OVER_ATTR, true);
+                playerLobby.removeFromGame(loser);
+                message = new Message("Valid Turn", Message.type.info);
+            } else {
+                message = new Message("Error: game over failed due to player absent from gameCenter.", Message.type.error);
             }
-
         }
 
         return gson.toJson(new Message("Valid Turn", Message.type.info), Message.class);

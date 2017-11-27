@@ -19,7 +19,6 @@ public class PlayerLobby {
 
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
-    List<Game> GameList;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     /**
@@ -27,7 +26,6 @@ public class PlayerLobby {
      */
     public PlayerLobby() {
         playerMap = new HashMap<>();        //associates Strings (name) to Players
-        GameList  = new ArrayList<>();
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
     }
 

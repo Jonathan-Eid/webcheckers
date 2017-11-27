@@ -14,6 +14,7 @@ public class Game {
     Piece.color player2Color;
     Board board;
     Turn turn;
+    Player winner;
 
     /**
      * Create a new game between two players.
@@ -148,6 +149,17 @@ public class Game {
         } else {
             tempBoard = turn.getBoard().reverse();
         }
-        return tempBoard.checkGameOver(activeColor);
+        if(tempBoard.checkGameOver(activeColor)){
+            winner = activePlayer;
+            return true;
+        }
+        return false;
+    }
+
+    public Player getWinner(){
+        if (winner != null){
+            return winner;
+        }
+        throw new IllegalStateException("No winner declared yet.");
     }
 }
