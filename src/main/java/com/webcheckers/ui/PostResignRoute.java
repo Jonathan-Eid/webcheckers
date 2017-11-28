@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.Message;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
@@ -18,12 +19,16 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 public class PostResignRoute implements Route {
     private Gson gson;
     private PlayerLobby playerLobby;
+    GameCenter gameCenter;
 
 
+    static final String RESIGNED_ATTR = "resigned";
 
-    public PostResignRoute(Gson gson, PlayerLobby playerLobby) {
+
+    public PostResignRoute(Gson gson, PlayerLobby playerLobby, GameCenter gameCenter) {
         this.gson = gson;
         this.playerLobby = playerLobby;
+        this.gameCenter = gameCenter;
     }
 
 
@@ -33,8 +38,9 @@ public class PostResignRoute implements Route {
         Player quitter = session.attribute(USER_ATTR);
         Player opponent = playerLobby.getPlayerOpponent(quitter);
         Message message;
-        if (playerLobby.isInGame(opponent) && playerLobby.isInGame(quitter)){
+        if (gameCenter.isInGame(opponent) && gameCenter.isInGame(quitter)){
             playerLobby.endResignedGame(quitter);
+            session.attribute(RESIGNED_ATTR, true);
             message = new Message("Resigned", Message.type.info);
         }
         else{

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import static com.webcheckers.ui.GetGameRoute.MESSAGE;
 import static com.webcheckers.ui.GetGameRoute.MESSAGE_ATTR;
 import static com.webcheckers.ui.PostCheckTurnRoute.OPPONENT_RESIGNED_ATTR;
+import static com.webcheckers.ui.PostResignRoute.RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
@@ -81,11 +82,17 @@ public class GetHomeRoute implements Route {
                     halt();
                     return null;
                 }
-                if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
+                else if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
                     //The game is over and the opponent has resigned.
                     session.removeAttribute(OPPONENT_RESIGNED_ATTR);
                     vm.put(MESSAGE_ATTR, true);
                     vm.put(MESSAGE, "Opponent has quit, you have won!");
+                }
+                else if (session.attribute(RESIGNED_ATTR) != null){
+                    //The game is over and the opponent has resigned.
+                    session.removeAttribute(RESIGNED_ATTR);
+                    vm.put(MESSAGE_ATTR, true);
+                    vm.put(MESSAGE, "Game is over. You have resigned.");
                 }
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());

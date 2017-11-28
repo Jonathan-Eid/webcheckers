@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
@@ -23,15 +24,18 @@ public class PostCheckTurnRoute implements Route {
 
     private Gson gson;
     private PlayerLobby playerLobby;
+    GameCenter gameCenter;
 
     static final String OPPONENT_RESIGNED_ATTR = "opponentResigned";
+
     /**
      * Constructor
      * @param gson Gson Interpreter
      */
-    public PostCheckTurnRoute(Gson gson, PlayerLobby playerLobby) {
+    public PostCheckTurnRoute(Gson gson, PlayerLobby playerLobby, GameCenter gameCenter) {
         this.gson = gson;
         this.playerLobby = playerLobby;
+        this.gameCenter = gameCenter;
     }
 
 
@@ -48,7 +52,7 @@ public class PostCheckTurnRoute implements Route {
         Player player = session.attribute(USER_ATTR);
         Game game = session.attribute(GAME_ATTR);
         Message message;
-        if (!playerLobby.isInGame(playerLobby.getPlayerOpponent(player))){
+        if (!gameCenter.isInGame(player)){
             //Opponent resigned.
             session.attribute(OPPONENT_RESIGNED_ATTR, true);
             message = new Message("true", Message.type.info);

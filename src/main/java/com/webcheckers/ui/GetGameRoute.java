@@ -12,6 +12,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.PostCheckTurnRoute.OPPONENT_RESIGNED_ATTR;
+import static com.webcheckers.ui.PostResignRoute.RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.*;
 import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
@@ -86,7 +87,7 @@ public class GetGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Session session = request.session();
 
-        if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
+        if (session.attribute(OPPONENT_RESIGNED_ATTR) != null || session.attribute(RESIGNED_ATTR) != null){
             //Game is over. Go to the home page.
             response.redirect(HOME_URL);
             halt();

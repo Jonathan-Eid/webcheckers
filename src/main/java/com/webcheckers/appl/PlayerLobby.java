@@ -19,16 +19,16 @@ public class PlayerLobby {
 
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
-    List<Game> gameList;
+    GameCenter gameCenter;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     /**
      * Initilize the playerMap, gameList and playerPlayerMap
      */
-    public PlayerLobby() {
+    public PlayerLobby(GameCenter gameCenter) {
         playerMap = new HashMap<>();        //associates Strings to Players
-        gameList = new ArrayList<>();
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
+        this.gameCenter = gameCenter;
     }
 
     /**
@@ -45,18 +45,6 @@ public class PlayerLobby {
             playerMap.put(name, new Player(name));
             return SignInResult.SIGNED_IN;
         }
-    }
-
-    /**
-     * Create a new Game object and associate it with two players.
-     * @param player1
-     * @param player2
-     * @return
-     */
-    public Game newGame(Player player1, Player player2){
-        Game newGame = new Game(player1, player2);
-        this.gameList.add(newGame);
-        return newGame;
     }
 
     /**
@@ -98,14 +86,6 @@ public class PlayerLobby {
         return null;
     }
 
-    public Game getGameFromPlayer(Player player){
-        for (Game game: gameList) {
-            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
-                return game;
-            }
-        }
-        throw new IllegalStateException("Get Game from Player called when player not in a game");
-    }
     /**
      * Get's the total number of players signed in.
      * @return String
@@ -142,20 +122,6 @@ public class PlayerLobby {
     }
 
     /**
-     * report whether a player is already in a game
-     * @param player a player who has signed in, and may or may not be in a game
-     * @return true if the player is in a game right now, false otherwise
-     */
-    public boolean isInGame(Player player){
-        for (Game game: gameList) {
-            if (game.getPlayer1().equals(player) || game.getPlayer2().equals(player)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * adds a player to the list of players in games
      * @param player Player
      */
@@ -173,25 +139,10 @@ public class PlayerLobby {
         return playerPlayerMap.get(player);
     }
 
-    /**
-     * removes a player from the map of players in games
-     * @param player Player
-     */
-    public void quitGame(Player player){
-        playerPlayerMap.remove(player);
-        Game game = gameList.get(gameList.indexOf(getGameFromPlayer(player)));
-        if(player.equals(game.getPlayer1())){
-            game.RemovePlayer1();
-        }
-        if(player.equals(game.getPlayer2())){
-            game.RemovePlayer2();
-        }
-    }
-
     public void endResignedGame(Player player){
         Player opponent = this.getPlayerOpponent(player);
         playerPlayerMap.remove(opponent);
         playerPlayerMap.remove(player);
-        gameList.remove(gameList.indexOf(getGameFromPlayer(player)));
+        gameCenter.removeGame(player);
     }
 }
