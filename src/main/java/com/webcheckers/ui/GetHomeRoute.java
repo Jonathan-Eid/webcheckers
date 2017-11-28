@@ -80,9 +80,11 @@ public class GetHomeRoute implements Route {
                 if(session.attribute(GAME_OVER_ATTR) != null){
                     Game game = session.attribute(GAME_ATTR);
                     if(game.getWinner().equals(player)){
-                        vm.put(MESSAGE_ATTR, "You Win!");
+                        vm.put(MESSAGE_ATTR, true);
+                        vm.put("error", "You have won!");
                     } else {
-                        vm.put(MESSAGE_ATTR, "You Lose!");
+                        vm.put(MESSAGE_ATTR, true);
+                        vm.put("error", "You have lost!");
                     }
                 }
                 else if(gameCenter.isInGame(player)){

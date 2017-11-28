@@ -15,6 +15,7 @@ public class Game {
     Board board;
     Turn turn;
     Player winner;
+    boolean gameOver;
 
     /**
      * Create a new game between two players.
@@ -29,6 +30,7 @@ public class Game {
         player2Color = Piece.color.WHITE;
         this.activePlayer = player1;
         this.activeColor = Piece.color.RED;
+        gameOver = false;
     }
 
     /**
@@ -46,6 +48,18 @@ public class Game {
      */
     public Player getPlayer2() {
         return player2;
+    }
+
+    /**
+     * Check if the game is over or not
+     * @return
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(){
+        this.gameOver = true;
     }
 
     /**
@@ -147,7 +161,7 @@ public class Game {
         if(activeColor.equals(Piece.color.RED)){
             tempBoard = turn.getBoard();
         } else {
-            tempBoard = turn.getBoard().reverse();
+            tempBoard = turn.getBoard();
         }
         if(tempBoard.checkGameOver(activeColor)){
             winner = activePlayer;

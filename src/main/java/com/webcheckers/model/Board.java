@@ -294,6 +294,7 @@ public class Board implements Iterable{
                 if(currentSquare.hasPiece()){           //check for the existence of a piece in this square
                     if(currentSquare.getPiece().getColor().equals(color)){  //check if the piece belongs to the active player
                         Piece currentPiece = currentSquare.getPiece();
+                        Objects.requireNonNull(currentPiece);
                         Position currentPosition = new Position(currentRow.getIndex(), currentSquare.getCellIdx());
 
                         if(currentPiece.getType().equals(Piece.pieceType.KING)){    //checks for possible king piece moves
