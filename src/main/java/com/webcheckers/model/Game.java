@@ -135,7 +135,7 @@ public class Game {
     }
 
     public Move.moveType isValidMove(Move move){
-        return this.board.isValidMove(move);
+        return this.turn.isValidMove(move);
     }
 
     /**
