@@ -93,6 +93,75 @@ public class Board implements Iterable{
     }
 
     /**
+     * a constructor for the board class that does not place any pieces on the new board
+     * @param extraneous allows this constructor to overload the normal constructor, but is never actually used
+     */
+    public Board(boolean extraneous){
+        this.boardState = state.NO_MOVE;
+        this.rows = new Row[8];
+        for (int y = 0; y < 8; y++){            //iterate over the Rows in this Board
+            Row row = new Row(y);
+            rows[y] = row;
+            for (int x = 0; x < 8; x++){        //iterate over the Squares in this Row
+                if (y < 3){                     //the first three rows should contain white checkers, but only on the black squares
+                    if(y % 2 == 0){
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                    }
+                    else{
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                    }
+                }
+                else if (y > 4){                //the last three rows should contain red checkers, but only on the black squares
+                    if(y % 2 == 0){
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                    }
+                    else{
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                    }
+                }
+                else{                           //the two rows in the middle of the board do not initially contain checkers
+                    if(y % 2 == 0){
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                    }
+                    else{
+                        if (x % 2 == 0){
+                            rows[y].setSpace(x, Square.color.RED);
+                        }
+                        else{
+                            rows[y].setSpace(x, Square.color.EMPTY_WHITE);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * copy constructor, creates a deep copy of other
      * this constructor recursively calls the copy constructors of Row, Square, and Piece
      * @param other the board to copy
@@ -402,6 +471,11 @@ public class Board implements Iterable{
             }
         }
         return ret;
+    }
+
+    public void addPiece(int row, int square, Piece.color color){
+        Piece newPiece = new Piece(color);
+        rows[row].getSpace(square).setPiece(newPiece);
     }
 
     /**
