@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -45,32 +46,58 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-
         final Map<String, Object> vm = new HashMap<>();
+        final Session session = request.session();
         final String userName = request.queryParams("username");
-        switch (playerLobby.signInPlayer(userName)) {
-            case SIGNED_IN:
-                final Session session = request.session();
-                //Store the Player Object into the session.
+        final String password = request.queryParams("password");
+
+        if (playerLobby.hasAccount(userName)){
+            //User is trying to sign in to a pre-existing account.
+            Player player = playerLobby.getPlayer(userName);
+            /*if (player.isSignedIn()){
+                vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
+                vm.put(INVALID_SIGN_IN_ATTR, "ERROR. This username has already been taken.");
+                return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
+            }*/
+            if(player.checkPassword(password)){
+                player.signIn();
                 session.attribute(USER_SIGNED_IN_ATTR, true);
                 session.attribute(USER_ATTR, playerLobby.getPlayer(userName));
                 response.redirect(WebServer.HOME_URL);
                 halt();
                 return null;
-            case INVALID_INPUT:
+            }
+            else{
                 vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
-                vm.put(INVALID_SIGN_IN_ATTR, "ERROR. Invalid name.");
+                vm.put(INVALID_SIGN_IN_ATTR, "ERROR. Incorrect password.");
                 return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-            case INVALID_PLAYER:
-                vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
-                vm.put(INVALID_SIGN_IN_ATTR, "Player name " + userName + " is already in use");
-                return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
-            case SIGNED_OUT:
-                response.redirect(WebServer.HOME_URL);
-                halt();
-                return null;
-            default:
-                throw new NoSuchElementException("Invalid result of sign in received");
+            }
+        }
+        else{
+            //User is trying to create a new account
+            switch (playerLobby.signInPlayer(userName, password)){
+                case SIGNED_IN:
+                    //Store the Player Object into the session.
+                    session.attribute(USER_SIGNED_IN_ATTR, true);
+                    session.attribute(USER_ATTR, playerLobby.getPlayer(userName));
+                    response.redirect(WebServer.HOME_URL);
+                    halt();
+                    return null;
+                case INVALID_INPUT:
+                    vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
+                    vm.put(INVALID_SIGN_IN_ATTR, "ERROR. Invalid name.");
+                    return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
+                case INVALID_PLAYER:
+                    vm.put(GetSignInRoute.SIGN_IN_MESSAGE_ATTR, GetSignInRoute.SIGN_IN_MESSAGE);
+                    vm.put(INVALID_SIGN_IN_ATTR, "Player name " + userName + " is already in use");
+                    return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
+                case SIGNED_OUT:
+                    response.redirect(WebServer.HOME_URL);
+                    halt();
+                    return null;
+                default:
+                    throw new NoSuchElementException("Invalid result of sign in received");
+            }
         }
     }
 }

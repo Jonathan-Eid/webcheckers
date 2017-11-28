@@ -79,7 +79,7 @@ public class GetHomeRouteTest {
     public void signed_in() {
         Player player = new Player("name");
         when(session.attribute("player")).thenReturn(player);
-        playerLobby.signInPlayer("name");
+        playerLobby.signInPlayer("name", "password");
 
         final MyModelAndView myModelView = new MyModelAndView();
         when(engine.render(any(ModelAndView.class))).thenAnswer(MyModelAndView.makeAnswer(myModelView));
@@ -105,8 +105,8 @@ public class GetHomeRouteTest {
         Player player = new Player("name");
         Player opponent = new Player("opponentName");
         when(session.attribute("player")).thenReturn(player);
-        playerLobby.signInPlayer("name");
-        playerLobby.signInPlayer("opponent");
+        playerLobby.signInPlayer("name", "password");
+        playerLobby.signInPlayer("opponent", "password");
         playerLobby.addToGame(player, opponent);
         playerLobby.addToGame(opponent, player);
 

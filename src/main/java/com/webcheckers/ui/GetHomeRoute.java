@@ -76,6 +76,12 @@ public class GetHomeRoute implements Route {
             //The user is signed in
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
+                if (!playerLobby.isSignedIn(player)){
+                    session.removeAttribute(USER_ATTR);
+                    session.removeAttribute(USER_SIGNED_IN_ATTR);
+                    playerLobby.signOutPlayer(player.getName());
+                    return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+                }
                 Objects.requireNonNull(player, "player must not be null");
                 if(gameCenter.isInGame(player)){
                     response.redirect(START_GAME_URL);
