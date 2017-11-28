@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import static com.webcheckers.ui.GetSignInRoute.SIGN_IN_HELP_ATTR;
+import static com.webcheckers.ui.GetSignInRoute.SIGN_IN_HELP_MESSAGE;
 import static spark.Spark.halt;
 
 /**
@@ -50,6 +52,7 @@ public class PostSignInRoute implements Route {
         final Session session = request.session();
         final String userName = request.queryParams("username");
         final String password = request.queryParams("password");
+        vm.put(SIGN_IN_HELP_ATTR, SIGN_IN_HELP_MESSAGE);
 
         if (playerLobby.hasAccount(userName)){
             //User is trying to sign in to a pre-existing account.
