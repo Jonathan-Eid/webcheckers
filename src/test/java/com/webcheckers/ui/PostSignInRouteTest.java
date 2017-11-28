@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.sun.org.apache.xpath.internal.SourceTree;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.Before;
@@ -35,6 +36,8 @@ public class PostSignInRouteTest {
     private Response response;
     private TemplateEngine engine;
 
+    GameCenter gameCenter;
+
 
     @Before
     public void setUp() throws Exception {
@@ -43,8 +46,8 @@ public class PostSignInRouteTest {
         response = mock(Response.class);
         when(request.session()).thenReturn(session);
         engine = mock(TemplateEngine.class);
-        playerLobby = new PlayerLobby();
-        playerLobby.signInPlayer(ALREADY_IN, "");
+        playerLobby = new PlayerLobby(gameCenter);
+        playerLobby.signInPlayer(ALREADY_IN, " ");
 
         CuT = new PostSignInRoute(engine,playerLobby);
 

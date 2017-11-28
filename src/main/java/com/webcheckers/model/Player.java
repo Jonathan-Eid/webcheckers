@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * creates a template for the player object
  * created by Johnny, Disney, Andy, Ani
@@ -81,6 +83,10 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player player) {
         return this.name.compareTo(player.name);
+    }
+
+    public boolean nullName(){
+        return this.name.equals("\"");
     }
 
 }

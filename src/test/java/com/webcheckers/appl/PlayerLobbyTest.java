@@ -31,10 +31,11 @@ public class PlayerLobbyTest {
     Player player2;
     Player player3;
     PlayerLobby CuT;
+    GameCenter gameCenter;
 
     @Before
     public void setUp() throws Exception {
-        CuT = new PlayerLobby();
+        CuT = new PlayerLobby(gameCenter);
         player1 = mock(Player.class);
         player2 = mock(Player.class);
         player3 = mock(Player.class);
@@ -118,7 +119,7 @@ public class PlayerLobbyTest {
         CuT.addToGame(player1, player2);
         //assertTrue(CuT.isInGame(player1));
         //assertTrue(CuT.isInGame(player2));
-        CuT.removeFromGame(player1);
+        //CuT.quitGame(player1);
         //assertFalse(CuT.isInGame(player1));
         //assertFalse(CuT.isInGame(player2));
     }

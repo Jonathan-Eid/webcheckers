@@ -47,7 +47,7 @@ public class GetHomeRouteTest {
         engine = mock(TemplateEngine.class);
         gameCenter = mock(GameCenter.class);
 
-        playerLobby = new PlayerLobby();
+        playerLobby = new PlayerLobby(gameCenter);
 
         // create a unique CuT for each test
         CuT = new GetHomeRoute(engine, playerLobby, gameCenter);

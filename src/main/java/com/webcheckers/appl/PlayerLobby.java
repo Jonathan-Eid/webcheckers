@@ -19,16 +19,16 @@ public class PlayerLobby {
 
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
-    List<Game> GameList;
+    GameCenter gameCenter;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     /**
      * Initilize the playerMap, gameList and playerPlayerMap
      */
-    public PlayerLobby() {
-        playerMap = new HashMap<>();        //associates Strings (name) to Players
-        GameList  = new ArrayList<>();
+    public PlayerLobby(GameCenter gameCenter) {
+        playerMap = new HashMap<>();        //associates Strings to Players
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
+        this.gameCenter = gameCenter;
     }
 
     /**
@@ -142,7 +142,6 @@ public class PlayerLobby {
         return result;
     }
 
-
     /**
      * adds a player to the list of players in games
      * @param player Player
@@ -161,13 +160,10 @@ public class PlayerLobby {
         return playerPlayerMap.get(player);
     }
 
-    /**
-     * removes a player from the map of players in games
-     * @param player Player
-     */
-    public void removeFromGame(Player player){
-        Player second = playerPlayerMap.get(player);
+    public void endResignedGame(Player player){
+        Player opponent = this.getPlayerOpponent(player);
+        playerPlayerMap.remove(opponent);
         playerPlayerMap.remove(player);
-        playerPlayerMap.remove(second);
+        gameCenter.removeGame(player);
     }
 }

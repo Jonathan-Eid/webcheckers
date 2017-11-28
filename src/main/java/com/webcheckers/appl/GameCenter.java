@@ -47,10 +47,21 @@ public class GameCenter {
      */
     public Game getGameFromPlayer(Player player){
         for (Game game: gameList) {
-            if (game.getPlayer2().equals(player)){
+            if (game.getPlayer2().equals(player) || game.getPlayer1().equals(player)){
                 return game;
             }
         }
         throw new IllegalStateException("Get Game from Player called when player not in a game");
+    }
+
+    public void removeGame(Player player){
+        int i = 0;
+        for (Game game: gameList){
+            if(game.getPlayer1().equals(player) || game.getPlayer2().equals(player)){
+                break;
+            }
+            i++;
+        }
+        gameList.remove(i);
     }
 }

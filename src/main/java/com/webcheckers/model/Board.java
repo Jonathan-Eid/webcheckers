@@ -3,6 +3,7 @@ package com.webcheckers.model;
 import javafx.geometry.Pos;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -125,6 +126,7 @@ public class Board implements Iterable{
         int deltaX = endX - startX;
         int deltaY = endY - startY;
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
+        Objects.requireNonNull(startPiece);
         if (endY == 7){
             if (startPiece.getColor().equals(Piece.color.WHITE)){
                 startPiece.kingMe();

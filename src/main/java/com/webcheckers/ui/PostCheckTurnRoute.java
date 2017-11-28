@@ -1,16 +1,21 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.*;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
+import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
+import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
+import static spark.Spark.halt;
 
 /**
  * Created by dis446 on 10/16/17.
@@ -18,13 +23,19 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 public class PostCheckTurnRoute implements Route {
 
     private Gson gson;
+    private PlayerLobby playerLobby;
+    GameCenter gameCenter;
+
+    static final String OPPONENT_RESIGNED_ATTR = "opponentResigned";
 
     /**
      * Constructor
      * @param gson Gson Interpreter
      */
-    public PostCheckTurnRoute(Gson gson) {
+    public PostCheckTurnRoute(Gson gson, PlayerLobby playerLobby, GameCenter gameCenter) {
         this.gson = gson;
+        this.playerLobby = playerLobby;
+        this.gameCenter = gameCenter;
     }
 
 
@@ -41,7 +52,12 @@ public class PostCheckTurnRoute implements Route {
         Player player = session.attribute(USER_ATTR);
         Game game = session.attribute(GAME_ATTR);
         Message message;
-        if (game.checkTurn(player)){
+        if (!gameCenter.isInGame(player)){
+            //Opponent resigned.
+            session.attribute(OPPONENT_RESIGNED_ATTR, true);
+            message = new Message("true", Message.type.info);
+        }
+        else if (game.checkTurn(player)){
             message = new Message("true", Message.type.info);
         }
         else {
