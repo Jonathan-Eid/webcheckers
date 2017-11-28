@@ -51,11 +51,11 @@ public final class Application {
         // the templates and associated data.
         final TemplateEngine templateEngine = new FreeMarkerEngine();
 
-        // Instantiate the player lobby to
-        PlayerLobby playerLobby = new PlayerLobby();
-
         //Instantiate the game center.
         GameCenter gameCenter = new GameCenter();
+
+        // Instantiate the player lobby to
+        PlayerLobby playerLobby = new PlayerLobby(gameCenter);
 
         // The application uses Gson to generate JSON representations of Java objects.
         // This should be used by your Ajax Routes to generate JSON for the HTTP
