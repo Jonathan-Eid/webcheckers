@@ -35,6 +35,8 @@ public class GetHomeRoute implements Route {
     static final String TITLE_ATTR = "title";
     static final String TITLE_VAL = "Welcome!";
     static final String NUM_PLAYERS_ATTR = "numPlayers";
+    static final String IN_GAME_ATTR = "inGame";
+    static final String GAMES_ATTR = "gameList";
     private PlayerLobby playerLobby;
     private GameCenter gameCenter;
 
@@ -84,11 +86,9 @@ public class GetHomeRoute implements Route {
                 }
                 Objects.requireNonNull(player, "player must not be null");
                 if(gameCenter.isInGame(player)){
-                    response.redirect(START_GAME_URL);
-                    halt();
-                    return null;
+                    vm.put(IN_GAME_ATTR, true);
                 }
-                else if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
+                if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
                     //The game is over and the opponent has resigned.
                     session.removeAttribute(OPPONENT_RESIGNED_ATTR);
                     vm.put(MESSAGE_ATTR, true);
@@ -102,6 +102,7 @@ public class GetHomeRoute implements Route {
                 }
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());
+                vm.put(GAMES_ATTR, gameCenter.gameList(player.getName()));
                 vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
             }
         }

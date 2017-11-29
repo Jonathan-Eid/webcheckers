@@ -151,4 +151,12 @@ public class Game {
         }
         return tempBoard.checkGameOver(activeColor);
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                player1.getName() +
+                " vs." + player2.getName() +
+                '}';
+    }
 }

@@ -6,6 +6,11 @@ import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.*;
+import freemarker.template.Template;
+import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
 import spark.*;
 
 import java.util.HashMap;
@@ -27,6 +32,7 @@ public class PostCheckTurnRoute implements Route {
     GameCenter gameCenter;
 
     static final String OPPONENT_RESIGNED_ATTR = "opponentResigned";
+
 
     /**
      * Constructor
