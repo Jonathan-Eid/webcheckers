@@ -14,7 +14,7 @@ public class Game {
     Piece.color player2Color;
     Board board;
     Turn turn;
-    Player winner;
+    Player loser;
     boolean gameOver;
 
     /**
@@ -31,6 +31,18 @@ public class Game {
         this.activePlayer = player1;
         this.activeColor = Piece.color.RED;
         gameOver = false;
+        BoardMaker boardMaker = new BoardMaker();
+        if(player1.getName().toLowerCase().equals("redwin")){
+            board = boardMaker.redWinsBoard();
+        } else if(player1.getName().toLowerCase().equals("whitewin")){
+            board = boardMaker.whiteWinsBoard();
+        } else if(player1.getName().toLowerCase().equals("crownme")){
+            board = boardMaker.makeKingBoard();
+        } else if(player1.getName().toLowerCase().equals("kingjump")){
+            board = boardMaker.kingJumpBoard();
+        } else if(player1.getName().toLowerCase().equals("chainjump")){
+            board = boardMaker.chainJumpBoard();
+        }
     }
 
     /**
@@ -149,7 +161,7 @@ public class Game {
     }
 
     public Move.moveType isValidMove(Move move){
-        return this.board.isValidMove(move);
+        return this.turn.isValidMove(move);
     }
 
     /**
@@ -157,22 +169,23 @@ public class Game {
      * @return
      */
     public boolean checkGameOver(){
-        Board tempBoard;
-        if(activeColor.equals(Piece.color.RED)){
-            tempBoard = turn.getBoard();
-        } else {
-            tempBoard = turn.getBoard();
-        }
+        Board tempBoard = turn.getBoard();
         if(tempBoard.checkGameOver(activeColor)){
-            winner = activePlayer;
+            loser = activePlayer;
+            gameOver = true;
             return true;
         }
+        gameOver = false;
         return false;
     }
 
     public Player getWinner(){
-        if (winner != null){
-            return winner;
+        if (loser != null){
+            if(loser.equals(player1)){
+                return player2;
+            } else {
+                return player1;
+            }
         }
         throw new IllegalStateException("No winner declared yet.");
     }

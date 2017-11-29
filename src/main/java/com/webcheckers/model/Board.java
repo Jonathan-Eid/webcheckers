@@ -456,8 +456,8 @@ public class Board implements Iterable{
                                 }
                             }
 
-                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() > 6){    //forward-right capture move?
-                                Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()+2);
+                            if(currentSquare.getCellIdx() > 1 && currentRow.getIndex() < 6){    //forward-right capture move?
+                                Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
                                     ret = false;
@@ -473,9 +473,12 @@ public class Board implements Iterable{
         return ret;
     }
 
-    public void addPiece(int row, int square, Piece.color color){
+    public void addPiece(int row, int square, Piece.color color, Piece.pieceType type){
         Piece newPiece = new Piece(color);
         rows[row].getSpace(square).setPiece(newPiece);
+        if(type.equals(Piece.pieceType.KING)){
+            rows[row].getSpace(square).getPiece().kingMe();
+        }
     }
 
     /**

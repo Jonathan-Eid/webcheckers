@@ -77,8 +77,11 @@ public class GetHomeRoute implements Route {
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
                 Objects.requireNonNull(player, "player must not be null");
+
                 if(session.attribute(GAME_OVER_ATTR) != null){
+                    session.removeAttribute(GAME_OVER_ATTR);
                     Game game = session.attribute(GAME_ATTR);
+                    gameCenter.removeGame(game);
                     if(game.getWinner().equals(player)){
                         vm.put(MESSAGE_ATTR, true);
                         vm.put("error", "You have won!");

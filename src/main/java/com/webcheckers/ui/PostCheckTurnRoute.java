@@ -11,6 +11,7 @@ import spark.Session;
 
 import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
+import static com.webcheckers.ui.PostSubmitTurnRoute.GAME_OVER_ATTR;
 
 /**
  * Created by dis446 on 10/16/17.
@@ -41,6 +42,9 @@ public class PostCheckTurnRoute implements Route {
         Player player = session.attribute(USER_ATTR);
         Game game = session.attribute(GAME_ATTR);
         Message message;
+        if (game.isGameOver()){
+            session.attribute(GAME_OVER_ATTR, true);
+        }
         if (game.checkTurn(player)){
             message = new Message("true", Message.type.info);
         }
