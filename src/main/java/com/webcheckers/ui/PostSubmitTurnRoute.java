@@ -24,6 +24,12 @@ public class PostSubmitTurnRoute implements Route {
     GameCenter gameCenter;
     PlayerLobby playerLobby;
 
+    /**
+     * Constructor for the Submit Button route.
+     * @param gson
+     * @param gameCenter
+     * @param playerLobby
+     */
     public PostSubmitTurnRoute(Gson gson, GameCenter gameCenter, PlayerLobby playerLobby) {
         this.gson = gson;
         this.gameCenter = gameCenter;
@@ -42,20 +48,17 @@ public class PostSubmitTurnRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();
         Game game = session.attribute(GAME_ATTR);
-        Player loser = session.attribute(USER_ATTR);
-        Player winner = gameCenter.getOpponentFromPlayer(loser);
-        Message message;
         game.finishTurn();
         game.startTurn();
+        //Check if the game is over.
         if(game.checkGameOver()) {
-            if(gameCenter.isInGame(loser) && gameCenter.isInGame(winner)){
+            //Game is over and the current user is the loser.
+            Player loser = session.attribute(USER_ATTR);
+            Player winner = gameCenter.getOpponentFromPlayer(loser);
+            if(gameCenter.isInGame(loser) && gameCenter.isInGame(winner)) {
                 session.attribute(GAME_OVER_ATTR, true);
-                message = new Message("Valid Turn", Message.type.info);
-            } else {
-                message = new Message("Error: game over failed due to player absent from gameCenter.", Message.type.error);
             }
         }
-
         return gson.toJson(new Message("Valid Turn", Message.type.info), Message.class);
     }
 }

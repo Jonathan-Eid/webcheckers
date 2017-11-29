@@ -27,7 +27,8 @@ import static spark.Spark.halt;
 public class GetGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private enum viewMode {PLAY, SPECTATOR, REPLAY};
+    private enum viewMode {PLAY, SPECTATOR, REPLAY}
+
     private final TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
 

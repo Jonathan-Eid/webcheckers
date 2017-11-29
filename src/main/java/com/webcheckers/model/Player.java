@@ -88,5 +88,4 @@ public class Player implements Comparable<Player>{
     public boolean nullName(){
         return this.name.equals("\"");
     }
-
 }

@@ -59,7 +59,6 @@ public class Square {
      * @return true if the piece is an unoccupied red square, false otherwise
      */
     public boolean isValid(){
-        return (color.equals(color.RED) & !hasPiece());
-
+        return (this.color.equals(color.RED) & !hasPiece());
     }
 }

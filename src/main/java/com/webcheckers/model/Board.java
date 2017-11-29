@@ -14,7 +14,8 @@ public class Board implements Iterable{
 
     private Row[] rows;
 
-    public enum state{NO_MOVE, SINGLE_MOVE, CAPTURE_MOVE};
+    public enum state{NO_MOVE, SINGLE_MOVE, CAPTURE_MOVE}
+
     private state boardState;
     private Position lastCapture;
 
@@ -342,137 +343,6 @@ public class Board implements Iterable{
         return board;
     }
 
-    private boolean canMoveHere(Piece.color color,Position position, Move.moveType moveType,
-                                moveYDirection yDirection, moveXDirection xDirection){
-        int xDiff = 0;
-        int yDiff = 0;
-        if (moveType.equals(Move.moveType.SINGLE)){
-           //x and y diffs should be 1
-            switch (yDirection){
-                case FORWARD:
-                    if (position.getRow() < 1){
-                        return false;
-                    }
-                    xDiff = -1;
-                    break;
-                case BACKWARD:
-                    if (position.getRow() > 6){
-                        return false;
-                    }
-                    xDiff = 1;
-                    break;
-            }
-            switch (xDirection){
-                case LEFT:
-                    if (position.getCell() < 1){
-                        return false;
-                    }
-                    yDiff = -1;
-                    break;
-                case RIGHT:
-                    if (position.getCell() > 6){
-                        return false;
-                    }
-                    yDiff = 1;
-                    break;
-            }
-        }
-        else if (moveType.equals(Move.moveType.CAPTURE)){
-            //x diff should be 1, y diff should be 2.
-            switch (yDirection){
-                case FORWARD:
-                    if (position.getRow() < 2){
-                        return false;
-                    }
-                    xDiff = -2;
-                    break;
-                case BACKWARD:
-                    if (position.getRow() > 5){
-                        return false;
-                    }
-                    xDiff = 2;
-                    break;
-            }
-            switch (xDirection){
-                case LEFT:
-                    if (position.getCell() < 2){
-                        return false;
-                    }
-                    yDiff = -2;
-                    break;
-                case RIGHT:
-                    if (position.getCell() > 5){
-                        return false;
-                    }
-                    yDiff = 2;
-                    break;
-            }
-        }
-        if (color.equals(Piece.color.WHITE)){
-            //If it is the white player, both x and y diffs have to be negated.
-            xDiff = - xDiff;
-            yDiff = - yDiff;
-        }
-        Position newPosition = new Position(position.getRow() + yDiff, position.getCell() + xDiff);
-        Move move = new Move(position, newPosition);
-        Move.moveType resultType = isValidMove(move);
-        return resultType.equals(moveType);
-    }
-
-    enum moveYDirection {FORWARD,BACKWARD}
-    enum moveXDirection {LEFT, RIGHT}
-
-    /*
-    private boolean canMakeMove(Piece.color color, Position position){
-        Square square = rows[position.getRow()].getSpace(position.getCell());
-        Piece piece = square.getPiece();
-        for (moveXDirection xDirection : moveXDirection.values()) {
-            if (canMoveHere(color, position, Move.moveType.SINGLE, moveYDirection.FORWARD, xDirection)){
-                return true;
-            }
-            if (canMoveHere(color, position, Move.moveType.CAPTURE, moveYDirection.FORWARD, xDirection)){
-                return true;
-            }
-        }
-        if (piece.getType().equals(Piece.pieceType.KING)){
-            for (moveXDirection xDirection : moveXDirection.values()){
-                if (canMoveHere(color, position, Move.moveType.SINGLE, moveYDirection.BACKWARD, xDirection)){
-                    return true;
-                }
-                if (canMoveHere(color, position, Move.moveType.CAPTURE, moveYDirection.BACKWARD, xDirection)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
-
-    /*
-    public boolean checkGameOver(Piece.color color){
-        Iterator<Row> boardIter = new BoardIterator();
-        Row currentRow;
-        Square currentSquare;
-        Position currentPosition;
-
-        while (boardIter.hasNext()) {
-            currentRow = boardIter.next();
-            Iterator<Square> rowIter = currentRow.iterator();
-            while (rowIter.hasNext()) {
-                currentSquare = rowIter.next();
-                currentPosition = new Position(currentRow.getIndex(), currentSquare.getCellIdx());
-                if (currentSquare.hasPiece()){
-                    Piece piece = currentSquare.getPiece();
-                    if (piece.getColor().equals(color)){
-                        if (canMakeMove(color, currentPosition)) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }*/
-
     /**
      * determines if the game is over for the player whose turn it is
      * this is accomplished by iterating over the board and checking for the existence of pieces belonging to the active player
@@ -482,7 +352,6 @@ public class Board implements Iterable{
      * @param color the color of the active player, whose pieces must be chacked for valid moves
      * @return true if the active player has no pieces with any valid moves, false if they are able to make a valid move this turn
      */
-
     public boolean checkGameOver(Piece.color color){
         Iterator<Row> boardIter = new BoardIterator();
         Row currentRow;
