@@ -19,14 +19,16 @@ public class PlayerLobby {
 
     Map <String, Player> playerMap;
     Map<Player, Player> playerPlayerMap;
+    GameCenter gameCenter;
     public enum SignInResult {SIGNED_IN, INVALID_INPUT, INVALID_PLAYER, SIGNED_OUT}
 
     /**
      * Initilize the playerMap, gameList and playerPlayerMap
      */
-    public PlayerLobby() {
-        playerMap = new HashMap<>();        //associates Strings (name) to Players
+    public PlayerLobby(GameCenter gameCenter) {
+        playerMap = new HashMap<>();        //associates Strings to Players
         playerPlayerMap = new HashMap<>();  //associates Players to other Players (their opponent)
+        this.gameCenter = gameCenter;
     }
 
     /**
@@ -34,15 +36,29 @@ public class PlayerLobby {
      * @param name String
      * @return SignInResult Enum
      */
-    public SignInResult signInPlayer(String name) {
+    public SignInResult signInPlayer(String name, String password) {
         if (invalidInput(name)) {
             return SignInResult.INVALID_INPUT;
-        } else if (isLoggedIn(name)) {
+        } else if (hasAccount(name)) {
             return SignInResult.INVALID_PLAYER;
         } else {
-            playerMap.put(name, new Player(name));
+            playerMap.put(name, new Player(name, password));
             return SignInResult.SIGNED_IN;
         }
+    }
+
+    /**
+     * Check if a given player is currently signed in.
+     * @param player
+     * @return
+     */
+    public boolean isSignedIn(Player player) {
+        for (Player player1 : this.playerMap.values()){
+            if (player1.isSignedIn() && player.equals(player1)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -53,10 +69,11 @@ public class PlayerLobby {
     public SignInResult signOutPlayer(String name) {
         if (invalidInput(name)) {
             return SignInResult.INVALID_INPUT;
-        } else if (!isLoggedIn(name)) {
+        } else if (!hasAccount(name)) {
             return SignInResult.INVALID_PLAYER;
         } else {
-            playerMap.remove(name);
+            Player player = playerMap.get(name);
+            player.signOut();
             return SignInResult.SIGNED_OUT;
         }
     }
@@ -77,7 +94,7 @@ public class PlayerLobby {
      */
     public Player getPlayer(String name) {
         if (!invalidInput(name)) {
-            if (isLoggedIn(name)) {
+            if (hasAccount(name)) {
                 return playerMap.get(name);
             }
         }
@@ -89,7 +106,13 @@ public class PlayerLobby {
      * @return String
      */
     public String getNumPlayers() {
-        return Integer.toString(playerMap.size());
+        int numPlayers = 0;
+        for (Player player : playerMap.values()){
+            if(player.isSignedIn()){
+                numPlayers++;
+            }
+        }
+        return Integer.toString(numPlayers);
     }
 
     /**
@@ -97,7 +120,7 @@ public class PlayerLobby {
      * @param name String
      * @return boolean
      */
-    private boolean isLoggedIn(String name) {
+    public boolean hasAccount(String name) {
         return playerMap.containsKey(name);
     }
 
@@ -110,7 +133,7 @@ public class PlayerLobby {
         String result = "";
         for (String playerName : playerMap.keySet()){
             Player player = playerMap.get(playerName);
-            if (!playerName.equals(name)) {
+            if (!playerName.equals(name) && player.isSignedIn()) {
                 result = result.concat("<form action=\"/startGame\" method=\"GET\"> <input type=\"hidden\" id=\"name\" " +
                         "name=\"opponent\" value=\"" + player.getName() + "\"> <button type=\"submit\" >" +
                         player.getName() + "</button> </div> </form>");
@@ -118,7 +141,6 @@ public class PlayerLobby {
         }
         return result;
     }
-
 
     /**
      * adds a player to the list of players in games
@@ -138,13 +160,10 @@ public class PlayerLobby {
         return playerPlayerMap.get(player);
     }
 
-    /**
-     * removes a player from the map of players in games
-     * @param player Player
-     */
-    public void removeFromGame(Player player){
-        Player second = playerPlayerMap.get(player);
+    public void endResignedGame(Player player){
+        Player opponent = this.getPlayerOpponent(player);
+        playerPlayerMap.remove(opponent);
         playerPlayerMap.remove(player);
-        playerPlayerMap.remove(second);
+        gameCenter.removeGame(player);
     }
 }
