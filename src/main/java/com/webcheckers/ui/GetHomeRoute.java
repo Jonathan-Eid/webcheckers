@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetGameRoute.GAME_ATTR;
+import static com.webcheckers.ui.GetGameRoute.MESSAGE_ATTR;
 import static com.webcheckers.ui.GetGameRoute.MESSAGE;
 import static com.webcheckers.ui.GetGameRoute.MESSAGE_ATTR;
 import static com.webcheckers.ui.PostCheckTurnRoute.OPPONENT_RESIGNED_ATTR;
@@ -17,6 +20,7 @@ import static com.webcheckers.ui.PostResignRoute.RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
+import static com.webcheckers.ui.PostSubmitTurnRoute.GAME_OVER_ATTR;
 import static com.webcheckers.ui.WebServer.GAME_URL;
 import static com.webcheckers.ui.WebServer.START_GAME_URL;
 import static spark.Spark.halt;
@@ -99,6 +103,23 @@ public class GetHomeRoute implements Route {
                     session.removeAttribute(RESIGNED_ATTR);
                     vm.put(MESSAGE_ATTR, true);
                     vm.put(MESSAGE, "Game is over. You have resigned.");
+
+                if(session.attribute(GAME_OVER_ATTR) != null){
+                    session.removeAttribute(GAME_OVER_ATTR);
+                    Game game = session.attribute(GAME_ATTR);
+                    gameCenter.removeGame(game);
+                    if(game.getWinner().equals(player)){
+                        vm.put(MESSAGE_ATTR, true);
+                        vm.put("error", "You have won!");
+                    } else {
+                        vm.put(MESSAGE_ATTR, true);
+                        vm.put("error", "You have lost!");
+                    }
+                }
+                else if(gameCenter.isInGame(player)){
+                    response.redirect(START_GAME_URL);
+                    halt();
+                    return null;
                 }
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());

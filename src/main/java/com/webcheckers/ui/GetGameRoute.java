@@ -16,6 +16,8 @@ import static com.webcheckers.ui.PostResignRoute.RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.*;
 import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
+import static com.webcheckers.ui.PostSubmitTurnRoute.GAME_OVER_ATTR;
+import static spark.Spark.halt;
 
 
 /**
@@ -99,6 +101,12 @@ public class GetGameRoute implements Route {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         Player currentPlayer = session.attribute(USER_ATTR);
+
+        if(session.attribute(GAME_OVER_ATTR) != null){
+            response.redirect(WebServer.HOME_URL);
+            halt();
+            return null;
+        }
 
         //Add to the viewMap all attributes that won't change.
         vm.put(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE_VAL);

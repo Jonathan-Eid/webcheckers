@@ -54,6 +54,25 @@ public class GameCenter {
         throw new IllegalStateException("Get Game from Player called when player not in a game");
     }
 
+    public Player getOpponentFromPlayer(Player player){
+        Game game = getGameFromPlayer(player);
+        if(game.getPlayer1() == player){
+            return game.getPlayer2();
+        } else {
+            return game.getPlayer1();
+        }
+    }
+
+    /**
+     * removes a provided game from the gameList in the game center
+     * @param game
+     * @return true if the specified game existed in the list before removal, false otherwise
+     */
+    public boolean removeGame(Game game){
+        return gameList.remove(game);
+    }
+
+
     public void removeGame(Player player){
         int i = 0;
         for (Game game: gameList){

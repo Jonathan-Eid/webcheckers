@@ -16,10 +16,12 @@ public class Game {
     Piece.color player2Color;
     Board board;
     Turn turn;
+    Player loser;
+    boolean gameOver;
 
     /**
      * Create a new game between two players.
-      * @param player1
+     * @param player1
      * @param player2
      */
     public Game(Player player1, Player player2){
@@ -30,6 +32,19 @@ public class Game {
         player2Color = Piece.color.WHITE;
         this.activePlayer = player1;
         this.activeColor = Piece.color.RED;
+        gameOver = false;
+        BoardMaker boardMaker = new BoardMaker();
+        if(player1.getName().toLowerCase().equals("redwin")){
+            board = boardMaker.redWinsBoard();
+        } else if(player1.getName().toLowerCase().equals("whitewin")){
+            board = boardMaker.whiteWinsBoard();
+        } else if(player1.getName().toLowerCase().equals("crownme")){
+            board = boardMaker.makeKingBoard();
+        } else if(player1.getName().toLowerCase().equals("kingjump")){
+            board = boardMaker.kingJumpBoard();
+        } else if(player1.getName().toLowerCase().equals("chainjump")){
+            board = boardMaker.chainJumpBoard();
+        }
     }
 
     /**
@@ -47,6 +62,18 @@ public class Game {
      */
     public Player getPlayer2() {
         return player2;
+    }
+
+    /**
+     * Check if the game is over or not
+     * @return
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(){
+        this.gameOver = true;
     }
 
     /**
@@ -143,13 +170,25 @@ public class Game {
      * @return
      */
     public boolean checkGameOver(){
-        Board tempBoard;
-        if(activeColor.equals(Piece.color.RED)){
-            tempBoard = board;
-        } else {
-            tempBoard = board.reverse();
+        Board tempBoard = turn.getBoard();
+        if(tempBoard.checkGameOver(activeColor)){
+            loser = activePlayer;
+            gameOver = true;
+            return true;
         }
-        return tempBoard.checkGameOver(activeColor);
+        gameOver = false;
+        return false;
+    }
+
+    public Player getWinner(){
+        if (loser != null){
+            if(loser.equals(player1)){
+                return player2;
+            } else {
+                return player1;
+            }
+        }
+        throw new IllegalStateException("No winner declared yet.");
     }
 
     @Override
