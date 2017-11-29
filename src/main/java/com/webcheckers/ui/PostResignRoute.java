@@ -17,6 +17,8 @@ import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 /**
  * Created by Juna on 11/17/2017.
  */
+
+
 public class PostResignRoute implements Route {
     private Gson gson;
     private PlayerLobby playerLobby;
@@ -33,6 +35,16 @@ public class PostResignRoute implements Route {
     }
 
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     *
+     * This handle is called by the player when they want to resign.
+     * There is an error message when a player tries to resign when the opponent has already resigned.
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         Session session = request.session();

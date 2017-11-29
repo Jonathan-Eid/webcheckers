@@ -422,6 +422,7 @@ public class Board implements Iterable{
     enum moveYDirection {FORWARD,BACKWARD}
     enum moveXDirection {LEFT, RIGHT}
 
+    /*
     private boolean canMakeMove(Piece.color color, Position position){
         Square square = rows[position.getRow()].getSpace(position.getCell());
         Piece piece = square.getPiece();
@@ -444,7 +445,7 @@ public class Board implements Iterable{
             }
         }
         return false;
-    }
+    }*/
 
     /*
     public boolean checkGameOver(Piece.color color){
@@ -724,6 +725,13 @@ public class Board implements Iterable{
         return true;
     }
 
+    /**
+     * Adds a piece to a specified square on the board
+     * @param row
+     * @param square
+     * @param color
+     * @param type
+     */
     public void addPiece(int row, int square, Piece.color color, Piece.pieceType type){
         Piece newPiece = new Piece(color);
         rows[row].getSpace(square).setPiece(newPiece);

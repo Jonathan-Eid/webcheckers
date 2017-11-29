@@ -54,6 +54,11 @@ public class GameCenter {
         throw new IllegalStateException("Get Game from Player called when player not in a game");
     }
 
+    /**
+     * Get the opponent from a player if they are in a game.
+     * @param player
+     * @return
+     */
     public Player getOpponentFromPlayer(Player player){
         Game game = getGameFromPlayer(player);
         if(game.getPlayer1() == player){
@@ -84,6 +89,11 @@ public class GameCenter {
         gameList.remove(i);
     }
 
+    /**
+     * Allows for current games to display on the homepage
+     * @param name
+     * @return
+     */
     public String gameList(String name){
         String gameStr = "";
         String result = "";
