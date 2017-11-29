@@ -19,7 +19,10 @@ public class GetSignInRoute implements Route {
     private final TemplateEngine templateEngine;
 
     static final String SIGN_IN_MESSAGE_ATTR = "signInMessage";
-    static final String SIGN_IN_MESSAGE = "Please enter a username: ";
+    static final String SIGN_IN_MESSAGE = "This game requires you to make an account. An account must have a username and a password";
+    static final String SIGN_IN_HELP_ATTR = "signInHelp";
+    static final String SIGN_IN_HELP_MESSAGE = "If you have an account, just sign in with your username and password. Otherwise, I'll automatically make an account for you.";
+
 
 
     /**
@@ -48,6 +51,7 @@ public class GetSignInRoute implements Route {
         LOG.config("GetSignInRoute is invoked.");
         Map<String, Object> vm = new HashMap<>();
         vm.put(SIGN_IN_MESSAGE_ATTR, SIGN_IN_MESSAGE);
+        vm.put(SIGN_IN_HELP_ATTR, SIGN_IN_HELP_MESSAGE);
         return templateEngine.render(new ModelAndView(vm, "signIn.ftl"));
     }
 }

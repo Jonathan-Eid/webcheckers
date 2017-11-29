@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import org.junit.Before;
@@ -26,6 +27,7 @@ public class GetGameRouteTest {
     Response response;
     Session session;
     Request request;
+    GameCenter gameCenter;
 
     @Before
     public void setUp() throws Exception {
@@ -36,7 +38,7 @@ public class GetGameRouteTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
 
-        playerLobby = new PlayerLobby();
+        playerLobby = new PlayerLobby(gameCenter);
 
         // create a unique CuT for each test
         CuT = new GetGameRoute(engine, playerLobby);

@@ -84,4 +84,7 @@ public class Turn {
         return undoBoards.peek();
     }
 
+    public Move.moveType isValidMove(Move move) {
+        return undoBoards.peek().isValidMove(move);
+    }
 }

@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetGameRoute.MESSAGE;
+import static com.webcheckers.ui.GetGameRoute.MESSAGE_ATTR;
+import static com.webcheckers.ui.PostCheckTurnRoute.OPPONENT_RESIGNED_ATTR;
+import static com.webcheckers.ui.PostResignRoute.RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.PLAYER_LIST_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_SIGNED_IN_ATTR;
@@ -72,11 +76,29 @@ public class GetHomeRoute implements Route {
             //The user is signed in
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
+                if (!playerLobby.isSignedIn(player)){
+                    session.removeAttribute(USER_ATTR);
+                    session.removeAttribute(USER_SIGNED_IN_ATTR);
+                    playerLobby.signOutPlayer(player.getName());
+                    return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+                }
                 Objects.requireNonNull(player, "player must not be null");
                 if(gameCenter.isInGame(player)){
                     response.redirect(START_GAME_URL);
                     halt();
                     return null;
+                }
+                else if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
+                    //The game is over and the opponent has resigned.
+                    session.removeAttribute(OPPONENT_RESIGNED_ATTR);
+                    vm.put(MESSAGE_ATTR, true);
+                    vm.put(MESSAGE, "Opponent has quit, you have won!");
+                }
+                else if (session.attribute(RESIGNED_ATTR) != null){
+                    //The game is over and the opponent has resigned.
+                    session.removeAttribute(RESIGNED_ATTR);
+                    vm.put(MESSAGE_ATTR, true);
+                    vm.put(MESSAGE, "Game is over. You have resigned.");
                 }
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());
