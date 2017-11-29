@@ -64,4 +64,18 @@ public class GameCenter {
         }
         gameList.remove(i);
     }
+
+    public String gameList(String name){
+        String gameStr = "";
+        String result = "";
+        for (Game game: gameList) {
+            if (game.getPlayer2().getName().equals(name) || game.getPlayer1().getName().equals(name)){
+                gameStr = game.toString();
+            }
+        }
+        result = result.concat("<form action=\"/startGame\" method=\"GET\"> <input type=\"hidden\" id=\"name\" " +
+                "name=\"opponent\" value=\"" + gameStr + "\"> <button type=\"submit\" >" +
+                gameStr + "</button> </div> </form>");
+        return result;
+    }
 }

@@ -11,6 +11,7 @@ import spark.Response;
 import spark.Route;
 import spark.Session;
 
+import static com.webcheckers.ui.PostCheckTurnRoute.OPPONENT_RESIGNED_ATTR;
 import static com.webcheckers.ui.PostSignInRoute.USER_ATTR;
 
 /**
@@ -44,7 +45,8 @@ public class PostResignRoute implements Route {
             message = new Message("Resigned", Message.type.info);
         }
         else{
-            message = new Message("Error: Could not resign", Message.type.error);
+            session.attribute(OPPONENT_RESIGNED_ATTR, true);
+            message = new Message("Opponent has already resigned", Message.type.error);
         }
         return gson.toJson(message, Message.class);
     }

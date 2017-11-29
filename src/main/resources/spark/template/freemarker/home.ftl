@@ -26,8 +26,10 @@
         Your name is ${user} <br/></br>
         Here are the players currently signed in </br>
         ${playerList} <br/>
-        These are your current games </br>
-        ${gameList} <br/>
+        <#if inGame??>
+            These are your current games </br>
+            ${gameList} <br/>
+        </#if>
         <a href="./signOut">Sign Out</a>
 
       <#else>
