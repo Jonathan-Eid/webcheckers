@@ -50,7 +50,6 @@ public class PostSubmitTurnRoute implements Route {
         if(game.checkGameOver()) {
             if(gameCenter.isInGame(loser) && gameCenter.isInGame(winner)){
                 session.attribute(GAME_OVER_ATTR, true);
-                playerLobby.removeFromGame(loser);
                 message = new Message("Valid Turn", Message.type.info);
             } else {
                 message = new Message("Error: game over failed due to player absent from gameCenter.", Message.type.error);

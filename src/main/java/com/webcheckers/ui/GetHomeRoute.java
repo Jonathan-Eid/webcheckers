@@ -78,37 +78,36 @@ public class GetHomeRoute implements Route {
         Session session = request.session();
         vm.put(TITLE_ATTR, TITLE_VAL);
         vm.put(NUM_PLAYERS_ATTR, playerLobby.getNumPlayers());
-        if (!session.isNew()){
+        if (!session.isNew()) {
             //The user is signed in
             if (session.attribute(USER_SIGNED_IN_ATTR) != null) {
                 Player player = session.attribute(USER_ATTR);
-                if (!playerLobby.isSignedIn(player)){
+                Objects.requireNonNull(player, "player must not be null");
+                if (!playerLobby.isSignedIn(player)) {
                     session.removeAttribute(USER_ATTR);
                     session.removeAttribute(USER_SIGNED_IN_ATTR);
                     playerLobby.signOutPlayer(player.getName());
                     return templateEngine.render(new ModelAndView(vm, "home.ftl"));
                 }
-                Objects.requireNonNull(player, "player must not be null");
-                if(gameCenter.isInGame(player)){
+                if (gameCenter.isInGame(player)) {
                     vm.put(IN_GAME_ATTR, true);
                 }
-                if (session.attribute(OPPONENT_RESIGNED_ATTR) != null){
+                if (session.attribute(OPPONENT_RESIGNED_ATTR) != null) {
                     //The game is over and the opponent has resigned.
                     session.removeAttribute(OPPONENT_RESIGNED_ATTR);
                     vm.put(MESSAGE_ATTR, true);
                     vm.put(MESSAGE, "Opponent has quit, you have won!");
-                }
-                else if (session.attribute(RESIGNED_ATTR) != null){
+                } else if (session.attribute(RESIGNED_ATTR) != null) {
                     //The game is over and the opponent has resigned.
                     session.removeAttribute(RESIGNED_ATTR);
                     vm.put(MESSAGE_ATTR, true);
                     vm.put(MESSAGE, "Game is over. You have resigned.");
-
-                if(session.attribute(GAME_OVER_ATTR) != null){
+                }
+                if (session.attribute(GAME_OVER_ATTR) != null){
                     session.removeAttribute(GAME_OVER_ATTR);
                     Game game = session.attribute(GAME_ATTR);
                     gameCenter.removeGame(game);
-                    if(game.getWinner().equals(player)){
+                    if (game.getWinner().equals(player)) {
                         vm.put(MESSAGE_ATTR, true);
                         vm.put("error", "You have won!");
                     } else {
@@ -116,19 +115,11 @@ public class GetHomeRoute implements Route {
                         vm.put("error", "You have lost!");
                     }
                 }
-                else if(gameCenter.isInGame(player)){
-                    response.redirect(START_GAME_URL);
-                    halt();
-                    return null;
-                }
                 vm.put(PostSignInRoute.USER_SIGNED_IN_ATTR, true);
                 vm.put(USER_ATTR, player.getName());
                 vm.put(GAMES_ATTR, gameCenter.gameList(player.getName()));
-                vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));
-            }
+                vm.put(PLAYER_LIST_ATTR, playerLobby.playerList(player.getName()));            }
         }
-
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
-
 }

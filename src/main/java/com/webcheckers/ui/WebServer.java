@@ -182,7 +182,7 @@ public class WebServer {
         post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gson));
         post(BACKUP_MOVE_URL, new PostBackUpMoveRoute(gson));
         post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameCenter, playerLobby));
-        post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson));
+        post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson, gameCenter, playerLobby));
         post(RESIGN_GAME_URL, new PostResignRoute(gson, playerLobby, gameCenter));
         //
         LOG.config("WebServer is initialized.");
