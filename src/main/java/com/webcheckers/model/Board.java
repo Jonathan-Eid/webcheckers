@@ -196,16 +196,6 @@ public class Board implements Iterable{
         int deltaY = endY - startY;
         Piece startPiece = rows[startY].getSpace(startX).getPiece();
         Objects.requireNonNull(startPiece, "startPiece must not be null." + this.toString());
-        if (endY == 7){
-            if (startPiece.getColor().equals(Piece.color.WHITE)){
-                startPiece.kingMe();
-            }
-        }
-        else if (endY == 0){
-            if (startPiece.getColor().equals(Piece.color.RED)){
-                startPiece.kingMe();
-            }
-        }
 
         switch (boardState) {
             case NO_MOVE:
@@ -317,6 +307,17 @@ public class Board implements Iterable{
             Square middleSquare = this.rows[y].getSpace(x);
             middleSquare.setPiece(null);
             this.lastCapture = end;
+        }
+
+        if (end.getRow() == 7){
+            if (endSquare.getPiece().getColor().equals(Piece.color.WHITE)){
+                endSquare.getPiece().kingMe();
+            }
+        }
+        else if (end.getRow() == 0){
+            if (endSquare.getPiece().getColor().equals(Piece.color.RED)){
+                endSquare.getPiece().kingMe();
+            }
         }
     }
 
@@ -445,7 +446,7 @@ public class Board implements Iterable{
         return false;
     }
 
-
+    /*
     public boolean checkGameOver(Piece.color color){
         Iterator<Row> boardIter = new BoardIterator();
         Row currentRow;
@@ -469,7 +470,7 @@ public class Board implements Iterable{
             }
         }
         return true;
-    }
+    }*/
 
     /**
      * determines if the game is over for the player whose turn it is
@@ -480,7 +481,7 @@ public class Board implements Iterable{
      * @param color the color of the active player, whose pieces must be chacked for valid moves
      * @return true if the active player has no pieces with any valid moves, false if they are able to make a valid move this turn
      */
-    /*
+
     public boolean checkGameOver(Piece.color color){
         Iterator<Row> boardIter = new BoardIterator();
         Row currentRow;
@@ -576,7 +577,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-1, currentSquare.getCellIdx()+1);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.SINGLE)){
-                                    ret = false;
+                                    return false;
                                 }
                             }
 
@@ -584,7 +585,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()-2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = false;
+                                    return false;
                                 }
                             }
 
@@ -592,7 +593,7 @@ public class Board implements Iterable{
                                 Position newPosition = new Position(currentRow.getIndex()+2, currentSquare.getCellIdx()-2);
                                 Move forwardLeftRegularMove = new Move(currentPosition, newPosition);
                                 if(isValidMove(forwardLeftRegularMove).equals(Move.moveType.CAPTURE)){
-                                    ret = false;
+                                    return false;
                                 }
                             }
                         }
@@ -722,7 +723,6 @@ public class Board implements Iterable{
         }
         return true;
     }
-    */
 
     public void addPiece(int row, int square, Piece.color color, Piece.pieceType type){
         Piece newPiece = new Piece(color);
