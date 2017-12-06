@@ -3,7 +3,7 @@
 ---
 # WebCheckers Design Documentation
 
-> Our Web Checkers Application has written with many design principles in mind. This documentation is a showcase of how we implemented our design and what principles were used to make those design decisions.
+> Our Web Checkers Application has been written with many design principles in mind. This documentation is a showcase of how we implemented our design and what principles were used to make those design decisions.
 
 # Team Information
 * Team name: Bethesda
@@ -43,6 +43,12 @@ Make Move: A player may move one of their pieces on the board and, assuming it's
 
 Undo Move: A player may decide to undo a move within their turn.
 
+Resign Game: A player may choose to quit the game.
+
+Sign in with Password: A player may choose to assign a password to their username.
+
+Asynchronous Games: A player may start a game with another player and play it whenever they want.
+
 ### Definition of MVP
 
 Every player must sign-in before playing a game.
@@ -70,10 +76,10 @@ Either player of a game may choose to resign, which ends the game.
 
 
 
-### Roadmap of Enhancements
-> In the future, we plan to implement user accounts so players would be able to identify each other.
+### Enhancements
+> A user can sign in with a password to claim and save their name
 
-> We also believe there should be a spectator feature for those who want to analyze another game to improve their checkers prowess.
+> Asynchronous games are available to players who want to be able to save their game state so they can sign out and return to it later.
 
 
 ## Application Domain
@@ -134,8 +140,8 @@ This section describes the application architecture.
 >The model is responsible for representing the domain of a checkers game. This tier contains a class for the player, which is responsible for associating a name with a Player object. The model’s board, row, square, piece, move, and position classes store and manipulate the internal representation of the play area. It also contains the game class, which is responsible for associating two players with a board object and maintaining that board. Additionally, it tracks which player is taking their turn and what color their pieces are. The turn class validates and stores moves made during a player’s turn.
 
 
-## PlayerLobby Subsystem
-> A sub-system would exist within one of the application tiers and is a group of components cooperating on a significant purpose within the application.  For example, in WebCheckers all of the UI Controller components for the Game view would be its own sub-system.
+## Controller Subsystems
+> A sub-system would exist within one of the application tiers and is a group of components cooperating on a significant purpose within the application.  For example, in WebCheckers all of the UI Controller components for the Game view would be its own sub-system. We have the PlayerLobby class that controls what is displayed on the homepage and controls signing in a player. The GameCenter class controls which games are displayed on the home page and controls whether a game is in session or not
 
 
 ## Game Subsystem
@@ -151,5 +157,11 @@ The game class stores two players, the colors assigned to those players, and a b
 ![Model/Application UML](ApplicationModelUML.png)
 
 ### Dynamic models
+####Turn State Diagram
 ![Turn State](TurnStateDiagram.png)
-![Application State Diagram](ApplicationStateDiagram.png) 
+####Application State Diagram
+![Application State Diagram](ApplicationStateDiagram.png)
+####Move Validation State Diagram
+![Move Validation State Diagram](MoveValidationStateDiagram.png) 
+####Asynchronous Sequence Diagram
+![Asynchronous Sequence](AsynchronousSequence.png)
